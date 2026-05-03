@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.unkey.com/schemas/ratelimit",
+  "title": "Unkey Rate Limit Result",
+  "description": "Result of a rate limit check from the Unkey platform, indicating whether the request is allowed and the current window state.",
+  "type": "object",
+  "required": ["success", "limit", "remaining", "reset"],
+  "properties": {
+    "success": {
+      "type": "boolean",
+      "description": "Whether this request was allowed (true) or denied due to rate limit exceeded (false)"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum number of requests allowed in the window",
+      "minimum": 1,
+      "example": 100
+    },
+    "remaining": {
+      "type": "integer",
+      "description": "Number of requests remaining in the current window",
+      "minimum": 0,
+      "example": 87
+    },
+    "reset": {
+      "type": "integer",
+      "description": "Unix timestamp (milliseconds) when the current window resets",
+      "example": 1714780920000
+    }
+  },
+  "additionalProperties": false
+}

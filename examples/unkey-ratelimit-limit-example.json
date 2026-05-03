@@ -1,0 +1,32 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.unkey.com/v2/ratelimit.limit",
+    "headers": {
+      "Authorization": "Bearer unkey_xxxxxxxxxxx",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "namespace": "api.requests",
+      "identifier": "user_abc123",
+      "limit": 100,
+      "duration": 60000,
+      "cost": 1,
+      "async": false
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "meta": {
+        "requestId": "req_4e1c2lh45n6m789"
+      },
+      "data": {
+        "success": true,
+        "limit": 100,
+        "remaining": 87,
+        "reset": 1714780920000
+      }
+    }
+  }
+}

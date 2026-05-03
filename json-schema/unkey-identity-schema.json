@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.unkey.com/schemas/identity",
+  "title": "Unkey Identity",
+  "description": "An identity in the Unkey platform that groups multiple API keys under a single external user or organization, enabling shared rate limits and analytics.",
+  "type": "object",
+  "required": ["id", "workspaceId", "externalId"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the identity",
+      "example": "identity_xyz789"
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "ID of the workspace this identity belongs to",
+      "example": "ws_9876543210"
+    },
+    "externalId": {
+      "type": "string",
+      "description": "External identifier from the integrating application (user ID, org ID, etc.)",
+      "example": "user_abc123"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Arbitrary metadata associated with the identity",
+      "additionalProperties": true
+    },
+    "ratelimits": {
+      "type": "array",
+      "description": "Rate limit configurations shared across all keys in this identity",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {"type": "string"},
+          "limit": {"type": "integer", "minimum": 1},
+          "duration": {"type": "integer", "minimum": 1},
+          "async": {"type": "boolean"}
+        }
+      }
+    },
+    "createdAt": {
+      "type": "integer",
+      "description": "Unix timestamp (milliseconds) when the identity was created"
+    },
+    "updatedAt": {
+      "type": "integer",
+      "description": "Unix timestamp (milliseconds) when the identity was last updated"
+    }
+  },
+  "additionalProperties": false
+}

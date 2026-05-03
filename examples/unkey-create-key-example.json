@@ -1,0 +1,46 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.unkey.com/v2/keys.createKey",
+    "headers": {
+      "Authorization": "Bearer unkey_xxxxxxxxxxx",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiId": "api_1234567890",
+      "prefix": "sk",
+      "name": "Production API Key",
+      "externalId": "user_abc123",
+      "meta": {
+        "plan": "pro",
+        "userId": "user_abc123"
+      },
+      "roles": ["read", "write"],
+      "permissions": ["data.read", "data.write"],
+      "expires": 1893456000000,
+      "ratelimit": {
+        "async": false,
+        "limit": 1000,
+        "duration": 60000
+      },
+      "credits": {
+        "amount": 10000,
+        "refillAmount": 10000,
+        "refillDay": 1
+      },
+      "enabled": true
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "meta": {
+        "requestId": "req_2c9a0jf23l4k567"
+      },
+      "data": {
+        "keyId": "key_1234567890abcdef",
+        "key": "sk_abcdefghijklmnopqrstuvwxyz1234567890"
+      }
+    }
+  }
+}

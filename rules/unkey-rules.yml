@@ -1,0 +1,121 @@
+extends: [[spectral:oas, all]]
+
+rules:
+
+  # Unkey uses POST for all management endpoints with dot-notation operation IDs
+  unkey-post-only-management:
+    description: Management endpoints should use POST method with dot-notation operationId
+    message: "{{description}}: {{path}}"
+    severity: warn
+    given: "$.paths[*]"
+    then:
+      - field: post
+        function: truthy
+
+  # Operation IDs must use dot-notation (resource.action pattern)
+  unkey-operation-id-dot-notation:
+    description: Operation IDs must use dot-notation (e.g. keys.createKey, ratelimit.limit)
+    message: "OperationId '{{value}}' should use dot-notation like 'resource.action'"
+    severity: error
+    given: "$.paths[*][*].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*\\.[a-z][a-zA-Z0-9]+$"
+
+  # All paths must start with /v2/
+  unkey-path-versioning:
+    description: All API paths must start with /v2/
+    message: "Path '{{path}}' must be versioned with /v2/ prefix"
+    severity: error
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^/v2/"
+
+  # All operations must use rootKey security
+  unkey-bearer-auth:
+    description: All operations (except liveness) must require rootKey authentication
+    message: "{{description}}: {{path}}"
+    severity: warn
+    given: "$.paths[?(!@property.match(/liveness/))][*]"
+    then:
+      - field: security
+        function: truthy
+
+  # Responses must wrap data in envelope with meta.requestId
+  unkey-response-envelope:
+    description: Success responses must use the meta+data envelope structure
+    message: "200 response must include meta and data properties"
+    severity: warn
+    given: "$.paths[*][*].responses['200'].content['application/json'].schema"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          required: [meta]
+          properties:
+            meta:
+              type: object
+
+  # Operation summaries must be in Title Case
+  unkey-title-case-summary:
+    description: Operation summaries must use Title Case
+    message: "Summary '{{value}}' should use Title Case"
+    severity: warn
+    given: "$.paths[*][*].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z]"
+
+  # Tags must be one of the defined resource groups
+  unkey-valid-tags:
+    description: Operations must use defined API resource tags
+    message: "Tag '{{value}}' must be one of: analytics, apis, deploy, identities, keys, liveness, permissions, ratelimit"
+    severity: warn
+    given: "$.paths[*][*].tags[*]"
+    then:
+      function: enumeration
+      functionOptions:
+        values:
+          - analytics
+          - apis
+          - deploy
+          - identities
+          - keys
+          - liveness
+          - permissions
+          - ratelimit
+
+  # Request bodies must use application/json
+  unkey-json-request-body:
+    description: Request bodies must use application/json media type
+    message: "{{description}}: {{path}}"
+    severity: error
+    given: "$.paths[*][*].requestBody.content"
+    then:
+      function: truthy
+      field: "application/json"
+
+  # Error responses must use consistent error response schemas
+  unkey-error-response-401:
+    description: Operations requiring auth must define 401 responses
+    message: "Authenticated operation missing 401 response"
+    severity: warn
+    given: "$.paths[?(!@property.match(/liveness/))][*]"
+    then:
+      field: "responses.401"
+      function: truthy
+
+  # 403 responses for permission-gated operations
+  unkey-error-response-403:
+    description: Operations with permissions must define 403 responses
+    message: "Permission-gated operation missing 403 response"
+    severity: warn
+    given: "$.paths[*][*]"
+    then:
+      field: "responses.403"
+      function: truthy

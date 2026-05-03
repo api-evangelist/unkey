@@ -1,0 +1,50 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.unkey.com/v2/keys.verifyKey",
+    "headers": {
+      "Authorization": "Bearer unkey_xxxxxxxxxxx",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "apiId": "api_1234567890",
+      "key": "sk_abcdefghijklmnopqrstuvwxyz1234567890",
+      "ratelimit": {
+        "cost": 1
+      },
+      "credits": {
+        "cost": 1
+      },
+      "permissions": ["data.read"]
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "meta": {
+        "requestId": "req_3d0b1kg34m5l678"
+      },
+      "data": {
+        "valid": true,
+        "keyId": "key_1234567890abcdef",
+        "name": "Production API Key",
+        "externalId": "user_abc123",
+        "meta": {
+          "plan": "pro",
+          "userId": "user_abc123"
+        },
+        "roles": ["read", "write"],
+        "permissions": ["data.read", "data.write"],
+        "enabled": true,
+        "credits": {
+          "remaining": 9999
+        },
+        "ratelimit": {
+          "limit": 1000,
+          "remaining": 999,
+          "reset": 1714780860000
+        }
+      }
+    }
+  }
+}

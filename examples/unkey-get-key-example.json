@@ -1,0 +1,50 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "https://api.unkey.com/v2/keys.getKey",
+    "headers": {
+      "Authorization": "Bearer unkey_xxxxxxxxxxx",
+      "Content-Type": "application/json"
+    },
+    "body": {
+      "keyId": "key_1234567890abcdef"
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "meta": {
+        "requestId": "req_5f2d3mi56o7n890"
+      },
+      "data": {
+        "id": "key_1234567890abcdef",
+        "apiId": "api_1234567890",
+        "workspaceId": "ws_9876543210",
+        "name": "Production API Key",
+        "prefix": "sk",
+        "externalId": "user_abc123",
+        "meta": {
+          "plan": "pro",
+          "userId": "user_abc123"
+        },
+        "roles": ["read", "write"],
+        "permissions": ["data.read", "data.write"],
+        "enabled": true,
+        "createdAt": 1714694460000,
+        "updatedAt": 1714694460000,
+        "expires": 1893456000000,
+        "ratelimit": {
+          "async": false,
+          "limit": 1000,
+          "duration": 60000
+        },
+        "credits": {
+          "amount": 10000,
+          "refillAmount": 10000,
+          "refillDay": 1,
+          "lastRefillAt": 1714694460000
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "title": "Unkey API Key Structure",
+  "description": "Structural documentation for Unkey API Key objects",
+  "entity": "Key",
+  "fields": [
+    {"name": "id", "type": "string", "required": true, "description": "Key identifier (key_xxx format)"},
+    {"name": "apiId", "type": "string", "required": true, "description": "Parent API namespace ID"},
+    {"name": "workspaceId", "type": "string", "required": true, "description": "Workspace ID"},
+    {"name": "name", "type": "string", "required": false, "description": "Human-readable key name"},
+    {"name": "prefix", "type": "string", "required": false, "description": "Key prefix displayed to users"},
+    {"name": "start", "type": "string", "required": false, "description": "First characters for display identification"},
+    {"name": "externalId", "type": "string", "required": false, "description": "External user/org identifier"},
+    {"name": "identityId", "type": "string", "required": false, "description": "Associated identity ID"},
+    {"name": "meta", "type": "object", "required": false, "description": "Arbitrary metadata key-value pairs"},
+    {"name": "roles", "type": "array<string>", "required": false, "description": "Assigned role names"},
+    {"name": "permissions", "type": "array<string>", "required": false, "description": "Directly assigned permission names"},
+    {"name": "enabled", "type": "boolean", "required": false, "default": true, "description": "Key enabled status"},
+    {"name": "createdAt", "type": "integer", "required": true, "description": "Creation timestamp (ms)"},
+    {"name": "updatedAt", "type": "integer", "required": false, "description": "Last updated timestamp (ms)"},
+    {"name": "expires", "type": "integer|null", "required": false, "description": "Expiration timestamp (ms) or null"},
+    {"name": "deletedAt", "type": "integer|null", "required": false, "description": "Deletion timestamp (ms) or null"},
+    {
+      "name": "ratelimit",
+      "type": "object",
+      "required": false,
+      "description": "Per-key rate limit configuration",
+      "fields": [
+        {"name": "async", "type": "boolean", "description": "Async rate limit updates"},
+        {"name": "limit", "type": "integer", "description": "Requests per window"},
+        {"name": "duration", "type": "integer", "description": "Window duration (ms)"},
+        {"name": "remaining", "type": "integer", "description": "Remaining in current window"},
+        {"name": "reset", "type": "integer", "description": "Window reset timestamp (ms)"}
+      ]
+    },
+    {
+      "name": "credits",
+      "type": "object",
+      "required": false,
+      "description": "Usage credit/quota configuration",
+      "fields": [
+        {"name": "amount", "type": "integer", "description": "Current credits remaining"},
+        {"name": "refillAmount", "type": "integer", "description": "Credits added per refill cycle"},
+        {"name": "refillDay", "type": "integer", "description": "Day of month for refill (1-31)"},
+        {"name": "lastRefillAt", "type": "integer", "description": "Last refill timestamp (ms)"}
+      ]
+    }
+  ]
+}

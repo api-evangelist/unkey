@@ -1,0 +1,222 @@
+vocabulary:
+  provider: Unkey
+  description: >-
+    Domain vocabulary for the Unkey developer platform — the complete API key management,
+    rate limiting, and identity platform for modern APIs. Covers core concepts for key
+    lifecycle, access control, rate limiting, and observability.
+  version: '2026-05-03'
+  tags:
+    - API Keys
+    - Rate Limiting
+    - Developer Platform
+    - Authentication
+    - Access Control
+
+  terms:
+
+    - term: Root Key
+      definition: >-
+        The primary authentication credential for the Unkey management API. Root keys
+        authorize operations like creating, reading, updating, and deleting API keys,
+        identities, and rate limit configurations. Root keys should never be exposed
+        client-side and should be rotated periodically.
+      tags:
+        - Authentication
+        - Security
+
+    - term: API Key
+      definition: >-
+        A secret credential issued to end-users or services by an API provider using
+        Unkey. Keys can have prefixes, expiration dates, rate limits, credit quotas,
+        permissions, and roles. Unkey stores only a hash of the key, never the plaintext.
+      tags:
+        - Authentication
+        - Access Control
+
+    - term: API Namespace
+      definition: >-
+        A logical grouping for API keys in Unkey (also called an "API"). Namespaces
+        isolate keys by environment (production vs. development), service, or product.
+        Each namespace has a unique identifier and dedicated infrastructure for key operations.
+      tags:
+        - Organization
+        - Namespacing
+
+    - term: Key Verification
+      definition: >-
+        The process of validating an API key by sending it to Unkey's verify endpoint.
+        Returns validity status, metadata, remaining rate limit, and credit balance. This
+        is the hot path in an API request flow and is globally distributed for low latency.
+      tags:
+        - Authentication
+        - Validation
+
+    - term: Identity
+      definition: >-
+        A logical entity in Unkey that groups multiple API keys under a single external
+        user or organization identifier. Identities enable shared rate limit pools across
+        all keys belonging to the same user, preventing limit circumvention by creating
+        multiple keys.
+      tags:
+        - Multi-Tenant
+        - Access Control
+
+    - term: External ID
+      definition: >-
+        The identifier from the integrating application's user system (e.g. database user
+        ID, Stripe customer ID) that links Unkey identities and keys to the external context.
+        Enables correlation between Unkey analytics and application-level user data.
+      tags:
+        - Integration
+        - Identifiers
+
+    - term: Rate Limit
+      definition: >-
+        A fixed-window throttle applied to API key verifications or standalone limit checks.
+        Defined by a count (limit) and window duration (milliseconds). Unkey's rate limiting
+        is globally distributed without requiring Redis.
+      tags:
+        - Rate Limiting
+        - Performance
+
+    - term: Rate Limit Window
+      definition: >-
+        The rolling time interval within which the rate limit counter is tracked. Defined
+        in milliseconds (e.g. 60000 = 1 minute). At the end of each window, the counter
+        resets to allow a fresh set of requests.
+      tags:
+        - Rate Limiting
+
+    - term: Rate Limit Namespace
+      definition: >-
+        A named grouping for standalone rate limit checks that is separate from API key
+        namespaces. Enables independent analytics and override management for different
+        classes of rate-limited operations (e.g. public API vs internal tRPC routes).
+      tags:
+        - Rate Limiting
+        - Organization
+
+    - term: Rate Limit Override
+      definition: >-
+        A per-identifier custom rate limit that overrides the namespace default. Allows
+        giving specific users or IP addresses higher or lower limits without changing
+        the global configuration.
+      tags:
+        - Rate Limiting
+        - Configuration
+
+    - term: Credits
+      definition: >-
+        A usage quota mechanism for API keys that decrements with each verified request.
+        Keys with zero credits are denied. Credits can be configured with automatic monthly
+        refills for usage-based billing scenarios.
+      tags:
+        - Billing
+        - Quotas
+
+    - term: Refill
+      definition: >-
+        The automatic replenishment of a key's credit balance on a configured day of the
+        month. Enables monthly usage-based billing models where users get a fresh allocation
+        of credits at the start of each billing cycle.
+      tags:
+        - Billing
+        - Credits
+
+    - term: Permission
+      definition: >-
+        A named capability that can be attached to an API key to grant specific access.
+        Permissions follow a hierarchical dot-notation pattern (e.g. data.read, data.write,
+        admin.*). Keys can have permissions directly or inherit them through roles.
+      tags:
+        - Access Control
+        - Authorization
+
+    - term: Role
+      definition: >-
+        A named collection of permissions that can be assigned to API keys as a group.
+        Roles simplify permission management by allowing common access patterns to be
+        bundled under a single name (e.g. "reader", "writer", "admin").
+      tags:
+        - Access Control
+        - Authorization
+
+    - term: Key Prefix
+      definition: >-
+        A short string prepended to an API key to provide visual identification of its
+        type or environment (e.g. "sk_" for secret keys, "pk_" for public keys, "test_"
+        for test keys). Prefixes are visible in the key but do not affect security.
+      tags:
+        - Keys
+        - Usability
+
+    - term: Plaintext Key
+      definition: >-
+        The raw API key value returned only at creation time. Unkey immediately hashes
+        the key and only stores the hash, making retrieval of the plaintext impossible
+        after initial issuance. Providers must display and store it for their users at creation.
+      tags:
+        - Security
+        - Keys
+
+    - term: Key Reroll
+      definition: >-
+        The operation of rotating an API key by generating a new random value while
+        preserving all settings (permissions, rate limits, metadata). The old key value
+        is immediately invalidated. Used for key rotation security practices.
+      tags:
+        - Security
+        - Keys
+
+    - term: Workspace
+      definition: >-
+        The top-level organizational unit in Unkey. All APIs, keys, identities, permissions,
+        and roles belong to a workspace. Workspaces are isolated from one another and have
+        their own root keys.
+      tags:
+        - Organization
+
+    - term: Async Rate Limiting
+      definition: >-
+        A rate limiting mode where the local counter is updated asynchronously after the
+        request completes rather than synchronously before allowing it. Provides lower
+        latency at the cost of allowing slight over-counting at high concurrency.
+      tags:
+        - Rate Limiting
+        - Performance
+
+    - term: Multi-Limit
+      definition: >-
+        A batch rate limit operation that checks multiple namespace+identifier combinations
+        in a single API call. Returns pass/fail for each limit with a combined success
+        flag indicating whether all limits passed.
+      tags:
+        - Rate Limiting
+        - Batch Operations
+
+    - term: Key Analytics
+      definition: >-
+        Usage data for API keys including verification counts, error rates, and outcome
+        distributions. Available via SQL queries against the verification analytics table
+        (key_verifications_v1) for custom reporting.
+      tags:
+        - Analytics
+        - Observability
+
+    - term: Response Envelope
+      definition: >-
+        The consistent JSON wrapper around all Unkey API responses, containing a `meta`
+        object (with requestId) and either a `data` object/array or an `error` object.
+        The requestId is essential for debugging and support escalation.
+      tags:
+        - API Design
+        - Response Format
+
+    - term: Deployment
+      definition: >-
+        An Unkey deployment resource representing the configuration and lifecycle state
+        of an Unkey-powered API service deployment, used in the deploy.createDeployment
+        and deploy.getDeployment operations.
+      tags:
+        - Infrastructure
+        - Deployments

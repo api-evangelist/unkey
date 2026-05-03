@@ -1,0 +1,196 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Unkey Rate Limiting
+  description: >-
+    Workflow capability for standalone rate limiting using the Unkey platform.
+    Enables platform engineers, backend developers, and API teams to protect any
+    endpoint from abuse with global rate limiting, per-identifier overrides, and
+    multi-limit batch checks — without requiring API key management.
+  tags:
+    - Unkey
+    - Rate Limiting
+    - API Protection
+    - Developer Platform
+    - Abuse Prevention
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      UNKEY_ROOT_KEY: UNKEY_ROOT_KEY
+
+capability:
+  consumes:
+    - import: unkey
+      location: ./shared/unkey.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: unkey-ratelimit-api
+      description: Unified REST API for Unkey rate limiting and override management.
+      resources:
+        - path: /v1/ratelimits
+          name: ratelimits
+          description: Apply rate limiting to identifiers
+          operations:
+            - method: POST
+              name: limit
+              description: Apply rate limiting check for a single identifier
+              call: "unkey.limit"
+              with:
+                namespace: "rest.namespace"
+                identifier: "rest.identifier"
+                limit: "rest.limit"
+                duration: "rest.duration"
+                cost: "rest.cost"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/ratelimits/multi
+          name: multi-limit
+          description: Batch rate limit checks
+          operations:
+            - method: POST
+              name: multi-limit
+              description: Apply multiple rate limit checks in one request
+              call: "unkey.multi-limit"
+              with:
+                limits: "rest.limits"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/ratelimits/overrides
+          name: ratelimit-overrides
+          description: Rate limit override management
+          operations:
+            - method: GET
+              name: list-overrides
+              description: List all rate limit overrides for a namespace
+              call: "unkey.list-overrides"
+              with:
+                namespaceId: "rest.namespaceId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: set-override
+              description: Set a rate limit override for a specific identifier
+              call: "unkey.set-override"
+              with:
+                identifier: "rest.identifier"
+                limit: "rest.limit"
+                duration: "rest.duration"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/ratelimits/overrides/{identifier}
+          name: ratelimit-override
+          description: Single override operations
+          operations:
+            - method: GET
+              name: get-override
+              description: Get rate limit override for an identifier
+              call: "unkey.get-override"
+              with:
+                identifier: "rest.identifier"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-override
+              description: Delete a rate limit override
+              call: "unkey.delete-override"
+              with:
+                identifier: "rest.identifier"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: unkey-ratelimit-mcp
+      transport: http
+      description: MCP server for AI-assisted rate limit configuration and monitoring with Unkey.
+      tools:
+        - name: apply-rate-limit
+          description: Apply a rate limiting check for a user, IP, or custom identifier
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "unkey.limit"
+          with:
+            namespace: "tools.namespace"
+            identifier: "tools.identifier"
+            limit: "tools.limit"
+            duration: "tools.duration"
+            cost: "tools.cost"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: apply-multi-rate-limit
+          description: Apply multiple rate limit checks simultaneously in a single request
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: false
+          call: "unkey.multi-limit"
+          with:
+            limits: "tools.limits"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: set-rate-limit-override
+          description: Set a custom rate limit override for a specific identifier
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "unkey.set-override"
+          with:
+            identifier: "tools.identifier"
+            limit: "tools.limit"
+            duration: "tools.duration"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-rate-limit-override
+          description: Get the rate limit override configuration for a specific identifier
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "unkey.get-override"
+          with:
+            identifier: "tools.identifier"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-rate-limit-overrides
+          description: List all rate limit overrides configured for a namespace
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "unkey.list-overrides"
+          with:
+            namespaceId: "tools.namespaceId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-rate-limit-override
+          description: Remove a rate limit override for a specific identifier
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "unkey.delete-override"
+          with:
+            identifier: "tools.identifier"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,155 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "unkey": "https://unkey.com/ontology#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "APIKey": "schema:DigitalDocument",
+    "APINamespace": "schema:SoftwareApplication",
+    "Identity": "schema:Person",
+    "RateLimit": "unkey:RateLimit",
+    "Permission": "unkey:Permission",
+    "Role": "unkey:Role",
+    "Workspace": "schema:Organization",
+
+    "id": "schema:identifier",
+    "name": "schema:name",
+    "description": "schema:description",
+    "enabled": {
+      "@id": "schema:actionStatus",
+      "@type": "xsd:boolean"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:long"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:long"
+    },
+    "expires": {
+      "@id": "schema:expires",
+      "@type": "xsd:long"
+    },
+
+    "apiId": {
+      "@id": "unkey:apiId",
+      "@type": "xsd:string"
+    },
+    "workspaceId": {
+      "@id": "unkey:workspaceId",
+      "@type": "xsd:string"
+    },
+    "prefix": {
+      "@id": "unkey:prefix",
+      "@type": "xsd:string"
+    },
+    "externalId": {
+      "@id": "unkey:externalId",
+      "@type": "xsd:string"
+    },
+    "identityId": {
+      "@id": "unkey:identityId",
+      "@type": "xsd:string"
+    },
+    "meta": {
+      "@id": "schema:additionalProperty",
+      "@type": "@json"
+    },
+    "roles": {
+      "@id": "unkey:roles",
+      "@container": "@set"
+    },
+    "permissions": {
+      "@id": "unkey:permissions",
+      "@container": "@set"
+    },
+    "hash": {
+      "@id": "schema:sha256",
+      "@type": "xsd:string"
+    },
+
+    "ratelimit": {
+      "@id": "unkey:ratelimit",
+      "@type": "unkey:RateLimit"
+    },
+    "limit": {
+      "@id": "unkey:limit",
+      "@type": "xsd:integer"
+    },
+    "duration": {
+      "@id": "unkey:duration",
+      "@type": "xsd:integer"
+    },
+    "remaining": {
+      "@id": "unkey:remaining",
+      "@type": "xsd:integer"
+    },
+    "reset": {
+      "@id": "unkey:reset",
+      "@type": "xsd:long"
+    },
+    "async": {
+      "@id": "unkey:async",
+      "@type": "xsd:boolean"
+    },
+    "success": {
+      "@id": "schema:actionStatus",
+      "@type": "xsd:boolean"
+    },
+
+    "credits": {
+      "@id": "unkey:credits",
+      "@type": "schema:MonetaryAmount"
+    },
+    "amount": {
+      "@id": "schema:value",
+      "@type": "xsd:integer"
+    },
+    "refillAmount": {
+      "@id": "unkey:refillAmount",
+      "@type": "xsd:integer"
+    },
+    "refillDay": {
+      "@id": "unkey:refillDay",
+      "@type": "xsd:integer"
+    },
+
+    "namespace": {
+      "@id": "unkey:namespace",
+      "@type": "xsd:string"
+    },
+    "identifier": {
+      "@id": "unkey:identifier",
+      "@type": "xsd:string"
+    },
+    "cost": {
+      "@id": "unkey:cost",
+      "@type": "xsd:integer"
+    },
+
+    "requestId": {
+      "@id": "unkey:requestId",
+      "@type": "xsd:string"
+    },
+    "meta_envelope": {
+      "@id": "unkey:responseMeta",
+      "@type": "@id"
+    },
+    "data": {
+      "@id": "schema:result"
+    },
+    "pagination": {
+      "@id": "schema:ItemList"
+    },
+    "cursor": {
+      "@id": "schema:pageToken",
+      "@type": "xsd:string"
+    },
+    "hasMore": {
+      "@id": "schema:numberOfPages",
+      "@type": "xsd:boolean"
+    }
+  }
+}

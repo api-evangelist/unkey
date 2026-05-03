@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://api.unkey.com/schemas/key",
+  "title": "Unkey API Key",
+  "description": "Represents an API key managed by the Unkey platform, including its configuration, permissions, rate limits, and credit settings.",
+  "type": "object",
+  "required": ["id", "apiId", "workspaceId", "createdAt"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the key",
+      "pattern": "^key_[a-zA-Z0-9]+$",
+      "example": "key_1234567890abcdef"
+    },
+    "apiId": {
+      "type": "string",
+      "description": "ID of the API namespace this key belongs to",
+      "pattern": "^api_[a-zA-Z0-9]+$",
+      "example": "api_1234567890"
+    },
+    "workspaceId": {
+      "type": "string",
+      "description": "ID of the workspace this key belongs to",
+      "example": "ws_9876543210"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name for the key",
+      "example": "Production API Key"
+    },
+    "prefix": {
+      "type": "string",
+      "description": "Key prefix shown before the hash (e.g. sk, pk, test)",
+      "example": "sk"
+    },
+    "start": {
+      "type": "string",
+      "description": "First few characters of the key for identification without exposing the full key",
+      "example": "sk_abc..."
+    },
+    "externalId": {
+      "type": "string",
+      "description": "External identifier linking the key to a user or organization in your system",
+      "example": "user_abc123"
+    },
+    "identityId": {
+      "type": "string",
+      "description": "ID of the identity this key belongs to",
+      "example": "identity_xyz789"
+    },
+    "meta": {
+      "type": "object",
+      "description": "Arbitrary metadata associated with the key",
+      "additionalProperties": true,
+      "example": {"plan": "pro", "userId": "user_abc123"}
+    },
+    "roles": {
+      "type": "array",
+      "description": "Roles assigned to this key",
+      "items": {"type": "string"},
+      "example": ["read", "write"]
+    },
+    "permissions": {
+      "type": "array",
+      "description": "Permissions directly assigned to this key",
+      "items": {"type": "string"},
+      "example": ["data.read", "data.write"]
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the key is currently active",
+      "default": true
+    },
+    "plaintext": {
+      "type": "string",
+      "description": "Plaintext key value — only returned on creation, never stored",
+      "example": "sk_abcdefghijklmnopqrstuvwxyz1234567890"
+    },
+    "hash": {
+      "type": "object",
+      "description": "Key hash configuration",
+      "properties": {
+        "value": {"type": "string", "description": "SHA-256 hash of the key"},
+        "variant": {"type": "string", "description": "Hash variant used"}
+      }
+    },
+    "createdAt": {
+      "type": "integer",
+      "description": "Unix timestamp (milliseconds) when the key was created",
+      "example": 1714694460000
+    },
+    "updatedAt": {
+      "type": "integer",
+      "description": "Unix timestamp (milliseconds) when the key was last updated"
+    },
+    "expires": {
+      "type": ["integer", "null"],
+      "description": "Unix timestamp (milliseconds) when the key expires, or null if it does not expire",
+      "example": 1893456000000
+    },
+    "deletedAt": {
+      "type": ["integer", "null"],
+      "description": "Unix timestamp (milliseconds) when the key was deleted"
+    },
+    "ratelimit": {
+      "type": "object",
+      "description": "Rate limit configuration for this key",
+      "properties": {
+        "async": {
+          "type": "boolean",
+          "description": "Whether rate limit updates are applied asynchronously"
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of requests in the window",
+          "minimum": 1,
+          "example": 1000
+        },
+        "duration": {
+          "type": "integer",
+          "description": "Rate limit window duration in milliseconds",
+          "minimum": 1,
+          "example": 60000
+        },
+        "remaining": {
+          "type": "integer",
+          "description": "Remaining requests in the current window"
+        },
+        "reset": {
+          "type": "integer",
+          "description": "Unix timestamp (milliseconds) when the window resets"
+        }
+      }
+    },
+    "credits": {
+      "type": "object",
+      "description": "Credit/usage quota configuration for this key",
+      "properties": {
+        "amount": {
+          "type": "integer",
+          "description": "Current credit amount remaining",
+          "minimum": 0
+        },
+        "refillAmount": {
+          "type": "integer",
+          "description": "Amount to refill on each refill cycle",
+          "minimum": 0
+        },
+        "refillDay": {
+          "type": "integer",
+          "description": "Day of month to refill credits (1-31)",
+          "minimum": 1,
+          "maximum": 31
+        },
+        "lastRefillAt": {
+          "type": "integer",
+          "description": "Unix timestamp (milliseconds) of last refill"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

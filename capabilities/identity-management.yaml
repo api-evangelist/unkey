@@ -1,0 +1,158 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: Unkey Identity Management
+  description: >-
+    Workflow capability for managing identities in the Unkey platform. Identities
+    group multiple API keys under a single external user or organization ID, enabling
+    shared rate limits and analytics across all keys belonging to the same identity.
+    Used by multi-tenant API providers and SaaS platforms.
+  tags:
+    - Unkey
+    - Identities
+    - Multi-Tenant
+    - Developer Platform
+    - Access Control
+  created: "2026-05-03"
+  modified: "2026-05-03"
+
+binds:
+  - namespace: env
+    keys:
+      UNKEY_ROOT_KEY: UNKEY_ROOT_KEY
+
+capability:
+  consumes:
+    - import: unkey
+      location: ./shared/unkey.yaml
+
+  exposes:
+    - type: rest
+      port: 8082
+      namespace: unkey-identity-api
+      description: Unified REST API for Unkey identity lifecycle management.
+      resources:
+        - path: /v1/identities
+          name: identities
+          description: Identity collection operations
+          operations:
+            - method: POST
+              name: create-identity
+              description: Create a new identity for grouping API keys
+              call: "unkey.create-identity"
+              with:
+                externalId: "rest.externalId"
+                meta: "rest.meta"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: list-identities
+              description: List all identities
+              call: "unkey.list-identities"
+              with:
+                cursor: "rest.cursor"
+                limit: "rest.limit"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+        - path: /v1/identities/{identityId}
+          name: identity
+          description: Single identity operations
+          operations:
+            - method: GET
+              name: get-identity
+              description: Get an identity by ID
+              call: "unkey.get-identity"
+              with:
+                identityId: "rest.identityId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: PUT
+              name: update-identity
+              description: Update identity metadata
+              call: "unkey.update-identity"
+              with:
+                identityId: "rest.identityId"
+                meta: "rest.meta"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-identity
+              description: Delete an identity
+              call: "unkey.delete-identity"
+              with:
+                identityId: "rest.identityId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9092
+      namespace: unkey-identity-mcp
+      transport: http
+      description: MCP server for AI-assisted identity and multi-tenant API key management.
+      tools:
+        - name: create-identity
+          description: Create a new identity to group API keys under a single external user or organization
+          hints:
+            readOnly: false
+            destructive: false
+          call: "unkey.create-identity"
+          with:
+            externalId: "tools.externalId"
+            meta: "tools.meta"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-identity
+          description: Retrieve an identity by its ID or external ID
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "unkey.get-identity"
+          with:
+            identityId: "tools.identityId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-identities
+          description: List all identities in the workspace with pagination
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "unkey.list-identities"
+          with:
+            cursor: "tools.cursor"
+            limit: "tools.limit"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: update-identity
+          description: Update metadata for an existing identity
+          hints:
+            readOnly: false
+            destructive: false
+            idempotent: true
+          call: "unkey.update-identity"
+          with:
+            identityId: "tools.identityId"
+            meta: "tools.meta"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-identity
+          description: Delete an identity and disassociate its grouped keys
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "unkey.delete-identity"
+          with:
+            identityId: "tools.identityId"
+          outputParameters:
+            - type: object
+              mapping: "$."
