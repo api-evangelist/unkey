@@ -1,0 +1,152 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Unkey
+providerId: unkey
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - API Keys
+  - Rate Limiting
+  - API Management
+description: Unkey usage-based pricing across Free / Starter / Pro / Business with $5-$50/mo credits.
+sources:
+  - https://www.unkey.com/pricing
+plans:
+  - id: unkey-free
+    name: Free
+    type: freemium
+    description: Up to 0.25 vCPU / 0.25 GB RAM per Instance.
+    entries:
+      - label: Compute per instance
+        name: compute
+        type: quota
+        metric: vCPU
+        limit: 1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: 1 concurrent build
+      - name: No custom domains
+      - name: Community support
+  - id: unkey-starter
+    name: Starter
+    type: paid
+    description: $5/month with $5 credits included.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '5.00'
+        userMultiplied: false
+      - label: Credits included
+        name: credits
+        type: quota
+        metric: USD
+        limit: 5
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Compute per instance
+        name: compute
+        type: quota
+        metric: vCPU
+        limit: 2
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Up to 2 vCPU / 2 GB per Instance
+      - name: Custom domains
+      - name: Email support
+  - id: unkey-pro
+    name: Pro
+    type: paid
+    description: $25/month with $25 credits included.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '25.00'
+        userMultiplied: false
+      - label: Credits included
+        name: credits
+        type: quota
+        metric: USD
+        limit: 25
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Compute per instance
+        name: compute
+        type: quota
+        metric: vCPU
+        limit: 8
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Up to 8 vCPU / 8 GB per Instance
+      - name: Custom domains
+      - name: Email support
+  - id: unkey-business
+    name: Business
+    type: paid
+    description: $50/month with $50 credits included.
+    entries:
+      - label: Monthly
+        name: monthly
+        type: subscription
+        metric: month
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '50.00'
+        userMultiplied: false
+      - label: Credits included
+        name: credits
+        type: quota
+        metric: USD
+        limit: 50
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+      - label: Compute per instance
+        name: compute
+        type: quota
+        metric: vCPU
+        limit: 32
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: false
+    elements:
+      - name: Up to 32 vCPU / 32 GB per Instance
+      - name: Custom domains
+      - name: Email support

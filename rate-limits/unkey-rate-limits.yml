@@ -1,0 +1,33 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Unkey
+providerId: unkey
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Rate Limiting
+  - API Management
+description: Unkey REST and Ratelimit APIs.
+sources:
+  - https://www.unkey.com/pricing
+  - https://www.unkey.com/docs/api-reference/overview
+headers: {}
+responseCodes:
+  throttled: 429
+limits:
+  - name: REST API (Free)
+    scope: workspace
+    metric: requests_per_second
+    limit: 60
+    timeFrame: second
+  - name: REST API (Pro+)
+    scope: workspace
+    metric: requests_per_second
+    limit: 600
+    timeFrame: second
+  - name: Ratelimit API
+    scope: namespace
+    metric: evaluations_per_second
+    limit: scales with usage credits
