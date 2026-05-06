@@ -1,158 +1,947 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
   label: Unkey Identity Management
-  description: >-
-    Workflow capability for managing identities in the Unkey platform. Identities
-    group multiple API keys under a single external user or organization ID, enabling
-    shared rate limits and analytics across all keys belonging to the same identity.
-    Used by multi-tenant API providers and SaaS platforms.
+  description: Workflow capability for managing identities in the Unkey platform. Identities group multiple API keys under
+    a single external user or organization ID, enabling shared rate limits and analytics across all keys belonging to the
+    same identity. Used by multi-tenant API providers and SaaS platforms.
   tags:
-    - Unkey
-    - Identities
-    - Multi-Tenant
-    - Developer Platform
-    - Access Control
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - Unkey
+  - Identities
+  - Multi-Tenant
+  - Developer Platform
+  - Access Control
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      UNKEY_ROOT_KEY: UNKEY_ROOT_KEY
-
+- namespace: env
+  keys:
+    UNKEY_ROOT_KEY: UNKEY_ROOT_KEY
 capability:
   consumes:
-    - import: unkey
-      location: ./shared/unkey.yaml
-
+  - type: http
+    namespace: unkey
+    baseUri: https://api.unkey.com
+    description: Unkey platform API for key management, rate limiting, and identity operations
+    authentication:
+      type: bearer
+      token: '{{UNKEY_ROOT_KEY}}'
+    resources:
+    - name: analytics
+      path: /v2
+      description: Analytics query operations for key verification data
+      operations:
+      - name: get-verifications
+        method: POST
+        description: Query Key Verification Data
+        inputParameters:
+        - name: query
+          in: body
+          type: string
+          required: true
+          description: SQL SELECT query against key verification analytics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            query: '{{tools.query}}'
+    - name: apis
+      path: /v2
+      description: API namespace management operations
+      operations:
+      - name: create-api
+        method: POST
+        description: Create API Namespace
+        inputParameters:
+        - name: name
+          in: body
+          type: string
+          required: true
+          description: Name for the API namespace
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            name: '{{tools.name}}'
+      - name: delete-api
+        method: POST
+        description: Delete API Namespace
+        inputParameters:
+        - name: apiId
+          in: body
+          type: string
+          required: true
+          description: ID of the API namespace to delete
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiId: '{{tools.apiId}}'
+      - name: get-api
+        method: POST
+        description: Get API Namespace
+        inputParameters:
+        - name: apiId
+          in: body
+          type: string
+          required: true
+          description: ID of the API namespace to retrieve
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiId: '{{tools.apiId}}'
+      - name: list-keys
+        method: POST
+        description: List API Keys
+        inputParameters:
+        - name: apiId
+          in: body
+          type: string
+          required: true
+          description: ID of the API namespace to list keys for
+        - name: cursor
+          in: body
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: limit
+          in: body
+          type: integer
+          required: false
+          description: Maximum number of keys to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiId: '{{tools.apiId}}'
+            cursor: '{{tools.cursor}}'
+            limit: '{{tools.limit}}'
+    - name: keys
+      path: /v2
+      description: API key lifecycle management operations
+      operations:
+      - name: create-key
+        method: POST
+        description: Create API Key
+        inputParameters:
+        - name: apiId
+          in: body
+          type: string
+          required: true
+          description: ID of the API namespace
+        - name: prefix
+          in: body
+          type: string
+          required: false
+          description: Key prefix (e.g. sk, pk, test)
+        - name: name
+          in: body
+          type: string
+          required: false
+          description: Human-readable name for the key
+        - name: externalId
+          in: body
+          type: string
+          required: false
+          description: External user or organization identifier
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiId: '{{tools.apiId}}'
+            prefix: '{{tools.prefix}}'
+            name: '{{tools.name}}'
+            externalId: '{{tools.externalId}}'
+      - name: verify-key
+        method: POST
+        description: Verify API Key
+        inputParameters:
+        - name: apiId
+          in: body
+          type: string
+          required: false
+          description: ID of the API namespace
+        - name: key
+          in: body
+          type: string
+          required: true
+          description: The API key to verify
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            apiId: '{{tools.apiId}}'
+            key: '{{tools.key}}'
+      - name: get-key
+        method: POST
+        description: Get API Key
+        inputParameters:
+        - name: keyId
+          in: body
+          type: string
+          required: true
+          description: ID of the key to retrieve
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyId: '{{tools.keyId}}'
+      - name: delete-key
+        method: POST
+        description: Delete API Keys
+        inputParameters:
+        - name: keyIds
+          in: body
+          type: array
+          required: true
+          description: List of key IDs to delete
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyIds: '{{tools.keyIds}}'
+      - name: update-key
+        method: POST
+        description: Update Key Settings
+        inputParameters:
+        - name: keyId
+          in: body
+          type: string
+          required: true
+          description: ID of the key to update
+        - name: name
+          in: body
+          type: string
+          required: false
+          description: New name for the key
+        - name: enabled
+          in: body
+          type: boolean
+          required: false
+          description: Whether the key is enabled
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyId: '{{tools.keyId}}'
+            name: '{{tools.name}}'
+            enabled: '{{tools.enabled}}'
+      - name: reroll-key
+        method: POST
+        description: Reroll Key
+        inputParameters:
+        - name: keyId
+          in: body
+          type: string
+          required: true
+          description: ID of the key to reroll
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyId: '{{tools.keyId}}'
+      - name: add-permissions
+        method: POST
+        description: Add Key Permissions
+        inputParameters:
+        - name: keyId
+          in: body
+          type: string
+          required: true
+          description: ID of the key
+        - name: permissions
+          in: body
+          type: array
+          required: true
+          description: Permissions to add to the key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyId: '{{tools.keyId}}'
+            permissions: '{{tools.permissions}}'
+      - name: add-roles
+        method: POST
+        description: Add Key Roles
+        inputParameters:
+        - name: keyId
+          in: body
+          type: string
+          required: true
+          description: ID of the key
+        - name: roles
+          in: body
+          type: array
+          required: true
+          description: Roles to add to the key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            keyId: '{{tools.keyId}}'
+            roles: '{{tools.roles}}'
+      - name: whoami
+        method: POST
+        description: Get API Key by Hash
+        inputParameters:
+        - name: hash
+          in: body
+          type: string
+          required: true
+          description: Hash of the key to look up
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            hash: '{{tools.hash}}'
+    - name: identities
+      path: /v2
+      description: Identity management for grouping keys by external user or organization
+      operations:
+      - name: create-identity
+        method: POST
+        description: Create Identity
+        inputParameters:
+        - name: externalId
+          in: body
+          type: string
+          required: true
+          description: External identifier for the identity
+        - name: meta
+          in: body
+          type: object
+          required: false
+          description: Metadata to associate with the identity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            externalId: '{{tools.externalId}}'
+            meta: '{{tools.meta}}'
+      - name: get-identity
+        method: POST
+        description: Get Identity
+        inputParameters:
+        - name: identityId
+          in: body
+          type: string
+          required: false
+          description: ID of the identity
+        - name: externalId
+          in: body
+          type: string
+          required: false
+          description: External ID of the identity
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identityId: '{{tools.identityId}}'
+      - name: list-identities
+        method: POST
+        description: List Identities
+        inputParameters:
+        - name: cursor
+          in: body
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: limit
+          in: body
+          type: integer
+          required: false
+          description: Maximum number of identities to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            cursor: '{{tools.cursor}}'
+            limit: '{{tools.limit}}'
+      - name: update-identity
+        method: POST
+        description: Update Identity
+        inputParameters:
+        - name: identityId
+          in: body
+          type: string
+          required: true
+          description: ID of the identity to update
+        - name: meta
+          in: body
+          type: object
+          required: false
+          description: Updated metadata
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identityId: '{{tools.identityId}}'
+            meta: '{{tools.meta}}'
+      - name: delete-identity
+        method: POST
+        description: Delete Identity
+        inputParameters:
+        - name: identityId
+          in: body
+          type: string
+          required: true
+          description: ID of the identity to delete
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identityId: '{{tools.identityId}}'
+    - name: ratelimit
+      path: /v2
+      description: Standalone rate limiting operations
+      operations:
+      - name: limit
+        method: POST
+        description: Apply Rate Limiting
+        inputParameters:
+        - name: namespace
+          in: body
+          type: string
+          required: true
+          description: Namespace grouping rate limit rules
+        - name: identifier
+          in: body
+          type: string
+          required: true
+          description: Unique identifier being rate limited (user ID, IP, etc.)
+        - name: limit
+          in: body
+          type: integer
+          required: true
+          description: Maximum number of requests in the window
+        - name: duration
+          in: body
+          type: integer
+          required: true
+          description: Window duration in milliseconds
+        - name: cost
+          in: body
+          type: integer
+          required: false
+          description: Cost of this request (default 1)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            namespace: '{{tools.namespace}}'
+            identifier: '{{tools.identifier}}'
+            limit: '{{tools.limit}}'
+            duration: '{{tools.duration}}'
+            cost: '{{tools.cost}}'
+      - name: multi-limit
+        method: POST
+        description: Apply Multiple Rate Limit Checks
+        inputParameters:
+        - name: limits
+          in: body
+          type: array
+          required: true
+          description: Array of rate limit checks to apply
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            limits: '{{tools.limits}}'
+      - name: set-override
+        method: POST
+        description: Set Ratelimit Override
+        inputParameters:
+        - name: namespaceId
+          in: body
+          type: string
+          required: false
+          description: ID of the namespace
+        - name: namespaceName
+          in: body
+          type: string
+          required: false
+          description: Name of the namespace
+        - name: identifier
+          in: body
+          type: string
+          required: true
+          description: Identifier to override
+        - name: limit
+          in: body
+          type: integer
+          required: true
+          description: Override limit
+        - name: duration
+          in: body
+          type: integer
+          required: true
+          description: Override window duration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identifier: '{{tools.identifier}}'
+            limit: '{{tools.limit}}'
+            duration: '{{tools.duration}}'
+      - name: get-override
+        method: POST
+        description: Get Ratelimit Override
+        inputParameters:
+        - name: namespaceId
+          in: body
+          type: string
+          required: false
+          description: ID of the namespace
+        - name: identifier
+          in: body
+          type: string
+          required: true
+          description: Identifier to get override for
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identifier: '{{tools.identifier}}'
+      - name: list-overrides
+        method: POST
+        description: List Ratelimit Overrides
+        inputParameters:
+        - name: namespaceId
+          in: body
+          type: string
+          required: false
+          description: ID of the namespace
+        - name: cursor
+          in: body
+          type: string
+          required: false
+          description: Pagination cursor
+        - name: limit
+          in: body
+          type: integer
+          required: false
+          description: Maximum results to return
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            namespaceId: '{{tools.namespaceId}}'
+      - name: delete-override
+        method: POST
+        description: Delete Ratelimit Override
+        inputParameters:
+        - name: namespaceId
+          in: body
+          type: string
+          required: false
+          description: ID of the namespace
+        - name: identifier
+          in: body
+          type: string
+          required: true
+          description: Identifier to delete override for
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            identifier: '{{tools.identifier}}'
+    - name: permissions
+      path: /v2
+      description: Permission and role management operations
+      operations:
+      - name: create-permission
+        method: POST
+        description: Create Permission
+        inputParameters:
+        - name: name
+          in: body
+          type: string
+          required: true
+          description: Name of the permission
+        - name: description
+          in: body
+          type: string
+          required: false
+          description: Description of what the permission grants
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            name: '{{tools.name}}'
+            description: '{{tools.description}}'
+      - name: get-permission
+        method: POST
+        description: Get Permission
+        inputParameters:
+        - name: permissionId
+          in: body
+          type: string
+          required: true
+          description: ID of the permission to retrieve
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            permissionId: '{{tools.permissionId}}'
+      - name: list-permissions
+        method: POST
+        description: List Permissions
+        inputParameters:
+        - name: cursor
+          in: body
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            cursor: '{{tools.cursor}}'
+      - name: delete-permission
+        method: POST
+        description: Delete Permission
+        inputParameters:
+        - name: permissionId
+          in: body
+          type: string
+          required: true
+          description: ID of the permission to delete
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            permissionId: '{{tools.permissionId}}'
+      - name: create-role
+        method: POST
+        description: Create Role
+        inputParameters:
+        - name: name
+          in: body
+          type: string
+          required: true
+          description: Name of the role
+        - name: description
+          in: body
+          type: string
+          required: false
+          description: Description of the role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            name: '{{tools.name}}'
+            description: '{{tools.description}}'
+      - name: get-role
+        method: POST
+        description: Get Role
+        inputParameters:
+        - name: roleId
+          in: body
+          type: string
+          required: true
+          description: ID of the role to retrieve
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            roleId: '{{tools.roleId}}'
+      - name: list-roles
+        method: POST
+        description: List Roles
+        inputParameters:
+        - name: cursor
+          in: body
+          type: string
+          required: false
+          description: Pagination cursor
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            cursor: '{{tools.cursor}}'
+      - name: delete-role
+        method: POST
+        description: Delete Role
+        inputParameters:
+        - name: roleId
+          in: body
+          type: string
+          required: true
+          description: ID of the role to delete
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            roleId: '{{tools.roleId}}'
+    - name: liveness
+      path: /v2
+      description: Health check operations
+      operations:
+      - name: liveness
+        method: GET
+        description: Health Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8082
-      namespace: unkey-identity-api
-      description: Unified REST API for Unkey identity lifecycle management.
-      resources:
-        - path: /v1/identities
-          name: identities
-          description: Identity collection operations
-          operations:
-            - method: POST
-              name: create-identity
-              description: Create a new identity for grouping API keys
-              call: "unkey.create-identity"
-              with:
-                externalId: "rest.externalId"
-                meta: "rest.meta"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: GET
-              name: list-identities
-              description: List all identities
-              call: "unkey.list-identities"
-              with:
-                cursor: "rest.cursor"
-                limit: "rest.limit"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/identities/{identityId}
-          name: identity
-          description: Single identity operations
-          operations:
-            - method: GET
-              name: get-identity
-              description: Get an identity by ID
-              call: "unkey.get-identity"
-              with:
-                identityId: "rest.identityId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: PUT
-              name: update-identity
-              description: Update identity metadata
-              call: "unkey.update-identity"
-              with:
-                identityId: "rest.identityId"
-                meta: "rest.meta"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: DELETE
-              name: delete-identity
-              description: Delete an identity
-              call: "unkey.delete-identity"
-              with:
-                identityId: "rest.identityId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9092
-      namespace: unkey-identity-mcp
-      transport: http
-      description: MCP server for AI-assisted identity and multi-tenant API key management.
-      tools:
-        - name: create-identity
-          description: Create a new identity to group API keys under a single external user or organization
-          hints:
-            readOnly: false
-            destructive: false
-          call: "unkey.create-identity"
-          with:
-            externalId: "tools.externalId"
-            meta: "tools.meta"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: get-identity
-          description: Retrieve an identity by its ID or external ID
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "unkey.get-identity"
-          with:
-            identityId: "tools.identityId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: list-identities
-          description: List all identities in the workspace with pagination
-          hints:
-            readOnly: true
-            openWorld: false
-          call: "unkey.list-identities"
-          with:
-            cursor: "tools.cursor"
-            limit: "tools.limit"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: update-identity
-          description: Update metadata for an existing identity
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: true
-          call: "unkey.update-identity"
-          with:
-            identityId: "tools.identityId"
-            meta: "tools.meta"
-          outputParameters:
-            - type: object
-              mapping: "$."
-        - name: delete-identity
-          description: Delete an identity and disassociate its grouped keys
-          hints:
-            readOnly: false
-            destructive: true
-            idempotent: true
-          call: "unkey.delete-identity"
-          with:
-            identityId: "tools.identityId"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8082
+    namespace: unkey-identity-api
+    description: Unified REST API for Unkey identity lifecycle management.
+    resources:
+    - path: /v1/identities
+      name: identities
+      description: Identity collection operations
+      operations:
+      - method: POST
+        name: create-identity
+        description: Create a new identity for grouping API keys
+        call: unkey.create-identity
+        with:
+          externalId: rest.externalId
+          meta: rest.meta
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: list-identities
+        description: List all identities
+        call: unkey.list-identities
+        with:
+          cursor: rest.cursor
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/identities/{identityId}
+      name: identity
+      description: Single identity operations
+      operations:
+      - method: GET
+        name: get-identity
+        description: Get an identity by ID
+        call: unkey.get-identity
+        with:
+          identityId: rest.identityId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: update-identity
+        description: Update identity metadata
+        call: unkey.update-identity
+        with:
+          identityId: rest.identityId
+          meta: rest.meta
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: delete-identity
+        description: Delete an identity
+        call: unkey.delete-identity
+        with:
+          identityId: rest.identityId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9092
+    namespace: unkey-identity-mcp
+    transport: http
+    description: MCP server for AI-assisted identity and multi-tenant API key management.
+    tools:
+    - name: create-identity
+      description: Create a new identity to group API keys under a single external user or organization
+      hints:
+        readOnly: false
+        destructive: false
+      call: unkey.create-identity
+      with:
+        externalId: tools.externalId
+        meta: tools.meta
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-identity
+      description: Retrieve an identity by its ID or external ID
+      hints:
+        readOnly: true
+        openWorld: false
+      call: unkey.get-identity
+      with:
+        identityId: tools.identityId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-identities
+      description: List all identities in the workspace with pagination
+      hints:
+        readOnly: true
+        openWorld: false
+      call: unkey.list-identities
+      with:
+        cursor: tools.cursor
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-identity
+      description: Update metadata for an existing identity
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: unkey.update-identity
+      with:
+        identityId: tools.identityId
+        meta: tools.meta
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-identity
+      description: Delete an identity and disassociate its grouped keys
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: unkey.delete-identity
+      with:
+        identityId: tools.identityId
+      outputParameters:
+      - type: object
+        mapping: $.
