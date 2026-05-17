@@ -63,7 +63,7 @@ common:
     url: https://www.unkey.com/pricing
   - type: Blog
     url: https://www.unkey.com/blog
-  - type: Changelog
+  - type: ChangeLog
     url: https://www.unkey.com/changelog
   - type: Vocabulary
     url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/vocabulary/unkey-vocabulary.yml
