@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Unkey API — analytics
+  description: 'Unkey API — analytics. 1 operations. Lead operation: Query Key Verification Data. Self-contained Naftiko capability
+    covering one Unkey business surface.'
+  tags:
+  - Unkey
+  - analytics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNKEY_API_KEY: UNKEY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unkey-analytics
+    baseUri: https://api.unkey.com
+    description: Unkey API — analytics business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-analytics.getVerifications
+      path: /v2/analytics.getVerifications
+      operations:
+      - name: analyticsgetverifications
+        method: POST
+        description: Query Key Verification Data
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UNKEY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: unkey-analytics-rest
+    port: 8080
+    description: REST adapter for Unkey API — analytics. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/analytics-getverifications
+      name: v2-analytics-getverifications
+      description: REST surface for v2-analytics.getVerifications.
+      operations:
+      - method: POST
+        name: analyticsgetverifications
+        description: Query Key Verification Data
+        call: unkey-analytics.analyticsgetverifications
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unkey-analytics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Unkey API — analytics. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: query-key-verification-data
+      description: Query Key Verification Data
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-analytics.analyticsgetverifications
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

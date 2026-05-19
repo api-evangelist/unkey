@@ -1,0 +1,70 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Unkey API — liveness
+  description: 'Unkey API — liveness. 1 operations. Lead operation: Health Check. Self-contained Naftiko capability covering
+    one Unkey business surface.'
+  tags:
+  - Unkey
+  - liveness
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNKEY_API_KEY: UNKEY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unkey-liveness
+    baseUri: https://api.unkey.com
+    description: Unkey API — liveness business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-liveness
+      path: /v2/liveness
+      operations:
+      - name: liveness
+        method: GET
+        description: Health Check
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.UNKEY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: unkey-liveness-rest
+    port: 8080
+    description: REST adapter for Unkey API — liveness. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v2/liveness
+      name: v2-liveness
+      description: REST surface for v2-liveness.
+      operations:
+      - method: GET
+        name: liveness
+        description: Health Check
+        call: unkey-liveness.liveness
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unkey-liveness-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Unkey API — liveness. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: health-check
+      description: Health Check
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: unkey-liveness.liveness
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,374 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Unkey API — permissions
+  description: 'Unkey API — permissions. 8 operations. Lead operation: Create Permission. Self-contained Naftiko capability
+    covering one Unkey business surface.'
+  tags:
+  - Unkey
+  - permissions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNKEY_API_KEY: UNKEY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unkey-permissions
+    baseUri: https://api.unkey.com
+    description: Unkey API — permissions business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-permissions.createPermission
+      path: /v2/permissions.createPermission
+      operations:
+      - name: permissionscreatepermission
+        method: POST
+        description: Create Permission
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.createRole
+      path: /v2/permissions.createRole
+      operations:
+      - name: permissionscreaterole
+        method: POST
+        description: Create Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.deletePermission
+      path: /v2/permissions.deletePermission
+      operations:
+      - name: permissionsdeletepermission
+        method: POST
+        description: Delete Permission
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.deleteRole
+      path: /v2/permissions.deleteRole
+      operations:
+      - name: permissionsdeleterole
+        method: POST
+        description: Delete Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.getPermission
+      path: /v2/permissions.getPermission
+      operations:
+      - name: permissionsgetpermission
+        method: POST
+        description: Get Permission
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.getRole
+      path: /v2/permissions.getRole
+      operations:
+      - name: permissionsgetrole
+        method: POST
+        description: Get Role
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.listPermissions
+      path: /v2/permissions.listPermissions
+      operations:
+      - name: permissionslistpermissions
+        method: POST
+        description: List Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-permissions.listRoles
+      path: /v2/permissions.listRoles
+      operations:
+      - name: permissionslistroles
+        method: POST
+        description: List Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UNKEY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: unkey-permissions-rest
+    port: 8080
+    description: REST adapter for Unkey API — permissions. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/permissions-createpermission
+      name: v2-permissions-createpermission
+      description: REST surface for v2-permissions.createPermission.
+      operations:
+      - method: POST
+        name: permissionscreatepermission
+        description: Create Permission
+        call: unkey-permissions.permissionscreatepermission
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-createrole
+      name: v2-permissions-createrole
+      description: REST surface for v2-permissions.createRole.
+      operations:
+      - method: POST
+        name: permissionscreaterole
+        description: Create Role
+        call: unkey-permissions.permissionscreaterole
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-deletepermission
+      name: v2-permissions-deletepermission
+      description: REST surface for v2-permissions.deletePermission.
+      operations:
+      - method: POST
+        name: permissionsdeletepermission
+        description: Delete Permission
+        call: unkey-permissions.permissionsdeletepermission
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-deleterole
+      name: v2-permissions-deleterole
+      description: REST surface for v2-permissions.deleteRole.
+      operations:
+      - method: POST
+        name: permissionsdeleterole
+        description: Delete Role
+        call: unkey-permissions.permissionsdeleterole
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-getpermission
+      name: v2-permissions-getpermission
+      description: REST surface for v2-permissions.getPermission.
+      operations:
+      - method: POST
+        name: permissionsgetpermission
+        description: Get Permission
+        call: unkey-permissions.permissionsgetpermission
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-getrole
+      name: v2-permissions-getrole
+      description: REST surface for v2-permissions.getRole.
+      operations:
+      - method: POST
+        name: permissionsgetrole
+        description: Get Role
+        call: unkey-permissions.permissionsgetrole
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-listpermissions
+      name: v2-permissions-listpermissions
+      description: REST surface for v2-permissions.listPermissions.
+      operations:
+      - method: POST
+        name: permissionslistpermissions
+        description: List Permissions
+        call: unkey-permissions.permissionslistpermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/permissions-listroles
+      name: v2-permissions-listroles
+      description: REST surface for v2-permissions.listRoles.
+      operations:
+      - method: POST
+        name: permissionslistroles
+        description: List Roles
+        call: unkey-permissions.permissionslistroles
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unkey-permissions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Unkey API — permissions. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: create-permission
+      description: Create Permission
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionscreatepermission
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-role
+      description: Create Role
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionscreaterole
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-permission
+      description: Delete Permission
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionsdeletepermission
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-role
+      description: Delete Role
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionsdeleterole
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-permission
+      description: Get Permission
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionsgetpermission
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-role
+      description: Get Role
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionsgetrole
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-permissions
+      description: List Permissions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionslistpermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-roles
+      description: List Roles
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-permissions.permissionslistroles
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

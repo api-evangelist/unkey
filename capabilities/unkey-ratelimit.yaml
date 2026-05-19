@@ -1,0 +1,290 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Unkey API — ratelimit
+  description: 'Unkey API — ratelimit. 6 operations. Lead operation: Delete Ratelimit Override. Self-contained Naftiko capability
+    covering one Unkey business surface.'
+  tags:
+  - Unkey
+  - ratelimit
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNKEY_API_KEY: UNKEY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unkey-ratelimit
+    baseUri: https://api.unkey.com
+    description: Unkey API — ratelimit business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-ratelimit.deleteOverride
+      path: /v2/ratelimit.deleteOverride
+      operations:
+      - name: ratelimitdeleteoverride
+        method: POST
+        description: Delete Ratelimit Override
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ratelimit.getOverride
+      path: /v2/ratelimit.getOverride
+      operations:
+      - name: ratelimitgetoverride
+        method: POST
+        description: Get Ratelimit Override
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ratelimit.limit
+      path: /v2/ratelimit.limit
+      operations:
+      - name: ratelimitlimit
+        method: POST
+        description: Apply Rate Limiting
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ratelimit.listOverrides
+      path: /v2/ratelimit.listOverrides
+      operations:
+      - name: ratelimitlistoverrides
+        method: POST
+        description: List Ratelimit Overrides
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ratelimit.multiLimit
+      path: /v2/ratelimit.multiLimit
+      operations:
+      - name: ratelimitmultilimit
+        method: POST
+        description: Apply Multiple Rate Limit Checks
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-ratelimit.setOverride
+      path: /v2/ratelimit.setOverride
+      operations:
+      - name: ratelimitsetoverride
+        method: POST
+        description: Set Ratelimit Override
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UNKEY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: unkey-ratelimit-rest
+    port: 8080
+    description: REST adapter for Unkey API — ratelimit. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/ratelimit-deleteoverride
+      name: v2-ratelimit-deleteoverride
+      description: REST surface for v2-ratelimit.deleteOverride.
+      operations:
+      - method: POST
+        name: ratelimitdeleteoverride
+        description: Delete Ratelimit Override
+        call: unkey-ratelimit.ratelimitdeleteoverride
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ratelimit-getoverride
+      name: v2-ratelimit-getoverride
+      description: REST surface for v2-ratelimit.getOverride.
+      operations:
+      - method: POST
+        name: ratelimitgetoverride
+        description: Get Ratelimit Override
+        call: unkey-ratelimit.ratelimitgetoverride
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ratelimit-limit
+      name: v2-ratelimit-limit
+      description: REST surface for v2-ratelimit.limit.
+      operations:
+      - method: POST
+        name: ratelimitlimit
+        description: Apply Rate Limiting
+        call: unkey-ratelimit.ratelimitlimit
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ratelimit-listoverrides
+      name: v2-ratelimit-listoverrides
+      description: REST surface for v2-ratelimit.listOverrides.
+      operations:
+      - method: POST
+        name: ratelimitlistoverrides
+        description: List Ratelimit Overrides
+        call: unkey-ratelimit.ratelimitlistoverrides
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ratelimit-multilimit
+      name: v2-ratelimit-multilimit
+      description: REST surface for v2-ratelimit.multiLimit.
+      operations:
+      - method: POST
+        name: ratelimitmultilimit
+        description: Apply Multiple Rate Limit Checks
+        call: unkey-ratelimit.ratelimitmultilimit
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/ratelimit-setoverride
+      name: v2-ratelimit-setoverride
+      description: REST surface for v2-ratelimit.setOverride.
+      operations:
+      - method: POST
+        name: ratelimitsetoverride
+        description: Set Ratelimit Override
+        call: unkey-ratelimit.ratelimitsetoverride
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unkey-ratelimit-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Unkey API — ratelimit. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: delete-ratelimit-override
+      description: Delete Ratelimit Override
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitdeleteoverride
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ratelimit-override
+      description: Get Ratelimit Override
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitgetoverride
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apply-rate-limiting
+      description: Apply Rate Limiting
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitlimit
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-ratelimit-overrides
+      description: List Ratelimit Overrides
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitlistoverrides
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: apply-multiple-rate-limit-checks
+      description: Apply Multiple Rate Limit Checks
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitmultilimit
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-ratelimit-override
+      description: Set Ratelimit Override
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-ratelimit.ratelimitsetoverride
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

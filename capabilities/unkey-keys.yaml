@@ -1,0 +1,668 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Unkey API — keys
+  description: 'Unkey API — keys. 15 operations. Lead operation: Add Key Permissions. Self-contained Naftiko capability covering
+    one Unkey business surface.'
+  tags:
+  - Unkey
+  - keys
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    UNKEY_API_KEY: UNKEY_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: unkey-keys
+    baseUri: https://api.unkey.com
+    description: Unkey API — keys business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-keys.addPermissions
+      path: /v2/keys.addPermissions
+      operations:
+      - name: keysaddpermissions
+        method: POST
+        description: Add Key Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.addRoles
+      path: /v2/keys.addRoles
+      operations:
+      - name: keysaddroles
+        method: POST
+        description: Add Key Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.createKey
+      path: /v2/keys.createKey
+      operations:
+      - name: keyscreatekey
+        method: POST
+        description: Create API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.deleteKey
+      path: /v2/keys.deleteKey
+      operations:
+      - name: keysdeletekey
+        method: POST
+        description: Delete API Keys
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.getKey
+      path: /v2/keys.getKey
+      operations:
+      - name: keysgetkey
+        method: POST
+        description: Get API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.migrateKeys
+      path: /v2/keys.migrateKeys
+      operations:
+      - name: keysmigratekeys
+        method: POST
+        description: Migrate API Key(s)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.removePermissions
+      path: /v2/keys.removePermissions
+      operations:
+      - name: keysremovepermissions
+        method: POST
+        description: Remove Key Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.removeRoles
+      path: /v2/keys.removeRoles
+      operations:
+      - name: keysremoveroles
+        method: POST
+        description: Remove Key Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.rerollKey
+      path: /v2/keys.rerollKey
+      operations:
+      - name: keysrerollkey
+        method: POST
+        description: Reroll Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.setPermissions
+      path: /v2/keys.setPermissions
+      operations:
+      - name: keyssetpermissions
+        method: POST
+        description: Set Key Permissions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.setRoles
+      path: /v2/keys.setRoles
+      operations:
+      - name: keyssetroles
+        method: POST
+        description: Set Key Roles
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.updateCredits
+      path: /v2/keys.updateCredits
+      operations:
+      - name: keysupdatecredits
+        method: POST
+        description: Update Key Credits
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.updateKey
+      path: /v2/keys.updateKey
+      operations:
+      - name: keysupdatekey
+        method: POST
+        description: Update Key Settings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.verifyKey
+      path: /v2/keys.verifyKey
+      operations:
+      - name: keysverifykey
+        method: POST
+        description: Verify API Key
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: v2-keys.whoami
+      path: /v2/keys.whoami
+      operations:
+      - name: keyswhoami
+        method: POST
+        description: Get API Key by Hash
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.UNKEY_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: unkey-keys-rest
+    port: 8080
+    description: REST adapter for Unkey API — keys. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/v2/keys-addpermissions
+      name: v2-keys-addpermissions
+      description: REST surface for v2-keys.addPermissions.
+      operations:
+      - method: POST
+        name: keysaddpermissions
+        description: Add Key Permissions
+        call: unkey-keys.keysaddpermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-addroles
+      name: v2-keys-addroles
+      description: REST surface for v2-keys.addRoles.
+      operations:
+      - method: POST
+        name: keysaddroles
+        description: Add Key Roles
+        call: unkey-keys.keysaddroles
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-createkey
+      name: v2-keys-createkey
+      description: REST surface for v2-keys.createKey.
+      operations:
+      - method: POST
+        name: keyscreatekey
+        description: Create API Key
+        call: unkey-keys.keyscreatekey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-deletekey
+      name: v2-keys-deletekey
+      description: REST surface for v2-keys.deleteKey.
+      operations:
+      - method: POST
+        name: keysdeletekey
+        description: Delete API Keys
+        call: unkey-keys.keysdeletekey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-getkey
+      name: v2-keys-getkey
+      description: REST surface for v2-keys.getKey.
+      operations:
+      - method: POST
+        name: keysgetkey
+        description: Get API Key
+        call: unkey-keys.keysgetkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-migratekeys
+      name: v2-keys-migratekeys
+      description: REST surface for v2-keys.migrateKeys.
+      operations:
+      - method: POST
+        name: keysmigratekeys
+        description: Migrate API Key(s)
+        call: unkey-keys.keysmigratekeys
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-removepermissions
+      name: v2-keys-removepermissions
+      description: REST surface for v2-keys.removePermissions.
+      operations:
+      - method: POST
+        name: keysremovepermissions
+        description: Remove Key Permissions
+        call: unkey-keys.keysremovepermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-removeroles
+      name: v2-keys-removeroles
+      description: REST surface for v2-keys.removeRoles.
+      operations:
+      - method: POST
+        name: keysremoveroles
+        description: Remove Key Roles
+        call: unkey-keys.keysremoveroles
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-rerollkey
+      name: v2-keys-rerollkey
+      description: REST surface for v2-keys.rerollKey.
+      operations:
+      - method: POST
+        name: keysrerollkey
+        description: Reroll Key
+        call: unkey-keys.keysrerollkey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-setpermissions
+      name: v2-keys-setpermissions
+      description: REST surface for v2-keys.setPermissions.
+      operations:
+      - method: POST
+        name: keyssetpermissions
+        description: Set Key Permissions
+        call: unkey-keys.keyssetpermissions
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-setroles
+      name: v2-keys-setroles
+      description: REST surface for v2-keys.setRoles.
+      operations:
+      - method: POST
+        name: keyssetroles
+        description: Set Key Roles
+        call: unkey-keys.keyssetroles
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-updatecredits
+      name: v2-keys-updatecredits
+      description: REST surface for v2-keys.updateCredits.
+      operations:
+      - method: POST
+        name: keysupdatecredits
+        description: Update Key Credits
+        call: unkey-keys.keysupdatecredits
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-updatekey
+      name: v2-keys-updatekey
+      description: REST surface for v2-keys.updateKey.
+      operations:
+      - method: POST
+        name: keysupdatekey
+        description: Update Key Settings
+        call: unkey-keys.keysupdatekey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-verifykey
+      name: v2-keys-verifykey
+      description: REST surface for v2-keys.verifyKey.
+      operations:
+      - method: POST
+        name: keysverifykey
+        description: Verify API Key
+        call: unkey-keys.keysverifykey
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/keys-whoami
+      name: v2-keys-whoami
+      description: REST surface for v2-keys.whoami.
+      operations:
+      - method: POST
+        name: keyswhoami
+        description: Get API Key by Hash
+        call: unkey-keys.keyswhoami
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: unkey-keys-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Unkey API — keys. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: add-key-permissions
+      description: Add Key Permissions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysaddpermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-key-roles
+      description: Add Key Roles
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysaddroles
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-api-key
+      description: Create API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keyscreatekey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-api-keys
+      description: Delete API Keys
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysdeletekey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key
+      description: Get API Key
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysgetkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: migrate-api-key-s
+      description: Migrate API Key(s)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysmigratekeys
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-key-permissions
+      description: Remove Key Permissions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysremovepermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-key-roles
+      description: Remove Key Roles
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysremoveroles
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reroll-key
+      description: Reroll Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysrerollkey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-key-permissions
+      description: Set Key Permissions
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keyssetpermissions
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: set-key-roles
+      description: Set Key Roles
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keyssetroles
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-key-credits
+      description: Update Key Credits
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysupdatecredits
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-key-settings
+      description: Update Key Settings
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysupdatekey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: verify-api-key
+      description: Verify API Key
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keysverifykey
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-api-key-hash
+      description: Get API Key by Hash
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: unkey-keys.keyswhoami
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
