@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2RatelimitGetOverrideRequestBody",
+  "title": "V2RatelimitGetOverrideRequestBody",
+  "description": "Gets the configuration of an existing rate limit override. Use this to retrieve details about custom rate limit rules that have been created for specific identifiers within a namespace.\n\nThis endpoint is useful for:\n- Verifying override configurations\n- Checking current limits for specific entities\n- Auditing rate limit policies\n- Debugging rate limiting behavior\n- Retrieving override settings for modification",
+  "additionalProperties": false,
+  "properties": {
+    "namespace": {
+      "description": "The id or name of the namespace containing the override.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "identifier": {
+      "description": "The exact identifier pattern for the override you want to retrieve. This must match exactly as it was specified when creating the override.\n\nImportant notes:\n- This is case-sensitive and must match exactly\n- Include any wildcards (*) that were part of the original pattern\n- For example, if the override was created for 'premium_*', you must use 'premium_*' here, not a specific ID like 'premium_user1'\n\nThis field is used to look up the specific override configuration for this pattern.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    }
+  },
+  "required": [
+    "namespace",
+    "identifier"
+  ],
+  "type": "object"
+}

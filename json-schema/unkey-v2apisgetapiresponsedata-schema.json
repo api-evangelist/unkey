@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2ApisGetApiResponseData",
+  "title": "V2ApisGetApiResponseData",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "The unique identifier of this API within Unkey's system.\nUsed in all operations related to this API including key creation, verification, and management.\nAlways begins with 'api_' followed by alphanumeric characters and underscores.\nThis identifier is permanent and never changes after API creation.\n",
+      "example": "api_1234567890abcdef"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "description": "The internal name of this API as specified during creation.\nUsed for organization and identification within your workspace.\nHelps distinguish between different environments, services, or access tiers.\nNot visible to end users - this is purely for administrative purposes.\n",
+      "example": "payment-service-production"
+    }
+  },
+  "required": [
+    "id",
+    "name"
+  ],
+  "additionalProperties": false
+}

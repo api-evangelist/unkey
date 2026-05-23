@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2RatelimitMultiLimitRequestBody",
+  "title": "V2RatelimitMultiLimitRequestBody",
+  "type": "array",
+  "description": "Array of rate limit checks to perform",
+  "minItems": 1,
+  "maxItems": 100,
+  "items": {
+    "$ref": "#/components/schemas/V2RatelimitLimitRequestBody"
+  }
+}

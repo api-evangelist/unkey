@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2ApisCreateApiResponseData",
+  "title": "V2ApisCreateApiResponseData",
+  "type": "object",
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "The unique identifier assigned to the newly created API.\nUse this ID for all subsequent operations including key creation, verification, and API management.\nAlways begins with 'api_' followed by a unique alphanumeric sequence.\n\nStore this ID securely as it's required when:\n- Creating API keys within this namespace\n- Verifying keys associated with this API\n- Managing API settings and metadata\n- Listing keys belonging to this API\n\nThis identifier is permanent and cannot be changed after creation.\n",
+      "example": "api_2cGKbMxRjIzhCxo1IdjH3a"
+    }
+  },
+  "required": [
+    "apiId"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2ApisCreateApiRequestBody",
+  "title": "V2ApisCreateApiRequestBody",
+  "type": "object",
+  "required": [
+    "name"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$",
+      "description": "Unique identifier for this API namespace within your workspace.\nUse descriptive names like 'payment-service-prod' or 'user-api-dev' to clearly identify purpose and environment.\n",
+      "example": "payment-service-production"
+    }
+  },
+  "additionalProperties": false
+}

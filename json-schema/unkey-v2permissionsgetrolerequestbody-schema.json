@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsGetRoleRequestBody",
+  "title": "V2PermissionsGetRoleRequestBody",
+  "type": "object",
+  "required": [
+    "role"
+  ],
+  "properties": {
+    "role": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_:\\-\\.\\*]+$",
+      "description": "Unique identifier of the role to permanently delete from your workspace.\nMust either be a valid role ID that begins with 'role_' or the given role name and exists within your workspace.\n\nUse this endpoint to verify role details, check its current permissions, or retrieve metadata.\nReturns complete role information including all assigned permissions for comprehensive access review.\n",
+      "example": "role_1234567890abcdef"
+    }
+  },
+  "additionalProperties": false
+}

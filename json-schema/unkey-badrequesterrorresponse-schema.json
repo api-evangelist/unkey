@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/BadRequestErrorResponse",
+  "title": "BadRequestErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BadRequestErrorDetails"
+    }
+  },
+  "description": "Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying."
+}

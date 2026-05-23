@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysRemovePermissionsResponseData",
+  "title": "V2KeysRemovePermissionsResponseData",
+  "type": "array",
+  "description": "Complete list of all permissions directly assigned to the key after the removal operation (remaining permissions only).\n\nNotes:\n- This list does NOT include permissions granted through roles\n- For a complete permission picture, use `/v2/keys.getKey` instead\n- An empty array indicates the key has no direct permissions assigned\n- Any cached versions of the key are immediately invalidated to ensure consistency\n- Changes to permissions take effect within seconds for new verifications",
+  "items": {
+    "$ref": "#/components/schemas/Permission"
+  }
+}

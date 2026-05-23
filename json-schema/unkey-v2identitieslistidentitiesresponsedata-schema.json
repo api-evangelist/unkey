@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesListIdentitiesResponseData",
+  "title": "V2IdentitiesListIdentitiesResponseData",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/Identity"
+  },
+  "description": "List of identities matching the specified criteria."
+}

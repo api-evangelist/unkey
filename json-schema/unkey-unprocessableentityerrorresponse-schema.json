@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UnprocessableEntityErrorResponse",
+  "title": "UnprocessableEntityErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when the request is syntactically valid but cannot be processed due to semantic constraints or resource limitations. This occurs when:\n- A query exceeds execution time limits\n- A query uses more memory than allowed\n- A query scans too many rows\n- A query result exceeds size limits\n\nThe request syntax is correct, but the operation cannot be completed due to business rules or resource constraints. Review the error details for specific limitations and adjust your request accordingly."
+}

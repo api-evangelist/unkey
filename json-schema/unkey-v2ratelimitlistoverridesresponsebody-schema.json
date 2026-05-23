@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2RatelimitListOverridesResponseBody",
+  "title": "V2RatelimitListOverridesResponseBody",
+  "type": "object",
+  "required": [
+    "meta",
+    "data"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "data": {
+      "$ref": "#/components/schemas/V2RatelimitListOverridesResponseData"
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    }
+  }
+}

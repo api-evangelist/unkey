@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2AnalyticsGetVerificationsRequestBody",
+  "title": "V2AnalyticsGetVerificationsRequestBody",
+  "type": "object",
+  "required": [
+    "query"
+  ],
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "SQL query to execute against your analytics data.\nOnly SELECT queries are allowed.\n",
+      "example": "SELECT COUNT(*) as total FROM key_verifications_v1 WHERE outcome = 'VALID' AND time >= now() - INTERVAL 7 DAY"
+    }
+  }
+}

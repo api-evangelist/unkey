@@ -1,0 +1,59 @@
+{
+  "operationId": "identities.deleteIdentity",
+  "method": "POST",
+  "path": "/v2/identities.deleteIdentity",
+  "summary": "Delete Identity",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "identity": "user_123"
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "success",
+      "example": {
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    },
+    {
+      "status": "403",
+      "contentType": "application/problem+json",
+      "name": "missingPermission",
+      "example": {
+        "error": {
+          "detail": "Your root key requires the 'identity.*.delete_identity' permission to perform this operation",
+          "status": 403,
+          "title": "Forbidden",
+          "type": "forbidden"
+        },
+        "meta": {
+          "requestId": "req_0uVwX4yZaAbCdEfGhIjKl"
+        }
+      }
+    },
+    {
+      "status": "404",
+      "contentType": "application/problem+json",
+      "name": "identityNotFound",
+      "example": {
+        "error": {
+          "detail": "Identity with externalId \"user_abc123\" not found.",
+          "status": 404,
+          "title": "Not Found",
+          "type": "not_found"
+        },
+        "meta": {
+          "requestId": "req_2wXyZaAbCdEfGhIjKlMnOp"
+        }
+      }
+    }
+  ]
+}

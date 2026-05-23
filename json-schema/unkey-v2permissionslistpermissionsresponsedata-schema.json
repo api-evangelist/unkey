@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsListPermissionsResponseData",
+  "title": "V2PermissionsListPermissionsResponseData",
+  "type": "array",
+  "maxItems": 1000,
+  "description": "Array of permission objects with complete configuration details.",
+  "items": {
+    "$ref": "#/components/schemas/Permission"
+  }
+}

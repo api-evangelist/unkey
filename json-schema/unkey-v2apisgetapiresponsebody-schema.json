@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2ApisGetApiResponseBody",
+  "title": "V2ApisGetApiResponseBody",
+  "type": "object",
+  "required": [
+    "meta",
+    "data"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "data": {
+      "$ref": "#/components/schemas/V2ApisGetApiResponseData"
+    }
+  },
+  "additionalProperties": false
+}

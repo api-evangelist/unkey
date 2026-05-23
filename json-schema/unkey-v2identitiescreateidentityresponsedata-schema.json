@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesCreateIdentityResponseData",
+  "title": "V2IdentitiesCreateIdentityResponseData",
+  "type": "object",
+  "properties": {
+    "identityId": {
+      "type": "string",
+      "description": "The unique identifier of the created identity."
+    }
+  },
+  "required": [
+    "identityId"
+  ]
+}

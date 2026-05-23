@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysDeleteKeyRequestBody",
+  "title": "V2KeysDeleteKeyRequestBody",
+  "type": "object",
+  "required": [
+    "keyId"
+  ],
+  "properties": {
+    "keyId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Specifies which key to delete using the database identifier returned from `createKey`.\nDo not confuse this with the actual API key string that users include in requests.\nDeletion immediately invalidates the key, causing all future verification attempts to fail with `code=NOT_FOUND`.\nKey deletion triggers cache invalidation across all regions but may take up to 30 seconds to fully propagate.\n",
+      "example": "key_2cGKbMxRyIzhCxo1Idjz8q"
+    },
+    "permanent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Controls deletion behavior between recoverable soft-deletion and irreversible permanent erasure.\nSoft deletion (default) preserves key data for potential recovery through direct database operations.\nPermanent deletion completely removes all traces including hash values and metadata with no recovery option.\n\nUse permanent deletion only for regulatory compliance (GDPR), resolving hash collisions, or when reusing identical key strings.\nPermanent deletion cannot be undone and may affect analytics data that references the deleted key.\nMost applications should use soft deletion to maintain audit trails and prevent accidental data loss.\n",
+      "example": false
+    }
+  },
+  "additionalProperties": false
+}

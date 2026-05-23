@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/GoneErrorResponse",
+  "title": "GoneErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when the requested resource has been soft-deleted and is no longer available. This occurs when:\n- The resource has been marked as deleted but still exists in the database\n- The resource is intentionally unavailable but could potentially be restored\n- The resource cannot be restored through the API or dashboard\n\nTo resolve this error, contact support if you need the resource restored."
+}

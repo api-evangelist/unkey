@@ -1,0 +1,54 @@
+{
+  "operationId": "liveness",
+  "method": "GET",
+  "path": "/v2/liveness",
+  "summary": "Health Check",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "healthy",
+      "example": {
+        "data": {
+          "message": "OK"
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    },
+    {
+      "status": "412",
+      "contentType": "application/json",
+      "name": "degraded",
+      "example": {
+        "error": {
+          "detail": "Service is in a degraded state. Some functionality may be limited.",
+          "status": 412,
+          "title": "Precondition Failed",
+          "type": "https://unkey.dev/errors/precondition-failed"
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    },
+    {
+      "status": "500",
+      "contentType": "application/json",
+      "name": "unhealthy",
+      "example": {
+        "error": {
+          "detail": "The service is currently experiencing issues and may not be fully operational.",
+          "status": 500,
+          "title": "Internal Server Error",
+          "type": "https://unkey.dev/errors/internal-server-error"
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQY"
+        }
+      }
+    }
+  ]
+}

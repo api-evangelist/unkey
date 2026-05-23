@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/UnauthorizedErrorResponse",
+  "title": "UnauthorizedErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when authentication has failed or credentials are missing. This occurs when:\n- No authentication token is provided in the request\n- The provided token is invalid, expired, or malformed\n- The token format doesn't match expected patterns\n\nTo resolve this error, ensure you're including a valid root key in the Authorization header."
+}

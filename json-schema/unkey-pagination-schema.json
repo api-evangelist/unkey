@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Pagination",
+  "title": "Pagination",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "description": "Opaque pagination token for retrieving the next page of results.\nInclude this exact value in the cursor field of subsequent requests.\nCursors are temporary and may expire after extended periods.\n",
+      "example": "eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ=="
+    },
+    "hasMore": {
+      "type": "boolean",
+      "description": "Indicates whether additional results exist beyond this page.\nWhen true, use the cursor to fetch the next page.\nWhen false, you have reached the end of the result set.\n",
+      "example": true
+    }
+  },
+  "required": [
+    "hasMore"
+  ],
+  "additionalProperties": false,
+  "description": "Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination."
+}

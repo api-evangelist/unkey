@@ -1,0 +1,42 @@
+{
+  "operationId": "ratelimit.listOverrides",
+  "method": "POST",
+  "path": "/v2/ratelimit.listOverrides",
+  "summary": "List Ratelimit Overrides",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "limit": 20,
+        "namespace": "api.requests"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "pagination",
+      "example": {
+        "cursor": "cursor_eyJsYXN0SWQiOiJvdnJfM2RITGNOeVN6SnppRHlwMkpla2E5ciJ9",
+        "namespace": "api.requests"
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "403",
+      "contentType": "application/json",
+      "name": "missingPermission",
+      "example": {
+        "error": {
+          "detail": "Your root key requires the 'ratelimit.*.read_override' permission to perform this operation",
+          "status": 403,
+          "title": "Forbidden",
+          "type": "forbidden"
+        },
+        "meta": {
+          "requestId": "req_0uVwX4yZaAbCdEfGhIjKl"
+        }
+      }
+    }
+  ]
+}

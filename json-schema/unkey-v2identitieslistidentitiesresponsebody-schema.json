@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesListIdentitiesResponseBody",
+  "title": "V2IdentitiesListIdentitiesResponseBody",
+  "type": "object",
+  "required": [
+    "meta",
+    "data",
+    "pagination"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "data": {
+      "$ref": "#/components/schemas/V2IdentitiesListIdentitiesResponseData"
+    },
+    "pagination": {
+      "$ref": "#/components/schemas/Pagination"
+    }
+  },
+  "additionalProperties": false
+}

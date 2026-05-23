@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysSetRolesRequestBody",
+  "title": "V2KeysSetRolesRequestBody",
+  "type": "object",
+  "required": [
+    "keyId",
+    "roles"
+  ],
+  "properties": {
+    "keyId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Specifies which key gets the complete role replacement using the database identifier returned from createKey.\nDo not confuse this with the actual API key string that users include in requests.\nThis is a wholesale replacement operation that removes all existing roles not included in the request.\nRole changes take effect immediately but may take up to 30 seconds to propagate across all regions.\n",
+      "example": "key_2cGKbMxRyIzhCxo1Idjz8q"
+    },
+    "roles": {
+      "type": "array",
+      "maxItems": 100,
+      "description": "Replaces all existing role assignments with this complete list of roles.\nThis is a wholesale replacement operation, not an incremental update like add/remove operations.\n\nProviding an empty array removes all direct role assignments from the key.\nAll roles must already exist in the workspace - roles cannot be created automatically.\nInvalid role references cause the entire operation to fail atomically, ensuring consistent state.\n",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-zA-Z0-9_:\\-\\.\\*]+$",
+        "minLength": 3,
+        "maxLength": 255,
+        "description": "Specify the role by name."
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysVerifyKeyResponseData",
+  "title": "V2KeysVerifyKeyResponseData",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "valid": {
+      "type": "boolean",
+      "description": "The primary verification result. If true, the key is valid\nand can be used. If false, check the 'code' field to understand why verification\nfailed. Your application should always check this field first before proceeding.\n"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "VALID",
+        "NOT_FOUND",
+        "FORBIDDEN",
+        "INSUFFICIENT_PERMISSIONS",
+        "USAGE_EXCEEDED",
+        "RATE_LIMITED",
+        "DISABLED",
+        "EXPIRED"
+      ],
+      "x-speakeasy-unknown-values": "allow",
+      "description": "A machine-readable code indicating the verification status\nor failure reason. Values: `VALID` (key is valid and passed all checks), `NOT_FOUND` (key doesn't\nexist or belongs to wrong API), `FORBIDDEN` (key lacks required permissions), `INSUFFICIENT_PERMISSIONS`\n(key lacks specific required permissions for this request), `USAGE_EXCEEDED` (key has no remaining credits), `RATE_LIMITED` (key exceeded rate limits), `DISABLED` (key was explicitly disabled),\n`EXPIRED` (key has passed its expiration date).\n"
+    },
+    "keyId": {
+      "type": "string",
+      "description": "The unique identifier of the verified key in Unkey's system.\nUse this ID for operations like updating or revoking the key. This field\nis returned for both valid and invalid keys (except when `code=NOT_FOUND`).\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "name": {
+      "type": "string",
+      "description": "The human-readable name assigned to this key during creation.\nThis is useful for displaying in logs or admin interfaces to identify\nthe key's purpose.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Custom metadata associated with the key. This can include any\nJSON-serializable data you stored with the key during creation or updates,\nsuch as plan information, feature flags, or user details. Use this to\navoid additional database lookups for contextual information needed during\nAPI calls.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "expires": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Unix timestamp (in milliseconds) when the key will expire.\nIf omitted, the key has no expiration. You can use this to\nwarn users about upcoming expirations or to understand the validity period.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "credits": {
+      "type": "integer",
+      "format": "int64",
+      "description": "The number of requests/credits remaining for this key. If omitted,\nthe key has unlimited usage. This value decreases with\neach verification (based on the 'cost' parameter) unless explicit credit\nrefills are configured.\n"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Indicates if the key is currently enabled. Disabled keys will\nalways fail verification with `code=DISABLED`. This is useful for implementing\ntemporary suspensions without deleting the key.\n"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of all permission names assigned to this key, either\ndirectly or through roles. These permissions determine what actions the\nkey can perform. Only returned when permissions were checked during verification\nor when the key fails with `code=FORBIDDEN`.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "roles": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "A list of all role names assigned to this key. Roles are collections\nof permissions that grant access to specific functionality. Only returned\nwhen permissions were checked during verification.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "identity": {
+      "$ref": "#/components/schemas/Identity",
+      "description": "Information about the identity associated with this key. Identities\nallow multiple keys to share resources (like rate limits) and represent\nthe same user or entity across different applications or devices.\n",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    },
+    "ratelimits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/VerifyKeyRatelimitData",
+        "description": "The ratelimits that got checked"
+      },
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    }
+  },
+  "required": [
+    "valid",
+    "code"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "operationId": "permissions.deletePermission",
+  "method": "POST",
+  "path": "/v2/permissions.deletePermission",
+  "summary": "Delete Permission",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "permissionId": "perm_1234567890abcdef"
+      }
+    }
+  ],
+  "responseExamples": []
+}

@@ -1,0 +1,32 @@
+{
+  "operationId": "keys.verifyKey",
+  "method": "POST",
+  "path": "/v2/keys.verifyKey",
+  "summary": "Verify API Key",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "400",
+      "contentType": "application/json",
+      "name": "permissionsQuerySyntaxError",
+      "example": {
+        "error": {
+          "detail": "Syntax error in permission query: unexpected token 'AND' at position 15. Expected permission name or opening parenthesis.",
+          "errors": [
+            {
+              "fix": "Check your query syntax. AND/OR operators must be between permissions, not at the start or end",
+              "location": "body.permissions",
+              "message": "unexpected token 'AND' at position 15"
+            }
+          ],
+          "status": 400,
+          "title": "Bad Request",
+          "type": "https://unkey.com/docs/errors/user/bad_request/permissions_query_syntax_error"
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    }
+  ]
+}

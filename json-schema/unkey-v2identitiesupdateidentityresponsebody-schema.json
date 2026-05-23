@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesUpdateIdentityResponseBody",
+  "title": "V2IdentitiesUpdateIdentityResponseBody",
+  "type": "object",
+  "required": [
+    "data",
+    "meta"
+  ],
+  "properties": {
+    "data": {
+      "$ref": "#/components/schemas/Identity"
+    },
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    }
+  }
+}

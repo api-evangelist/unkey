@@ -1,0 +1,90 @@
+{
+  "operationId": "ratelimit.limit",
+  "method": "POST",
+  "path": "/v2/ratelimit.limit",
+  "summary": "Apply Rate Limiting",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "duration": 60000,
+        "identifier": "user_abc123",
+        "limit": 100,
+        "namespace": "api.requests"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "ipLimit",
+      "example": {
+        "duration": 60000,
+        "identifier": "203.0.113.42",
+        "limit": 5,
+        "namespace": "auth.login"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "weightedCost",
+      "example": {
+        "cost": 5,
+        "duration": 3600000,
+        "identifier": "user_def456",
+        "limit": 50,
+        "namespace": "api.heavy_operations"
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "allowed",
+      "example": {
+        "data": {
+          "limit": 100,
+          "remaining": 99,
+          "reset": 1714582980000,
+          "success": true
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "limitReached",
+      "example": {
+        "data": {
+          "limit": 100,
+          "remaining": 0,
+          "reset": 1714582980000,
+          "success": false
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQY"
+        }
+      }
+    },
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "withOverride",
+      "example": {
+        "data": {
+          "limit": 1000,
+          "overrideId": "ovr_2cGKbMxRyIzhCxo1Idjz8q",
+          "remaining": 995,
+          "reset": 1714582980000,
+          "success": true
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQZ"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsListPermissionsRequestBody",
+  "title": "V2PermissionsListPermissionsRequestBody",
+  "type": "object",
+  "properties": {
+    "cursor": {
+      "type": "string",
+      "maxLength": 1024,
+      "description": "Pagination cursor from a previous response to fetch the next page of permissions.\nInclude this value when you need to retrieve additional permissions beyond the initial response.\nEach response containing more results than the requested limit includes a cursor for subsequent pages.\n\nLeave empty or omit this field to start from the beginning of the permission list.\nCursors are temporary and may expire - always handle cases where a cursor becomes invalid.\n",
+      "example": "eyJrZXkiOiJwZXJtXzEyMzQifQ=="
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 100,
+      "description": "Maximum number of permissions to return in a single response.",
+      "example": 50
+    }
+  },
+  "additionalProperties": false
+}

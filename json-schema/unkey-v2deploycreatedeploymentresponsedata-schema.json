@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2DeployCreateDeploymentResponseData",
+  "title": "V2DeployCreateDeploymentResponseData",
+  "type": "object",
+  "required": [
+    "deploymentId"
+  ],
+  "properties": {
+    "deploymentId": {
+      "type": "string",
+      "description": "Unique deployment identifier",
+      "example": "d_abc123xyz"
+    }
+  }
+}

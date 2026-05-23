@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysSetRolesResponseData",
+  "title": "V2KeysSetRolesResponseData",
+  "type": "array",
+  "description": "Complete list of all roles now directly assigned to the key after the set operation has completed.\n\nThe response includes:\n- The comprehensive, updated set of roles (reflecting the complete replacement)\n- Both ID and name for each role for easy reference\n\nImportant notes:\n- This response shows the final state after the complete replacement\n- If you provided an empty array in the request, this will also be empty\n- This only shows direct role assignments on the key\n- Role permissions are not expanded in this response - use keys.getKey for complete details\n- An empty array indicates the key now has no roles assigned at all",
+  "items": {
+    "$ref": "#/components/schemas/Role"
+  }
+}

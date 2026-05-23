@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/KeyCreditsData",
+  "title": "KeyCreditsData",
+  "type": "object",
+  "description": "Credit configuration and remaining balance for this key.",
+  "properties": {
+    "remaining": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "format": "int64",
+      "minimum": 0,
+      "maximum": 9223372036854776000,
+      "description": "Number of credits remaining (null for unlimited).",
+      "example": 1000
+    },
+    "refill": {
+      "$ref": "#/components/schemas/KeyCreditsRefill",
+      "x-go-type-skip-optional-pointer": true,
+      "x-go-type-skip-optional-pointer-with-omitzero": true
+    }
+  },
+  "required": [
+    "remaining"
+  ],
+  "additionalProperties": false
+}

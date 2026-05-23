@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2ApisListKeysRequestBody",
+  "title": "V2ApisListKeysRequestBody",
+  "type": "object",
+  "required": [
+    "apiId"
+  ],
+  "properties": {
+    "apiId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The API namespace whose keys you want to list.\nReturns all keys in this API, subject to pagination and filters.\n",
+      "example": "api_1234abcd"
+    },
+    "limit": {
+      "type": "integer",
+      "description": "Maximum number of keys to return per request.\nBalance between response size and number of pagination calls needed.\n",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 100
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Pagination cursor from previous response to fetch next page.\nUse when `hasMore: true` in previous response.\n",
+      "example": "key_1234abcd"
+    },
+    "externalId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Filter keys by external ID to find keys for a specific user or entity.\nMust exactly match the externalId set during key creation.\n",
+      "example": "user_1234abcd"
+    },
+    "decrypt": {
+      "type": "boolean",
+      "description": "When true, attempts to include the plaintext key value in the response. SECURITY WARNING:\n- This requires special permissions on the calling root key\n- Only works for keys created with 'recoverable: true'\n- Exposes sensitive key material in the response\n- Should only be used in secure administrative contexts\n- Never enable this in user-facing applications",
+      "default": false
+    },
+    "revalidateKeysCache": {
+      "type": "boolean",
+      "default": false,
+      "description": "EXPERIMENTAL: Skip the cache and fetch the keys directly from the database. This ensures you see the most recent state, including keys created moments ago. Use this when:\n- You've just created a key and need to display it immediately\n- You need absolute certainty about the current key state\n- You're debugging cache consistency issues\n\nThis parameter comes with a performance cost and should be used sparingly."
+    }
+  },
+  "additionalProperties": false
+}

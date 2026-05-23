@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsCreatePermissionResponseData",
+  "title": "V2PermissionsCreatePermissionResponseData",
+  "type": "object",
+  "properties": {
+    "permissionId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "The unique identifier assigned to the newly created permission.\nUse this ID to reference the permission in role assignments, key operations, and other API calls.\nAlways begins with 'perm_' followed by a unique alphanumeric sequence.\nStore this ID if you need to manage or reference this permission in future operations.\n",
+      "example": "perm_1234567890abcdef"
+    }
+  },
+  "required": [
+    "permissionId"
+  ],
+  "additionalProperties": false
+}

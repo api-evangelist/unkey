@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsGetPermissionRequestBody",
+  "title": "V2PermissionsGetPermissionRequestBody",
+  "type": "object",
+  "required": [
+    "permission"
+  ],
+  "properties": {
+    "permission": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$",
+      "description": "The unique identifier of the permission to retrieve. Must be a valid permission ID that begins with 'perm_' and exists within your workspace.\n",
+      "example": "perm_1234567890abcdef"
+    }
+  },
+  "additionalProperties": false
+}

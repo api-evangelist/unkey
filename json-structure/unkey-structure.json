@@ -1,0 +1,1650 @@
+{
+  "provider": "Unkey",
+  "providerId": "unkey",
+  "kind": "json-structure",
+  "description": "Structural overview of the Unkey API surface; extracted from openapi/.",
+  "schemaCount": 147,
+  "operationCount": 42,
+  "schemas": [
+    {
+      "name": "V2AnalyticsGetVerificationsRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "query"
+      ]
+    },
+    {
+      "name": "V2AnalyticsGetVerificationsResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "BadRequestErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "UnauthorizedErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "ForbiddenErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "NotFoundErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "UnprocessableEntityErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "TooManyRequestsErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "InternalServerErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "ServiceUnavailableErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "V2ApisCreateApiRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "V2ApisCreateApiResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2ApisDeleteApiRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "apiId"
+      ]
+    },
+    {
+      "name": "V2ApisDeleteApiResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "PreconditionFailedErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "V2ApisGetApiRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "apiId"
+      ]
+    },
+    {
+      "name": "V2ApisGetApiResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2ApisListKeysRequestBody",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "apiId"
+      ]
+    },
+    {
+      "name": "V2ApisListKeysResponseBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2DeployCreateDeploymentRequestBody",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "project",
+        "app",
+        "branch",
+        "environmentSlug",
+        "dockerImage"
+      ]
+    },
+    {
+      "name": "V2DeployCreateDeploymentResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2DeployGetDeploymentRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "deploymentId"
+      ]
+    },
+    {
+      "name": "V2DeployGetDeploymentResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2IdentitiesCreateIdentityRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "externalId"
+      ]
+    },
+    {
+      "name": "V2IdentitiesCreateIdentityResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "ConflictErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "V2IdentitiesDeleteIdentityRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "identity"
+      ]
+    },
+    {
+      "name": "V2IdentitiesDeleteIdentityResponseBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "meta"
+      ]
+    },
+    {
+      "name": "V2IdentitiesGetIdentityRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "identity"
+      ]
+    },
+    {
+      "name": "V2IdentitiesGetIdentityResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2IdentitiesListIdentitiesRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "V2IdentitiesListIdentitiesResponseBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "meta",
+        "data",
+        "pagination"
+      ]
+    },
+    {
+      "name": "V2IdentitiesUpdateIdentityRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "identity"
+      ]
+    },
+    {
+      "name": "V2IdentitiesUpdateIdentityResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "data",
+        "meta"
+      ]
+    },
+    {
+      "name": "V2KeysAddPermissionsRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "permissions"
+      ]
+    },
+    {
+      "name": "V2KeysAddPermissionsResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysAddRolesRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "roles"
+      ]
+    },
+    {
+      "name": "V2KeysAddRolesResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysCreateKeyRequestBody",
+      "type": "object",
+      "propertyCount": 13,
+      "required": [
+        "apiId"
+      ]
+    },
+    {
+      "name": "V2KeysCreateKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysDeleteKeyRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId"
+      ]
+    },
+    {
+      "name": "V2KeysDeleteKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysGetKeyRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId"
+      ]
+    },
+    {
+      "name": "V2KeysGetKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysMigrateKeysRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "migrationId",
+        "apiId",
+        "keys"
+      ]
+    },
+    {
+      "name": "V2KeysMigrateKeysResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysRemovePermissionsRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "permissions"
+      ]
+    },
+    {
+      "name": "V2KeysRemovePermissionsResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysRemoveRolesRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "roles"
+      ]
+    },
+    {
+      "name": "V2KeysRemoveRolesResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysRerollKeyRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "expiration"
+      ]
+    },
+    {
+      "name": "V2KeysRerollKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysSetPermissionsRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "permissions"
+      ]
+    },
+    {
+      "name": "V2KeysSetPermissionsResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysSetRolesRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "roles"
+      ]
+    },
+    {
+      "name": "V2KeysSetRolesResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysUpdateCreditsRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "keyId",
+        "operation"
+      ]
+    },
+    {
+      "name": "V2KeysUpdateCreditsResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysUpdateKeyRequestBody",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "keyId"
+      ]
+    },
+    {
+      "name": "V2KeysUpdateKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysVerifyKeyRequestBody",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "key"
+      ]
+    },
+    {
+      "name": "V2KeysVerifyKeyResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2KeysWhoamiRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "key"
+      ]
+    },
+    {
+      "name": "V2KeysWhoamiResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2LivenessResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreatePermissionRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "name",
+        "slug"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreatePermissionResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreateRoleRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreateRoleResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsDeletePermissionRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "permission"
+      ]
+    },
+    {
+      "name": "V2PermissionsDeletePermissionResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsDeleteRoleRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "role"
+      ]
+    },
+    {
+      "name": "V2PermissionsDeleteRoleResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsGetPermissionRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "permission"
+      ]
+    },
+    {
+      "name": "V2PermissionsGetPermissionResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsGetRoleRequestBody",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "role"
+      ]
+    },
+    {
+      "name": "V2PermissionsGetRoleResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsListPermissionsRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "V2PermissionsListPermissionsResponseBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2PermissionsListRolesRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "V2PermissionsListRolesResponseBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2RatelimitDeleteOverrideRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "namespace",
+        "identifier"
+      ]
+    },
+    {
+      "name": "V2RatelimitDeleteOverrideResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2RatelimitGetOverrideRequestBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "namespace",
+        "identifier"
+      ]
+    },
+    {
+      "name": "V2RatelimitGetOverrideResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2RatelimitLimitRequestBody",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "namespace",
+        "identifier",
+        "limit",
+        "duration"
+      ]
+    },
+    {
+      "name": "V2RatelimitLimitResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "GoneErrorResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "error"
+      ]
+    },
+    {
+      "name": "V2RatelimitListOverridesRequestBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "namespace"
+      ]
+    },
+    {
+      "name": "V2RatelimitListOverridesResponseBody",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2RatelimitMultiLimitRequestBody",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2RatelimitMultiLimitResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "V2RatelimitSetOverrideRequestBody",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "namespace",
+        "identifier",
+        "limit",
+        "duration"
+      ]
+    },
+    {
+      "name": "V2RatelimitSetOverrideResponseBody",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "meta",
+        "data"
+      ]
+    },
+    {
+      "name": "Meta",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "requestId"
+      ]
+    },
+    {
+      "name": "V2AnalyticsGetVerificationsResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "BadRequestErrorDetails",
+      "type": null,
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "BaseError",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "title",
+        "detail",
+        "status",
+        "type"
+      ]
+    },
+    {
+      "name": "ValidationError",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "location",
+        "message"
+      ]
+    },
+    {
+      "name": "V2ApisCreateApiResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "apiId"
+      ]
+    },
+    {
+      "name": "EmptyResponse",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2ApisGetApiResponseData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    {
+      "name": "V2ApisListKeysResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "Pagination",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "hasMore"
+      ]
+    },
+    {
+      "name": "KeyResponseData",
+      "type": "object",
+      "propertyCount": 15,
+      "required": [
+        "keyId",
+        "start",
+        "createdAt",
+        "enabled"
+      ]
+    },
+    {
+      "name": "KeyCreditsData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "remaining"
+      ]
+    },
+    {
+      "name": "Identity",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "externalId",
+        "id"
+      ]
+    },
+    {
+      "name": "RatelimitResponse",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "id",
+        "name",
+        "limit",
+        "duration",
+        "autoApply"
+      ]
+    },
+    {
+      "name": "KeyCreditsRefill",
+      "type": "object",
+      "propertyCount": 3,
+      "required": [
+        "interval",
+        "amount"
+      ]
+    },
+    {
+      "name": "V2DeployGitCommit",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "V2DeployCreateDeploymentResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "deploymentId"
+      ]
+    },
+    {
+      "name": "V2DeployGetDeploymentResponseData",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "id",
+        "status"
+      ]
+    },
+    {
+      "name": "V2DeployDeploymentStep",
+      "type": "object",
+      "propertyCount": 4,
+      "required": []
+    },
+    {
+      "name": "RatelimitRequest",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "name",
+        "limit",
+        "duration",
+        "autoApply"
+      ]
+    },
+    {
+      "name": "V2IdentitiesCreateIdentityResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "identityId"
+      ]
+    },
+    {
+      "name": "V2IdentitiesListIdentitiesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2KeysAddPermissionsResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "Permission",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "id",
+        "name",
+        "slug"
+      ]
+    },
+    {
+      "name": "V2KeysAddRolesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "Role",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    {
+      "name": "V2KeysCreateKeyResponseData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "key"
+      ]
+    },
+    {
+      "name": "V2KeysMigrateKeyData",
+      "type": "object",
+      "propertyCount": 10,
+      "required": [
+        "hash"
+      ]
+    },
+    {
+      "name": "V2KeysMigrateKeysResponseData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "migrated",
+        "failed"
+      ]
+    },
+    {
+      "name": "V2KeysMigrateKeysMigration",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "hash",
+        "keyId"
+      ]
+    },
+    {
+      "name": "V2KeysRemovePermissionsResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2KeysRemoveRolesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2KeysRerollKeyResponseData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "keyId",
+        "key"
+      ]
+    },
+    {
+      "name": "V2KeysSetPermissionsResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2KeysSetRolesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "UpdateKeyCreditsData",
+      "type": [
+        "object",
+        "null"
+      ],
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "UpdateKeyCreditsRefill",
+      "type": [
+        "object",
+        "null"
+      ],
+      "propertyCount": 3,
+      "required": [
+        "interval",
+        "amount"
+      ]
+    },
+    {
+      "name": "KeysVerifyKeyCredits",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "cost"
+      ]
+    },
+    {
+      "name": "KeysVerifyKeyRatelimit",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "name"
+      ]
+    },
+    {
+      "name": "V2KeysVerifyKeyResponseData",
+      "type": "object",
+      "propertyCount": 12,
+      "required": [
+        "valid",
+        "code"
+      ]
+    },
+    {
+      "name": "VerifyKeyRatelimitData",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "id",
+        "exceeded",
+        "name",
+        "limit",
+        "duration",
+        "reset",
+        "remaining",
+        "autoApply"
+      ]
+    },
+    {
+      "name": "V2LivenessResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "message"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreatePermissionResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "permissionId"
+      ]
+    },
+    {
+      "name": "V2PermissionsCreateRoleResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "roleId"
+      ]
+    },
+    {
+      "name": "V2PermissionsListPermissionsResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2PermissionsListRolesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2RatelimitDeleteOverrideResponseData",
+      "type": "object",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "RatelimitOverride",
+      "type": "object",
+      "propertyCount": 4,
+      "required": [
+        "overrideId",
+        "duration",
+        "identifier",
+        "limit"
+      ]
+    },
+    {
+      "name": "V2RatelimitLimitResponseData",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "limit",
+        "remaining",
+        "reset",
+        "success"
+      ]
+    },
+    {
+      "name": "V2RatelimitListOverridesResponseData",
+      "type": "array",
+      "propertyCount": 0,
+      "required": []
+    },
+    {
+      "name": "V2RatelimitMultiLimitResponseData",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "passed",
+        "limits"
+      ]
+    },
+    {
+      "name": "V2RatelimitMultiLimitCheck",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "namespace",
+        "identifier",
+        "limit",
+        "remaining",
+        "reset",
+        "passed"
+      ]
+    },
+    {
+      "name": "V2RatelimitSetOverrideResponseData",
+      "type": "object",
+      "propertyCount": 1,
+      "required": [
+        "overrideId"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/v2/analytics.getVerifications",
+      "operationId": "analytics.getVerifications",
+      "summary": "Query Key Verification Data",
+      "tags": [
+        "analytics"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/apis.createApi",
+      "operationId": "apis.createApi",
+      "summary": "Create API Namespace",
+      "tags": [
+        "apis"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/apis.deleteApi",
+      "operationId": "apis.deleteApi",
+      "summary": "Delete API Namespace",
+      "tags": [
+        "apis"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/apis.getApi",
+      "operationId": "apis.getApi",
+      "summary": "Get API Namespace",
+      "tags": [
+        "apis"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/apis.listKeys",
+      "operationId": "apis.listKeys",
+      "summary": "List API Keys",
+      "tags": [
+        "apis"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/deploy.createDeployment",
+      "operationId": "deploy.createDeployment",
+      "summary": "Create Deployment",
+      "tags": [
+        "deploy"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/deploy.getDeployment",
+      "operationId": "deploy.getDeployment",
+      "summary": "Get Deployment",
+      "tags": [
+        "deploy"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/identities.createIdentity",
+      "operationId": "identities.createIdentity",
+      "summary": "Create Identity",
+      "tags": [
+        "identities"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/identities.deleteIdentity",
+      "operationId": "identities.deleteIdentity",
+      "summary": "Delete Identity",
+      "tags": [
+        "identities"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/identities.getIdentity",
+      "operationId": "identities.getIdentity",
+      "summary": "Get Identity",
+      "tags": [
+        "identities"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/identities.listIdentities",
+      "operationId": "identities.listIdentities",
+      "summary": "List Identities",
+      "tags": [
+        "identities"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/identities.updateIdentity",
+      "operationId": "identities.updateIdentity",
+      "summary": "Update Identity",
+      "tags": [
+        "identities"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.addPermissions",
+      "operationId": "keys.addPermissions",
+      "summary": "Add Key Permissions",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.addRoles",
+      "operationId": "keys.addRoles",
+      "summary": "Add Key Roles",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.createKey",
+      "operationId": "keys.createKey",
+      "summary": "Create API Key",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.deleteKey",
+      "operationId": "keys.deleteKey",
+      "summary": "Delete API Keys",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.getKey",
+      "operationId": "keys.getKey",
+      "summary": "Get API Key",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.migrateKeys",
+      "operationId": "keys.migrateKeys",
+      "summary": "Migrate API Key(s)",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.removePermissions",
+      "operationId": "keys.removePermissions",
+      "summary": "Remove Key Permissions",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.removeRoles",
+      "operationId": "keys.removeRoles",
+      "summary": "Remove Key Roles",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.rerollKey",
+      "operationId": "keys.rerollKey",
+      "summary": "Reroll Key",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.setPermissions",
+      "operationId": "keys.setPermissions",
+      "summary": "Set Key Permissions",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.setRoles",
+      "operationId": "keys.setRoles",
+      "summary": "Set Key Roles",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.updateCredits",
+      "operationId": "keys.updateCredits",
+      "summary": "Update Key Credits",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.updateKey",
+      "operationId": "keys.updateKey",
+      "summary": "Update Key Settings",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.verifyKey",
+      "operationId": "keys.verifyKey",
+      "summary": "Verify API Key",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/keys.whoami",
+      "operationId": "keys.whoami",
+      "summary": "Get API Key by Hash",
+      "tags": [
+        "keys"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/v2/liveness",
+      "operationId": "liveness",
+      "summary": "Health Check",
+      "tags": [
+        "liveness"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.createPermission",
+      "operationId": "permissions.createPermission",
+      "summary": "Create Permission",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.createRole",
+      "operationId": "permissions.createRole",
+      "summary": "Create Role",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.deletePermission",
+      "operationId": "permissions.deletePermission",
+      "summary": "Delete Permission",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.deleteRole",
+      "operationId": "permissions.deleteRole",
+      "summary": "Delete Role",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.getPermission",
+      "operationId": "permissions.getPermission",
+      "summary": "Get Permission",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.getRole",
+      "operationId": "permissions.getRole",
+      "summary": "Get Role",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.listPermissions",
+      "operationId": "permissions.listPermissions",
+      "summary": "List Permissions",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/permissions.listRoles",
+      "operationId": "permissions.listRoles",
+      "summary": "List Roles",
+      "tags": [
+        "permissions"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.deleteOverride",
+      "operationId": "ratelimit.deleteOverride",
+      "summary": "Delete Ratelimit Override",
+      "tags": [
+        "ratelimit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.getOverride",
+      "operationId": "ratelimit.getOverride",
+      "summary": "Get Ratelimit Override",
+      "tags": [
+        "ratelimit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.limit",
+      "operationId": "ratelimit.limit",
+      "summary": "Apply Rate Limiting",
+      "tags": [
+        "ratelimit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.listOverrides",
+      "operationId": "ratelimit.listOverrides",
+      "summary": "List Ratelimit Overrides",
+      "tags": [
+        "ratelimit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.multiLimit",
+      "operationId": "ratelimit.multiLimit",
+      "summary": "Apply Multiple Rate Limit Checks",
+      "tags": [
+        "ratelimit"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/v2/ratelimit.setOverride",
+      "operationId": "ratelimit.setOverride",
+      "summary": "Set Ratelimit Override",
+      "tags": [
+        "ratelimit"
+      ]
+    }
+  ]
+}

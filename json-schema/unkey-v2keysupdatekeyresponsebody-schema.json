@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysUpdateKeyResponseBody",
+  "title": "V2KeysUpdateKeyResponseBody",
+  "type": "object",
+  "required": [
+    "meta",
+    "data"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "data": {
+      "$ref": "#/components/schemas/EmptyResponse"
+    }
+  },
+  "additionalProperties": false
+}

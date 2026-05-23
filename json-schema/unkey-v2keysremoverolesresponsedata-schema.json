@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysRemoveRolesResponseData",
+  "title": "V2KeysRemoveRolesResponseData",
+  "type": "array",
+  "description": "Complete list of all roles directly assigned to the key after the removal operation completes.\n\nThe response includes:\n- The remaining roles still assigned to the key (after removing the specified roles)\n- Both ID and name for each role for easy reference\n\nImportant notes:\n- The response reflects the current state after the removal operation\n- An empty array indicates the key now has no roles assigned\n- This only shows direct role assignments\n- Role permissions are not expanded in this response - use keys.getKey for full details\n- Changes take effect immediately for new verifications but cached sessions may retain old permissions briefly",
+  "items": {
+    "$ref": "#/components/schemas/Role"
+  }
+}

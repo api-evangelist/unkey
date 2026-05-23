@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysVerifyKeyRequestBody",
+  "title": "V2KeysVerifyKeyRequestBody",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "key"
+  ],
+  "properties": {
+    "key": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "The API key to verify, exactly as provided by your user.\nInclude any prefix - even small changes will cause verification to fail.\n",
+      "example": "sk_1234abcdef"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 512
+      },
+      "maxItems": 20,
+      "description": "Attaches metadata tags for analytics and monitoring without affecting verification outcomes.\nEnables segmentation of API usage in dashboards by endpoint, client version, region, or custom dimensions.\nUse 'key=value' format for compatibility with most analytics tools and clear categorization.\nAvoid including sensitive data in tags as they may appear in logs and analytics reports.\n",
+      "example": [
+        "endpoint=/users/profile",
+        "method=GET",
+        "region=us-east-1",
+        "clientVersion=2.3.0",
+        "feature=premium"
+      ]
+    },
+    "permissions": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000,
+      "description": "Checks if the key has the specified permission(s) using a query syntax.\nSupports single permissions, logical operators (AND, OR), and parentheses for grouping.\nExamples:\n- Single permission: \"documents.read\"\n- Multiple permissions: \"documents.read AND documents.write\"\n- Complex queries: \"(documents.read OR documents.write) AND users.view\"\nVerification fails if the key lacks the required permissions through direct assignment or role inheritance.\n",
+      "example": "documents.read AND users.view"
+    },
+    "credits": {
+      "$ref": "#/components/schemas/KeysVerifyKeyCredits"
+    },
+    "ratelimits": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/KeysVerifyKeyRatelimit"
+      },
+      "description": "Enforces time-based rate limiting during verification to prevent abuse and ensure fair usage.\nOmitting this field skips rate limit checks entirely, relying only on configured key rate limits.\nMultiple rate limits can be checked simultaneously, each with different costs and temporary overrides.\nRate limit checks are optimized for performance but may allow brief bursts during high concurrency.\n"
+    },
+    "migrationId": {
+      "type": "string",
+      "maxLength": 256,
+      "description": "Migrate keys on demand from your previous system. Reach out for migration support at support@unkey.dev",
+      "example": "m_1234abcd"
+    }
+  }
+}

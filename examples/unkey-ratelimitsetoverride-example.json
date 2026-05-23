@@ -1,0 +1,62 @@
+{
+  "operationId": "ratelimit.setOverride",
+  "method": "POST",
+  "path": "/v2/ratelimit.setOverride",
+  "summary": "Set Ratelimit Override",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "premium",
+      "example": {
+        "duration": 60000,
+        "identifier": "premium_user_123",
+        "limit": 1000,
+        "namespace": "api.requests"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "wildcard",
+      "example": {
+        "duration": 60000,
+        "identifier": "premium_*",
+        "limit": 500,
+        "namespace": "api.requests"
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "403",
+      "contentType": "application/json",
+      "name": "missingPermission",
+      "example": {
+        "error": {
+          "detail": "Your root key requires the 'ratelimit.*.set_override' permission to perform this operation",
+          "status": 403,
+          "title": "Forbidden",
+          "type": "forbidden"
+        },
+        "meta": {
+          "requestId": "req_0uVwX4yZaAbCdEfGhIjKl"
+        }
+      }
+    },
+    {
+      "status": "404",
+      "contentType": "application/json",
+      "name": "namespaceNotFound",
+      "example": {
+        "error": {
+          "detail": "This namespace does not exist.",
+          "status": 404,
+          "title": "Not Found",
+          "type": "not_found"
+        },
+        "meta": {
+          "requestId": "req_2wXyZaAbCdEfGhIjKlMnOp"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/NotFoundErrorResponse",
+  "title": "NotFoundErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when the requested resource cannot be found. This occurs when:\n- The specified resource ID doesn't exist in your workspace\n- The resource has been deleted or moved\n- The resource exists but is not accessible with current permissions\n\nTo resolve this error, verify the resource ID is correct and that you have access to it."
+}

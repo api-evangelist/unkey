@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesCreateIdentityRequestBody",
+  "title": "V2IdentitiesCreateIdentityRequestBody",
+  "type": "object",
+  "required": [
+    "externalId"
+  ],
+  "properties": {
+    "externalId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_.-]+$",
+      "description": "Creates an identity using your system's unique identifier for a user, organization, or entity.\nMust be stable and unique across your workspace - duplicate externalIds return CONFLICT errors.\nThis identifier links Unkey identities to your authentication system, database records, or tenant structure.\n\nAvoid changing externalIds after creation as this breaks the link between your systems.\nUse consistent identifier patterns across your application for easier management and debugging.\nAccepts letters, numbers, underscores, dots, and hyphens for flexible identifier formats.\nEssential for implementing proper multi-tenant isolation and user-specific rate limiting.\n",
+      "example": "user_123"
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": true,
+      "maxProperties": 100,
+      "description": "Stores arbitrary JSON metadata returned during key verification for contextual information.\nEliminates additional database lookups during verification, improving performance for stateless services.\nAvoid storing sensitive data here as it's returned in verification responses.\n\nLarge metadata objects increase verification latency and should stay under 10KB total size.\nUse this for subscription details, feature flags, user preferences, and organization information.\nMetadata is returned as-is whenever keys associated with this identity are verified.\n"
+    },
+    "ratelimits": {
+      "type": "array",
+      "maxItems": 50,
+      "items": {
+        "$ref": "#/components/schemas/RatelimitRequest"
+      },
+      "description": "Defines shared rate limits that apply to all keys belonging to this identity.\nPrevents abuse by users with multiple keys by enforcing consistent limits across their entire key portfolio.\nEssential for implementing fair usage policies and tiered access levels in multi-tenant applications.\n\nRate limit counters are shared across all keys with this identity, regardless of how many keys the user creates.\nDuring verification, specify which named limits to check for enforcement.\nIdentity rate limits supplement any key-specific rate limits that may also be configured.\n- Each named limit can have different thresholds and windows\n\nWhen verifying keys, you can specify which limits you want to use and all keys attached to this identity will share the limits, regardless of which specific key is used.\n"
+    }
+  }
+}

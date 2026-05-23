@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysGetKeyRequestBody",
+  "title": "V2KeysGetKeyRequestBody",
+  "type": "object",
+  "properties": {
+    "keyId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "Specifies which key to retrieve using the database identifier returned from `keys.createKey`.\nDo not confuse this with the actual API key string that users include in requests.\nKey data includes metadata, permissions, usage statistics, and configuration but never the plaintext key value unless `decrypt=true`.\nFind this ID in creation responses, key listings, dashboard, or verification responses.\n",
+      "example": "key_1234abcd"
+    },
+    "decrypt": {
+      "type": "boolean",
+      "default": false,
+      "description": "Controls whether to include the plaintext key value in the response for recovery purposes.\nOnly works for keys created with `recoverable=true` and requires the `decrypt_key` permission.\nReturned keys must be handled securely, never logged, cached, or stored insecurely.\n\nUse only for legitimate recovery scenarios like user password resets or emergency access.\nMost applications should keep this false to maintain security best practices and avoid accidental key exposure.\nDecryption requests are audited and may trigger security alerts in enterprise environments.\n"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "keyId"
+  ]
+}

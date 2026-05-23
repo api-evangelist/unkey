@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsCreatePermissionRequestBody",
+  "title": "V2PermissionsCreatePermissionRequestBody",
+  "type": "object",
+  "required": [
+    "name",
+    "slug"
+  ],
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "description": "Creates a permission with this human-readable name that describes its purpose.\nNames must be unique within your workspace to prevent conflicts during assignment.\nUse clear, semantic names that developers can easily understand when building authorization logic.\nConsider using hierarchical naming conventions like 'resource.action' for better organization.\n\nExamples: 'users.read', 'billing.write', 'analytics.view', 'admin.manage'\n",
+      "example": "users.read"
+    },
+    "slug": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[a-zA-Z][a-zA-Z0-9._-]*$",
+      "description": "Creates a URL-safe identifier for this permission that can be used in APIs and integrations.\nMust start with a letter and contain only letters, numbers, periods, underscores, and hyphens.\nSlugs are often used in REST endpoints, configuration files, and external integrations.\nShould closely match the name but in a format suitable for technical usage.\nMust be unique within your workspace to ensure reliable permission lookups.\n\nKeep slugs concise but descriptive for better developer experience.\n",
+      "example": "users-read"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 512,
+      "description": "Provides detailed documentation of what this permission grants access to.\nInclude information about affected resources, allowed actions, and any important limitations.\nThis internal documentation helps team members understand permission scope and security implications.\nNot visible to end users - designed for development teams and security audits.\n\nConsider documenting:\n- What resources can be accessed\n- What operations are permitted\n- Any conditions or limitations\n- Related permissions that might be needed\n",
+      "example": "Grants read-only access to user profile information, account settings, and subscription status."
+    }
+  },
+  "additionalProperties": false
+}

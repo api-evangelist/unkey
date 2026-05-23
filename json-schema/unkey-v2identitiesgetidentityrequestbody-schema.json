@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2IdentitiesGetIdentityRequestBody",
+  "title": "V2IdentitiesGetIdentityRequestBody",
+  "type": "object",
+  "properties": {
+    "identity": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The ID of the identity to retrieve. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).",
+      "example": "user_abc123"
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "identity"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2RatelimitListOverridesResponseData",
+  "title": "V2RatelimitListOverridesResponseData",
+  "type": "array",
+  "items": {
+    "$ref": "#/components/schemas/RatelimitOverride"
+  }
+}

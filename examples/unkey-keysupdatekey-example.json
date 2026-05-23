@@ -1,0 +1,20 @@
+{
+  "operationId": "keys.updateKey",
+  "method": "POST",
+  "path": "/v2/keys.updateKey",
+  "summary": "Update Key Settings",
+  "requestExamples": [],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "success",
+      "example": {
+        "data": {},
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQY"
+        }
+      }
+    }
+  ]
+}

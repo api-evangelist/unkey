@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysRerollKeyRequestBody",
+  "title": "V2KeysRerollKeyRequestBody",
+  "type": "object",
+  "required": [
+    "keyId",
+    "expiration"
+  ],
+  "properties": {
+    "keyId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "The database identifier of the key to reroll.\n\nThis is the unique ID returned when creating or listing keys, NOT the actual API key token.\nYou can find this ID in:\n- The response from `keys.createKey`\n- Key verification responses\n- The Unkey dashboard\n- API key listing endpoints\n",
+      "example": "key_2cGKbMxRyIzhCxo1Idjz8q"
+    },
+    "expiration": {
+      "type": "integer",
+      "format": "int64",
+      "minimum": 0,
+      "maximum": 4102444800000,
+      "description": "Duration in milliseconds until the ORIGINAL key is revoked, starting from now.\n\nThis parameter controls the overlap period for key rotation:\n- Set to `0` to revoke the original key immediately\n- Positive values keep the original key active for the specified duration\n- Allows graceful migration by giving users time to update their credentials\n\nCommon overlap periods:\n- Immediate revocation: 0\n- 1 hour grace period: 3600000\n- 24 hours grace period: 86400000\n- 7 days grace period: 604800000\n- 30 days grace period: 2592000000\n",
+      "example": 86400000
+    }
+  }
+}

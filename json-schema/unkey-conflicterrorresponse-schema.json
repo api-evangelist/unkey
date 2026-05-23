@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ConflictErrorResponse",
+  "title": "ConflictErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when the request conflicts with the current state of the resource. This occurs when:\n- Attempting to create a resource that already exists\n- Modifying a resource that has been changed by another operation\n- Violating unique constraints or business rules\n\nTo resolve this error, check the current state of the resource and adjust your request accordingly."
+}

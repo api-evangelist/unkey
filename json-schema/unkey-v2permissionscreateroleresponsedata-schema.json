@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2PermissionsCreateRoleResponseData",
+  "title": "V2PermissionsCreateRoleResponseData",
+  "type": "object",
+  "properties": {
+    "roleId": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 255,
+      "pattern": "^[a-zA-Z0-9_]+$",
+      "description": "The unique identifier assigned to the newly created role.\nUse this ID to reference the role in permission assignments, key operations, and role management calls.\nAlways begins with 'role_' followed by a unique alphanumeric sequence.\nStore this ID if you need to manage, modify, or assign this role in future operations.\n",
+      "example": "role_1234567890abcdef"
+    }
+  },
+  "required": [
+    "roleId"
+  ],
+  "additionalProperties": false
+}

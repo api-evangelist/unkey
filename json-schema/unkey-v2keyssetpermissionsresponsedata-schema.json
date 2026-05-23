@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2KeysSetPermissionsResponseData",
+  "title": "V2KeysSetPermissionsResponseData",
+  "type": "array",
+  "description": "Complete list of all permissions now directly assigned to the key after the set operation has completed.\n\nThe response includes:\n- The comprehensive, updated set of direct permissions (reflecting the complete replacement)\n- Both ID and name for each permission for easy reference\n\nImportant notes:\n- This only shows direct permissions, not those granted through roles\n- An empty array means the key has no direct permissions assigned\n- For a complete permission picture including roles, use keys.getKey instead",
+  "items": {
+    "$ref": "#/components/schemas/Permission"
+  }
+}

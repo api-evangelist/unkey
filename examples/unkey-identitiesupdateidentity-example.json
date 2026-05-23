@@ -1,0 +1,54 @@
+{
+  "operationId": "identities.updateIdentity",
+  "method": "POST",
+  "path": "/v2/identities.updateIdentity",
+  "summary": "Update Identity",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "updateMetadata",
+      "example": {
+        "identity": "user_123",
+        "meta": {
+          "email": "alice@example.com",
+          "name": "Alice Smith",
+          "plan": "premium"
+        }
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "403",
+      "contentType": "application/json",
+      "name": "missingPermission",
+      "example": {
+        "error": {
+          "detail": "Your root key requires the 'identity.*.update_identity' permission to perform this operation",
+          "status": 403,
+          "title": "Forbidden",
+          "type": "forbidden"
+        },
+        "meta": {
+          "requestId": "req_0uVwX4yZaAbCdEfGhIjKl"
+        }
+      }
+    },
+    {
+      "status": "404",
+      "contentType": "application/json",
+      "name": "identityNotFound",
+      "example": {
+        "error": {
+          "detail": "Identity with externalId \"user_123\" not found.",
+          "status": 404,
+          "title": "Not Found",
+          "type": "not_found"
+        },
+        "meta": {
+          "requestId": "req_2wXyZaAbCdEfGhIjKlMnOp"
+        }
+      }
+    }
+  ]
+}

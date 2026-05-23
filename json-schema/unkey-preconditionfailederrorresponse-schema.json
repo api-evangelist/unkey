@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PreconditionFailedErrorResponse",
+  "title": "PreconditionFailedErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when one or more conditions specified in the request headers are not met. This typically occurs when:\n- Using conditional requests with If-Match or If-None-Match headers\n- The resource version doesn't match the expected value\n- Optimistic concurrency control detects a conflict\n\nTo resolve this error, fetch the latest version of the resource and retry with updated conditions."
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/V2DeployGetDeploymentRequestBody",
+  "title": "V2DeployGetDeploymentRequestBody",
+  "type": "object",
+  "required": [
+    "deploymentId"
+  ],
+  "properties": {
+    "deploymentId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique deployment identifier to retrieve",
+      "example": "d_abc123xyz",
+      "pattern": "^d_[a-zA-Z0-9]+$"
+    }
+  }
+}

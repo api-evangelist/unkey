@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ForbiddenErrorResponse",
+  "title": "ForbiddenErrorResponse",
+  "type": "object",
+  "required": [
+    "meta",
+    "error"
+  ],
+  "properties": {
+    "meta": {
+      "$ref": "#/components/schemas/Meta"
+    },
+    "error": {
+      "$ref": "#/components/schemas/BaseError"
+    }
+  },
+  "description": "Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:\n- The root key doesn't have the required permissions for this endpoint\n- The operation requires elevated privileges that the current key lacks\n- Access to the requested resource is restricted based on workspace settings\n\nTo resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator."
+}

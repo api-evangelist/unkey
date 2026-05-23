@@ -1,0 +1,24 @@
+{
+  "operationId": "permissions.createRole",
+  "method": "POST",
+  "path": "/v2/permissions.createRole",
+  "summary": "Create Role",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "description": "Can read and write content",
+        "name": "content.editor"
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "withoutDescription",
+      "example": {
+        "name": "api.reader"
+      }
+    }
+  ],
+  "responseExamples": []
+}

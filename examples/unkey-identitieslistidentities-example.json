@@ -1,0 +1,87 @@
+{
+  "operationId": "identities.listIdentities",
+  "method": "POST",
+  "path": "/v2/identities.listIdentities",
+  "summary": "List Identities",
+  "requestExamples": [
+    {
+      "contentType": "application/json",
+      "name": "basic",
+      "example": {
+        "limit": 50
+      }
+    },
+    {
+      "contentType": "application/json",
+      "name": "withCursor",
+      "example": {
+        "cursor": "cursor_eyJrZXkiOiJrZXlfMTIzNCJ9",
+        "limit": 50
+      }
+    }
+  ],
+  "responseExamples": [
+    {
+      "status": "200",
+      "contentType": "application/json",
+      "name": "success",
+      "example": {
+        "data": {
+          "cursor": "cursor_eyJsYXN0SWQiOiJpZF8wMlpZUjNROU5QOEpNNFg4SFdTS1BXNDNKRiJ9",
+          "identities": [
+            {
+              "externalId": "user_123",
+              "id": "id_01H9TQP8NP8JN3X8HWSKPW43JE",
+              "meta": {
+                "name": "Alice Smith",
+                "plan": "premium"
+              },
+              "ratelimits": [
+                {
+                  "duration": 60000,
+                  "limit": 1000,
+                  "name": "requests"
+                }
+              ]
+            },
+            {
+              "externalId": "user_456",
+              "id": "id_02ZYR3Q9NP8JM4X8HWSKPW43JF",
+              "meta": {
+                "name": "Bob Johnson",
+                "plan": "basic"
+              },
+              "ratelimits": [
+                {
+                  "duration": 60000,
+                  "limit": 500,
+                  "name": "requests"
+                }
+              ]
+            }
+          ],
+          "total": 247
+        },
+        "meta": {
+          "requestId": "req_01H9TQPP77V5E48E9SH0BG0ZQX"
+        }
+      }
+    },
+    {
+      "status": "403",
+      "contentType": "application/json",
+      "name": "missingPermission",
+      "example": {
+        "error": {
+          "detail": "Your root key requires the 'identity.*.read_identity' permission to perform this operation",
+          "status": 403,
+          "title": "Forbidden",
+          "type": "forbidden"
+        },
+        "meta": {
+          "requestId": "req_0uVwX4yZaAbCdEfGhIjKl"
+        }
+      }
+    }
+  ]
+}
