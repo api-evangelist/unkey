@@ -1,0 +1,870 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "analytics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Query Key Verification Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/analytics.getVerifications",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Execute custom SQL queries against your key verification analytics.\nFor complete documentation including available tables, columns, data types, query examples, see the schema reference in the API documentation.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "apis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.createApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an API namespace for organizing keys by environment, service, or product.\n\nUse this to separate production from development keys, isolate different services, or manage multiple products. Each API gets a unique identifier and dedicated infrastructure for secure key operations.\n\n**Important**: API names must be unique within your workspace and cannot be changed after creation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.create_api` (to creat"
+        },
+        {
+          "info": {
+            "name": "Delete API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.deleteApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete an API namespace and immediately invalidate all associated keys.\n\nUse this for cleaning up development environments, retiring deprecated services, or removing unused resources.\nAll keys in the namespace are immediately marked as deleted and will fail verification with `code=NOT_FOUND`.\n\n**Important**: This operation is immediate and permanent. Verify you have the correct API ID before deletion.\nIf delete protection is enabled, disable it first through the dashboard or API conf"
+        },
+        {
+          "info": {
+            "name": "Get API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.getApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve basic information about an API namespace including its ID and name.\n\nUse this to verify an API exists before performing operations, get the human-readable name when you only have the API ID, or confirm access to a specific namespace. For detailed key information, use the `listKeys` endpoint instead.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.read_api` (to read any API)\n- `api.<api_id>.read_api` (to read a specific API)\n"
+        },
+        {
+          "info": {
+            "name": "List API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.listKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of API keys for dashboard and administrative interfaces.\n\nUse this to build key management dashboards, filter keys by user with `externalId`, or retrieve key details for administrative purposes. Each key includes status, metadata, permissions, and usage limits.\n\n**Important**: Set `decrypt: true` only in secure contexts to retrieve plaintext key values from recoverable keys.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions for basic ke"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "deploy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/deploy.createDeployment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nCreates a new deployment for a project using either a pre-built Docker image or build context.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+        },
+        {
+          "info": {
+            "name": "Get Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/deploy.getDeployment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nRetrieves deployment information including status, error messages, and steps.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "identities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.createIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an identity to group multiple API keys under a single entity. Identities enable shared rate limits and metadata across all associated keys.\n\nPerfect for users with multiple devices, organizations with multiple API keys, or when you need unified rate limiting across different services.\n\n**Important**\nRequires `identity.*.create_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "Delete Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.deleteIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete an identity. This operation cannot be undone.\n\nUse this for data cleanup, compliance requirements, or when removing entities from your system.\n\n> **Important**\n> Requires `identity.*.delete_identity` permission\n> Associated API keys remain functional but lose shared resources\n> External ID becomes available for reuse immediately\n"
+        },
+        {
+          "info": {
+            "name": "Get Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.getIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an identity by external ID. Returns metadata, rate limits, and other associated data.\n\nUse this to check if an identity exists, view configurations, or build management dashboards.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "List Identities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.listIdentities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a paginated list of all identities in your workspace. Returns metadata and rate limit configurations.\n\nPerfect for building management dashboards, auditing configurations, or browsing your identities.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "Update Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.updateIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an identity's metadata and rate limits. Only specified fields are modified - others remain unchanged.\n\nPerfect for subscription changes, plan upgrades, or updating user information. Changes take effect immediately.\n\n> **Important**\n> Requires `identity.*.update_identity` permission\n> Rate limit changes propagate within 30 seconds\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "keys",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add Key Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.addPermissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add permissions to a key without affecting existing permissions.\n\nUse this for privilege upgrades, enabling new features, or plan changes that grant additional capabilities. Permissions granted through roles remain unchanged.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_id>.update_key` (to update keys in a spec"
+        },
+        {
+          "info": {
+            "name": "Add Key Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.addRoles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Add roles to a key without affecting existing roles or permissions.\n\nUse this for privilege upgrades, enabling new feature sets, or subscription changes that grant additional role-based capabilities. Direct permissions remain unchanged.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_id>.update_key` (to update key"
+        },
+        {
+          "info": {
+            "name": "Create API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.createKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new API key for user authentication and authorization.\n\nUse this endpoint when users sign up, upgrade subscription tiers, or need additional keys. Keys are cryptographically secure and unique to the specified API namespace.\n\n**Important**: The key is returned only once. Store it immediately and provide it to your user, as it cannot be retrieved later.\n\n**Common use cases:**\n- Generate keys for new user registrations\n- Create additional keys for different applications\n- Issue keys with s"
+        },
+        {
+          "info": {
+            "name": "Delete API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.deleteKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Delete API keys permanently from user accounts or for cleanup purposes.\n\nUse this for user-requested key deletion, account deletion workflows, or cleaning up unused keys. Keys are immediately invalidated. Two modes: soft delete (default, preserves audit records) and permanent delete.\n\n**Important**: For temporary access control, use `updateKey` with `enabled: false` instead of deletion.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.delete_key` (to "
+        },
+        {
+          "info": {
+            "name": "Get API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.getKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve detailed key information for dashboard interfaces and administrative purposes.\n\nUse this to build key management dashboards showing users their key details, status, permissions, and usage data. You can identify keys by `keyId` or the actual key string.\n\n**Important**: Set `decrypt: true` only in secure contexts to retrieve plaintext key values from recoverable keys.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions for basic key information:\n- `api.*.re"
+        },
+        {
+          "info": {
+            "name": "Migrate API Key(s)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.migrateKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns HTTP 200 even on partial success; hashes that could not be migrated are listed under `data.failed`.\n\n**Required Permissions**\nYour root key must have one of the following permissions for basic key information:\n- `api.*.create_key` (to migrate keys to any API)\n- `api.<api_id>.create_key` (to migrate keys to a specific API)\n"
+        },
+        {
+          "info": {
+            "name": "Remove Key Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.removePermissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove permissions from a key without affecting existing roles or other permissions.\n\nUse this for privilege downgrades, removing temporary access, or plan changes that revoke specific capabilities. Permissions granted through roles remain unchanged.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_id>.update_key` "
+        },
+        {
+          "info": {
+            "name": "Remove Key Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.removeRoles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove roles from a key without affecting direct permissions or other roles.\n\nUse this for privilege downgrades, removing temporary access, or subscription changes that revoke specific role-based capabilities. Direct permissions remain unchanged.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_id>.update_key` (to "
+        },
+        {
+          "info": {
+            "name": "Reroll Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.rerollKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Generate a new API key while preserving the configuration from an existing key.\n\nThis operation creates a fresh key with a new token while maintaining all settings from the original key:\n- Permissions and roles\n- Custom metadata\n- Rate limit configurations\n- Identity associations\n- Remaining credits\n- Recovery settings\n\n**Key Generation:**\n- The system attempts to extract the prefix from the original key\n- If prefix extraction fails, the default API prefix is used\n- Key length follows the API's "
+        },
+        {
+          "info": {
+            "name": "Set Key Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.setPermissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace all permissions on a key with the specified set in a single atomic operation.\n\nUse this to synchronize with external systems, reset permissions to a known state, or apply standardized permission templates. Permissions granted through roles remain unchanged.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_i"
+        },
+        {
+          "info": {
+            "name": "Set Key Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.setRoles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Replace all roles on a key with the specified set in a single atomic operation.\n\nUse this to synchronize with external systems, reset roles to a known state, or apply standardized role templates. Direct permissions are never affected.\n\n**Important**: Changes take effect immediately with up to 30-second edge propagation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update keys in any API)\n- `api.<api_id>.update_key` (to update keys "
+        },
+        {
+          "info": {
+            "name": "Update Key Credits",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.updateCredits",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update credit quotas in response to plan changes, billing cycles, or usage purchases.\n\nUse this for user upgrades/downgrades, monthly quota resets, credit purchases, or promotional bonuses. Supports three operations: set, increment, or decrement credits. Set to null for unlimited usage.\n\n**Important**: Setting unlimited credits automatically clears existing refill configurations.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.update_key` (to update "
+        },
+        {
+          "info": {
+            "name": "Update Key Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.updateKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update key properties in response to plan changes, subscription updates, or account status changes.\n\nUse this for user upgrades/downgrades, role modifications, or administrative changes. Supports partial updates - only specify fields you want to change. Set fields to null to clear them.\n\n**Important**: Permissions and roles are replaced entirely. Use dedicated add/remove endpoints for incremental changes.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api"
+        },
+        {
+          "info": {
+            "name": "Verify API Key",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.verifyKey",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Verify an API key's validity and permissions for request authentication.\n\nUse this endpoint on every incoming request to your protected resources. It checks key validity, permissions, rate limits, and usage quotas in a single call.\n\n**Important**: Returns HTTP 200 for all verification outcomes — check the `valid` field in response data to determine if the key is authorized. A 429 may be returned if the workspace exceeds its API rate limit.\n\n**Common use cases:**\n- Authenticate API requests befor"
+        },
+        {
+          "info": {
+            "name": "Get API Key by Hash",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/keys.whoami",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Find out what key this is.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions for basic key information:\n- `api.*.read_key` (to read keys from any API)\n- `api.<api_id>.read_key` (to read keys from a specific API)\n\nIf your rootkey lacks permissions but the key exists, we may return a 404 status here to prevent leaking the existance of a key to unauthorized clients. If you believe that a key should exist, but receive a 404, please double check your root key has the"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "liveness",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unkey.com/v2/liveness"
+          },
+          "docs": "Check if the Unkey API service is healthy and ready to handle requests.\n\nUse this for load balancer health checks, monitoring systems, and orchestration platforms. No authentication required with minimal processing overhead.\n\n**Required Permissions**\n\nNone - this endpoint requires no authentication.\n\n**Side Effects**\n\nNone - this is a read-only health check that does not modify any data or state.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.createPermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new permission to define specific actions or capabilities in your RBAC system. Permissions can be assigned directly to API keys or included in roles.\n\nUse hierarchical naming patterns like `documents.read`, `admin.users.delete`, or `billing.invoices.create` for clear organization.\n\n**Important:** Permission names must be unique within the workspace. Once created, permissions are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permis"
+        },
+        {
+          "info": {
+            "name": "Create Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.createRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new role to group related permissions for easier management. Roles enable consistent permission assignment across multiple API keys.\n\n**Important:** Role names must be unique within the workspace. Once created, roles are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.create_role`\n"
+        },
+        {
+          "info": {
+            "name": "Delete Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.deletePermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a permission from your workspace. This also removes the permission from all API keys and roles.\n\n**Important:** This operation cannot be undone and immediately affects all API keys and roles that had this permission assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_permission`\n"
+        },
+        {
+          "info": {
+            "name": "Delete Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.deleteRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a role from your workspace. This also removes the role from all assigned API keys.\n\n**Important:** This operation cannot be undone and immediately affects all API keys that had this role assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_role`\n"
+        },
+        {
+          "info": {
+            "name": "Get Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.getPermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve details about a specific permission including its name, description, and metadata.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n"
+        },
+        {
+          "info": {
+            "name": "Get Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.getRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve details about a specific role including its assigned permissions.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n"
+        },
+        {
+          "info": {
+            "name": "List Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.listPermissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all permissions in your workspace.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n"
+        },
+        {
+          "info": {
+            "name": "List Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.listRoles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all roles in your workspace including their assigned permissions.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ratelimit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.deleteOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently remove a rate limit override. Affected identifiers immediately revert to the namespace default.\n\nUse this to remove temporary overrides, reset identifiers to standard limits, or clean up outdated rules.\n\n**Important:** Deletion is immediate and permanent. The override cannot be recovered and must be recreated if needed again.\n\n**Permissions:** Requires `ratelimit.*.delete_override` or `ratelimit.<namespace_id>.delete_override`\n"
+        },
+        {
+          "info": {
+            "name": "Get Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.getOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the configuration of a specific rate limit override by its identifier.\n\nUse this to inspect override configurations, audit rate limiting policies, or debug rate limiting behavior.\n\n**Important:** The identifier must match exactly as specified when creating the override, including wildcard patterns.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+        },
+        {
+          "info": {
+            "name": "Apply Rate Limiting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.limit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check and enforce rate limits for any identifier (user ID, IP address, API client, etc.).\n\nUse this for rate limiting beyond API keys - limit users by ID, IPs by address, or any custom identifier. Supports namespace organization, variable costs, and custom overrides.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether the limit is exceeded — check the `success` field in the response to determine if the request should be allowed. A 429 may be returned if the workspace exc"
+        },
+        {
+          "info": {
+            "name": "List Ratelimit Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.listOverrides",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of all rate limit overrides in a namespace.\n\nUse this to audit rate limiting policies, build admin dashboards, or manage override configurations.\n\n**Important:** Results are paginated. Use the cursor parameter to retrieve additional pages when more results are available.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+        },
+        {
+          "info": {
+            "name": "Apply Multiple Rate Limit Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.multiLimit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check and enforce multiple rate limits in a single request for any identifiers (user IDs, IP addresses, API clients, etc.).\n\nUse this to efficiently check multiple rate limits at once. Each rate limit check is independent and returns its own result with a top-level `passed` indicator showing if all checks succeeded.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether limits are exceeded — check the `passed` field to see if all limits passed, or the `success` field in eac"
+        },
+        {
+          "info": {
+            "name": "Set Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.setOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or update a custom rate limit for specific identifiers, bypassing the namespace default.\n\nUse this to create premium tiers with higher limits, apply stricter limits to specific users, or implement emergency throttling.\n\n**Important:** Overrides take effect immediately and completely replace the default limit for matching identifiers. Use wildcard patterns (e.g., `premium_*`) to match multiple identifiers.\n\n**Permissions:** Requires `ratelimit.*.set_override` or `ratelimit.<namespace_id>.s"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

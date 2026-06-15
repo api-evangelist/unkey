@@ -1,95 +1,71 @@
-# Unkey
+# Unkey (unkey)
 
 Unkey is the developer platform for modern APIs, providing globally distributed API key management, rate limiting, identity management, analytics, and deployment capabilities. The platform enables API providers to issue, verify, and revoke keys with metadata, expiration, usage credits, permissions, and roles — without managing any infrastructure.
 
-**Website:** [unkey.com](https://www.unkey.com)
-**Documentation:** [unkey.com/docs](https://www.unkey.com/docs)
-**GitHub:** [github.com/unkeyed/unkey](https://github.com/unkeyed/unkey)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/apis.yml)
 
----
+## Scope
+
+- **Type:** Index
+
+## Tags
+
+- API Keys
+- Rate Limiting
+- Authentication
+- Developer Platform
+- Access Control
+- Identity
+- Analytics
+
+## Timestamps
+
+- **Created:** 2026-03-16
+- **Modified:** 2026-05-19
 
 ## APIs
 
-### Unkey API (v2.0.0)
+### Unkey API
 
-REST API providing programmatic access to all Unkey platform resources. Base URL: `https://api.unkey.com`
+Unkey's REST API providing programmatic access to all platform resources: API namespace management, API key lifecycle (create, verify, update, reroll, delete), identity management, permissions and roles, standalone rate limiting with namespace overrides, key verification analytics via SQL, and deployment operations. All management operations use Bearer authentication with root keys.
 
-Authentication: Bearer token (root key) — `Authorization: Bearer unkey_xxx`
+- **Human URL:** [https://www.unkey.com](https://www.unkey.com)
+- **Base URL:** `https://api.unkey.com`
 
-**Operations by resource group:**
+#### Tags
 
-| Group | Endpoints |
-|---|---|
-| **Keys** | create, verify, get, update, reroll, delete, whoami, add/remove/set permissions, add/remove/set roles, update credits, migrate |
-| **APIs** | create, get, delete API namespace, list keys |
-| **Identities** | create, get, update, delete, list |
-| **Permissions** | create, get, delete, list |
-| **Roles** | create, get, delete, list |
-| **Rate Limits** | limit, multi-limit, set/get/list/delete overrides |
-| **Analytics** | query key verification data via SQL |
-| **Deploy** | create deployment, get deployment |
-| **Liveness** | health check |
+- API Keys
+- Rate Limiting
+- Identity
+- Permissions
+- Analytics
+- Deployments
 
-- [OpenAPI Specification](openapi/unkey-openapi.yml)
+#### Properties
 
----
+- [Documentation](https://www.unkey.com/docs)
+- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/openapi/unkey-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Postman Collection](collections/unkey.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/unkey.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
-## Artifacts
+## Common Properties
 
-### OpenAPI
-| File | Description |
-|---|---|
-| [unkey-openapi.yml](openapi/unkey-openapi.yml) | Full Unkey API OpenAPI 3.1.0 specification (42 operations, 147 schemas) |
+- [LinkedIn](https://www.linkedin.com/company/unkeyed)
+- [Website](https://www.unkey.com)
+- [Documentation](https://www.unkey.com/docs)
+- [Git Hub](https://github.com/unkeyed/unkey)
+- [Pricing](https://www.unkey.com/pricing)
+- [Blog](https://www.unkey.com/blog)
+- [Changelog](https://www.unkey.com/changelog)
+- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/vocabulary/unkey-vocabulary.yml)
+- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-ld/unkey-context.jsonld)
+- [Features](undefined)
 
-### Spectral Rules
-| File | Description |
-|---|---|
-| [unkey-rules.yml](rules/unkey-rules.yml) | Spectral ruleset enforcing Unkey API conventions |
+## Maintainers
 
-### Capabilities (Naftiko)
-| File | Description |
-|---|---|
-| [shared/unkey.yaml](capabilities/shared/unkey.yaml) | Shared Unkey API consumed definition |
-| [api-key-management.yaml](capabilities/api-key-management.yaml) | API key lifecycle workflow (14 tools) |
-| [rate-limiting.yaml](capabilities/rate-limiting.yaml) | Rate limiting and override management workflow (6 tools) |
-| [identity-management.yaml](capabilities/identity-management.yaml) | Identity lifecycle workflow (5 tools) |
-
-### JSON Schema
-| File | Description |
-|---|---|
-| [unkey-key-schema.json](json-schema/unkey-key-schema.json) | API Key entity schema |
-| [unkey-ratelimit-schema.json](json-schema/unkey-ratelimit-schema.json) | Rate Limit result schema |
-| [unkey-identity-schema.json](json-schema/unkey-identity-schema.json) | Identity entity schema |
-
-### JSON Structure
-| File | Description |
-|---|---|
-| [unkey-key-structure.json](json-structure/unkey-key-structure.json) | API Key field documentation |
-
-### JSON-LD Context
-| File | Description |
-|---|---|
-| [unkey-context.jsonld](json-ld/unkey-context.jsonld) | Linked data context for Unkey domain concepts |
-
-### Examples
-| File | Description |
-|---|---|
-| [unkey-create-key-example.json](examples/unkey-create-key-example.json) | Create API key request/response |
-| [unkey-verify-key-example.json](examples/unkey-verify-key-example.json) | Verify API key request/response |
-| [unkey-get-key-example.json](examples/unkey-get-key-example.json) | Get API key by ID request/response |
-| [unkey-ratelimit-limit-example.json](examples/unkey-ratelimit-limit-example.json) | Apply rate limiting request/response |
-
-### Vocabulary
-| File | Description |
-|---|---|
-| [unkey-vocabulary.yml](vocabulary/unkey-vocabulary.yml) | Domain vocabulary for Unkey platform concepts |
-
----
-
-## APIs Index
-
-- [apis.yml](apis.yml)
-
----
-
-*Maintained by [API Evangelist](https://apievangelist.com)*
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com
