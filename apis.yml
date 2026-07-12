@@ -48,6 +48,10 @@ apis:
       - type: JSONSchema
         url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 common:
+  - type: DomainSecurity
+    url: security/unkey-domain-security.yml
+  - type: Authentication
+    url: authentication/unkey-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/unkeyed
   - type: Website

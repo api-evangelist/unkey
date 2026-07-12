@@ -1,0 +1,20 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/unkey-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: rootKey
+  type: http
+  scheme: bearer
+  bearerFormat: root key
+  description: |-
+    Unkey uses API keys (root keys) for authentication. These keys authorize access to management operations in the API.
+    To authenticate, include your root key in the Authorization header of each request:
+    ```
+    Authorization: Bearer unkey_123
+    ```
+    Root keys have specific permissions attached to them, controlling what operations they can perform. Key permissions follow a hierarchical structure with patter
+  sources:
+  - openapi/unkey-openapi.yml
