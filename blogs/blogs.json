@@ -2,13 +2,14 @@
   "repo": "unkey",
   "feeds": [
     {
-      "source": "https://www.unkey.com/blog",
-      "feed_url": "",
+      "source": "https://www.unkey.com/pricing",
+      "feed_url": "https://www.unkey.com/pricing",
+      "title": "",
       "saved": 0,
-      "method": "agent-scrape"
+      "method": "none"
     }
   ],
-  "fetched": "2026-06-27T13:18:59Z",
+  "fetched": "2026-07-11T11:50:51Z",
   "post_count": 0,
-  "agent_pulled": "2026-06-27"
+  "agent_pulled": "2026-07-04"
 }
