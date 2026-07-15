@@ -48,6 +48,8 @@ apis:
       - type: JSONSchema
         url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/unkey-agentic-access.yml
   - type: DomainSecurity
     url: security/unkey-domain-security.yml
   - type: Authentication
