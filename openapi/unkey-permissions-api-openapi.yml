@@ -1,0 +1,1414 @@
+openapi: 3.1.0
+info:
+  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
+  title: Unkey analytics permissions API
+  version: 2.0.0
+servers:
+- url: https://api.unkey.com
+security:
+- rootKey: []
+tags:
+- description: Permission and role management operations
+  name: permissions
+paths:
+  /v2/permissions.createPermission:
+    post:
+      description: 'Create a new permission to define specific actions or capabilities in your RBAC system. Permissions can be assigned directly to API keys or included in roles.
+
+
+        Use hierarchical naming patterns like `documents.read`, `admin.users.delete`, or `billing.invoices.create` for clear organization.
+
+
+        **Important:** Permission names must be unique within the workspace. Once created, permissions are immediately available for assignment.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.create_permission`
+
+        '
+      operationId: permissions.createPermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsCreatePermissionRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsCreatePermissionResponseBody'
+          description: Permission created successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictErrorResponse'
+          description: Conflict - permission with that name already exists
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Create Permission
+      tags:
+      - permissions
+      x-speakeasy-name-override: CreatePermission
+  /v2/permissions.createRole:
+    post:
+      description: 'Create a new role to group related permissions for easier management. Roles enable consistent permission assignment across multiple API keys.
+
+
+        **Important:** Role names must be unique within the workspace. Once created, roles are immediately available for assignment.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.create_role`
+
+        '
+      operationId: permissions.createRole
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Basic role creation
+                value:
+                  description: Can read and write content
+                  name: content.editor
+              withoutDescription:
+                summary: Role without description
+                value:
+                  name: api.reader
+            schema:
+              $ref: '#/components/schemas/V2PermissionsCreateRoleRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsCreateRoleResponseBody'
+          description: Role created successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConflictErrorResponse'
+          description: Conflict - A role with this name already exists
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Create Role
+      tags:
+      - permissions
+      x-speakeasy-name-override: CreateRole
+  /v2/permissions.deletePermission:
+    post:
+      description: 'Remove a permission from your workspace. This also removes the permission from all API keys and roles.
+
+
+        **Important:** This operation cannot be undone and immediately affects all API keys and roles that had this permission assigned.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.delete_permission`
+
+        '
+      operationId: permissions.deletePermission
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Delete a permission
+                value:
+                  permissionId: perm_1234567890abcdef
+            schema:
+              $ref: '#/components/schemas/V2PermissionsDeletePermissionRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsDeletePermissionResponseBody'
+          description: Permission deleted successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found - The specified permission does not exist
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Delete Permission
+      tags:
+      - permissions
+      x-speakeasy-name-override: DeletePermission
+  /v2/permissions.deleteRole:
+    post:
+      description: 'Remove a role from your workspace. This also removes the role from all assigned API keys.
+
+
+        **Important:** This operation cannot be undone and immediately affects all API keys that had this role assigned.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.delete_role`
+
+        '
+      operationId: permissions.deleteRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsDeleteRoleRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsDeleteRoleResponseBody'
+          description: Role deleted successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Delete Role
+      tags:
+      - permissions
+      x-speakeasy-name-override: DeleteRole
+  /v2/permissions.getPermission:
+    post:
+      description: 'Retrieve details about a specific permission including its name, description, and metadata.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.read_permission`
+
+        '
+      operationId: permissions.getPermission
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsGetPermissionRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsGetPermissionResponseBody'
+          description: Permission retrieved successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Get Permission
+      tags:
+      - permissions
+      x-speakeasy-name-override: GetPermission
+  /v2/permissions.getRole:
+    post:
+      description: 'Retrieve details about a specific role including its assigned permissions.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.read_role`
+
+        '
+      operationId: permissions.getRole
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsGetRoleRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsGetRoleResponseBody'
+          description: Role retrieved successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: Get Role
+      tags:
+      - permissions
+      x-speakeasy-name-override: GetRole
+  /v2/permissions.listPermissions:
+    post:
+      description: 'Retrieve all permissions in your workspace.
+
+        Results are paginated and sorted by their id.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.read_permission`
+
+        '
+      operationId: permissions.listPermissions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsListPermissionsRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsListPermissionsResponseBody'
+          description: Permissions retrieved successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: List Permissions
+      tags:
+      - permissions
+      x-speakeasy-name-override: ListPermissions
+  /v2/permissions.listRoles:
+    post:
+      description: 'Retrieve all roles in your workspace including their assigned permissions.
+
+        Results are paginated and sorted by their id.
+
+
+        **Required Permissions**
+
+
+        Your root key must have the following permission:
+
+        - `rbac.*.read_role`
+
+        '
+      operationId: permissions.listRoles
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2PermissionsListRolesRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2PermissionsListRolesResponseBody'
+          description: Roles retrieved successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: List Roles
+      tags:
+      - permissions
+      x-speakeasy-name-override: ListRoles
+components:
+  schemas:
+    V2PermissionsDeleteRoleRequestBody:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: string
+          pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+          minLength: 3
+          maxLength: 255
+          description: 'Unique identifier of the role to permanently delete from your workspace.
+
+            Must either be a valid role ID that begins with ''role_'' or the given role name and exists within your workspace.
+
+
+            WARNING: Deletion is immediate and irreversible with significant consequences:
+
+            - All API keys assigned this role will lose the associated permissions
+
+            - Access to resources protected by this role''s permissions will be denied
+
+            - Any authorization logic depending on this role will start failing
+
+            - Historical analytics referencing this role remain intact
+
+
+            Before deletion, ensure:
+
+            - You''ve updated any dependent authorization logic or code
+
+            - You''ve migrated any keys to use alternative roles or direct permissions
+
+            - You''ve notified relevant team members of the access changes
+
+            '
+          example: role_dns_manager
+      additionalProperties: false
+    V2PermissionsListRolesRequestBody:
+      type: object
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+          description: 'Maximum number of roles to return in a single response.
+
+            Use smaller values for faster response times and better UI performance.
+
+            Use larger values when you need to process many roles efficiently.
+
+            Results exceeding this limit will be paginated with a cursor for continuation.
+
+            '
+          example: 50
+        cursor:
+          type: string
+          maxLength: 1024
+          description: 'Pagination cursor from a previous response to fetch the next page of roles.
+
+            Include this when you need to retrieve additional roles beyond the first page.
+
+            Each response containing more results will include a cursor value that can be used here.
+
+            Leave empty or omit this field to start from the beginning of the role list.
+
+            '
+          example: eyJrZXkiOiJyb2xlXzEyMzQifQ==
+      additionalProperties: false
+    V2PermissionsDeletePermissionResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/EmptyResponse'
+      additionalProperties: false
+    ValidationError:
+      additionalProperties: false
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
+    UnauthorizedErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+
+        - No authentication token is provided in the request
+
+        - The provided token is invalid, expired, or malformed
+
+        - The token format doesn''t match expected patterns
+
+
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+    V2PermissionsListRolesResponseData:
+      type: array
+      maxItems: 1000
+      description: Array of roles with their assigned permissions.
+      items:
+        $ref: '#/components/schemas/Role'
+    V2PermissionsGetPermissionRequestBody:
+      type: object
+      required:
+      - permission
+      properties:
+        permission:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+          description: 'The unique identifier of the permission to retrieve. Must be a valid permission ID that begins with ''perm_'' and exists within your workspace.
+
+            '
+          example: perm_1234567890abcdef
+      additionalProperties: false
+    V2PermissionsCreateRoleResponseData:
+      type: object
+      properties:
+        roleId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier assigned to the newly created role.
+
+            Use this ID to reference the role in permission assignments, key operations, and role management calls.
+
+            Always begins with ''role_'' followed by a unique alphanumeric sequence.
+
+            Store this ID if you need to manage, modify, or assign this role in future operations.
+
+            '
+          example: role_1234567890abcdef
+      required:
+      - roleId
+      additionalProperties: false
+    Pagination:
+      type: object
+      properties:
+        cursor:
+          type: string
+          minLength: 1
+          maxLength: 1024
+          description: 'Opaque pagination token for retrieving the next page of results.
+
+            Include this exact value in the cursor field of subsequent requests.
+
+            Cursors are temporary and may expire after extended periods.
+
+            '
+          example: eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==
+        hasMore:
+          type: boolean
+          description: 'Indicates whether additional results exist beyond this page.
+
+            When true, use the cursor to fetch the next page.
+
+            When false, you have reached the end of the result set.
+
+            '
+          example: true
+      required:
+      - hasMore
+      additionalProperties: false
+      description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
+    V2PermissionsGetPermissionResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/Permission'
+      additionalProperties: false
+    V2PermissionsCreateRoleRequestBody:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 512
+          pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+          description: 'The unique name for this role. Must be unique within your workspace and clearly indicate the role''s purpose. Use descriptive names like ''admin'', ''editor'', or ''billing_manager''.
+
+
+            Examples: ''admin.billing'', ''support.readonly'', ''developer.api'', ''manager.analytics''
+
+            '
+          example: support.readonly
+        description:
+          type: string
+          maxLength: 512
+          description: 'Provides comprehensive documentation of what this role encompasses and what access it grants.
+
+            Include information about the intended use case, what permissions should be assigned, and any important considerations.
+
+            This internal documentation helps team members understand role boundaries and security implications.
+
+            Not visible to end users - designed for administration teams and access control audits.
+
+
+            Consider documenting:
+
+            - The role''s intended purpose and scope
+
+            - What types of users should receive this role
+
+            - What permissions are typically associated with it
+
+            - Any security considerations or limitations
+
+            - Related roles that might be used together
+
+            '
+          example: Provides read-only access for customer support representatives. Includes permissions to view user accounts, support tickets, and basic analytics. Does not include access to billing, admin functions, or data modification capabilities.
+      additionalProperties: false
+    V2PermissionsCreatePermissionResponseData:
+      type: object
+      properties:
+        permissionId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier assigned to the newly created permission.
+
+            Use this ID to reference the permission in role assignments, key operations, and other API calls.
+
+            Always begins with ''perm_'' followed by a unique alphanumeric sequence.
+
+            Store this ID if you need to manage or reference this permission in future operations.
+
+            '
+          example: perm_1234567890abcdef
+      required:
+      - permissionId
+      additionalProperties: false
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    V2PermissionsGetRoleRequestBody:
+      type: object
+      required:
+      - role
+      properties:
+        role:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+          description: 'Unique identifier of the role to permanently delete from your workspace.
+
+            Must either be a valid role ID that begins with ''role_'' or the given role name and exists within your workspace.
+
+
+            Use this endpoint to verify role details, check its current permissions, or retrieve metadata.
+
+            Returns complete role information including all assigned permissions for comprehensive access review.
+
+            '
+          example: role_1234567890abcdef
+      additionalProperties: false
+    V2PermissionsDeleteRoleResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/EmptyResponse'
+      additionalProperties: false
+    V2PermissionsListPermissionsResponseData:
+      type: array
+      maxItems: 1000
+      description: Array of permission objects with complete configuration details.
+      items:
+        $ref: '#/components/schemas/Permission'
+    V2PermissionsListRolesResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2PermissionsListRolesResponseData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      additionalProperties: false
+    V2PermissionsDeletePermissionRequestBody:
+      type: object
+      required:
+      - permission
+      properties:
+        permission:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+          description: 'Specifies which permission to permanently delete from your workspace.
+
+
+            This can be a permission ID or a permission slug.
+
+
+            WARNING: Deleting a permission has immediate and irreversible consequences:
+
+            - All API keys with this permission will lose that access immediately
+
+            - All roles containing this permission will have it removed
+
+            - Any verification requests checking for this permission will fail
+
+            - This action cannot be undone
+
+
+            Before deletion, ensure you:
+
+            - Have updated any keys or roles that depend on this permission
+
+            - Have migrated to alternative permissions if needed
+
+            - Have notified affected users about the access changes
+
+            '
+          example: perm_1234567890abcdef
+      additionalProperties: false
+    V2PermissionsCreatePermissionRequestBody:
+      type: object
+      required:
+      - name
+      - slug
+      properties:
+        name:
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: 'Creates a permission with this human-readable name that describes its purpose.
+
+            Names must be unique within your workspace to prevent conflicts during assignment.
+
+            Use clear, semantic names that developers can easily understand when building authorization logic.
+
+            Consider using hierarchical naming conventions like ''resource.action'' for better organization.
+
+
+            Examples: ''users.read'', ''billing.write'', ''analytics.view'', ''admin.manage''
+
+            '
+          example: users.read
+        slug:
+          type: string
+          minLength: 1
+          maxLength: 128
+          pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+          description: 'Creates a URL-safe identifier for this permission that can be used in APIs and integrations.
+
+            Must start with a letter and contain only letters, numbers, periods, underscores, and hyphens.
+
+            Slugs are often used in REST endpoints, configuration files, and external integrations.
+
+            Should closely match the name but in a format suitable for technical usage.
+
+            Must be unique within your workspace to ensure reliable permission lookups.
+
+
+            Keep slugs concise but descriptive for better developer experience.
+
+            '
+          example: users-read
+        description:
+          type: string
+          maxLength: 512
+          description: 'Provides detailed documentation of what this permission grants access to.
+
+            Include information about affected resources, allowed actions, and any important limitations.
+
+            This internal documentation helps team members understand permission scope and security implications.
+
+            Not visible to end users - designed for development teams and security audits.
+
+
+            Consider documenting:
+
+            - What resources can be accessed
+
+            - What operations are permitted
+
+            - Any conditions or limitations
+
+            - Related permissions that might be needed
+
+            '
+          example: Grants read-only access to user profile information, account settings, and subscription status.
+      additionalProperties: false
+    V2PermissionsGetRoleResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/Role'
+      additionalProperties: false
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    Permission:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier for this permission within Unkey''s system.
+
+            Generated automatically when the permission is created and used to reference this permission in API operations.
+
+            Always begins with ''perm_'' followed by alphanumeric characters and underscores.
+
+            '
+          example: perm_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: 'The human-readable name for this permission that describes its purpose.
+
+            Should be descriptive enough for developers to understand what access it grants.
+
+            Use clear, semantic names that reflect the resources or actions being permitted.
+
+            Names must be unique within your workspace to avoid confusion and conflicts.
+
+            '
+          example: users.read
+        slug:
+          pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: The unique URL-safe identifier for this permission.
+          example: users-read
+        description:
+          type: string
+          maxLength: 512
+          description: 'Optional detailed explanation of what this permission grants access to.
+
+            Helps team members understand the scope and implications of granting this permission.
+
+            Include information about what resources can be accessed and what actions can be performed.
+
+            Not visible to end users - this is for internal documentation and team clarity.
+
+            '
+          example: Allows reading user profile information and account details
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - id
+      - name
+      - slug
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The unique identifier for this role within Unkey''s system.
+
+            Generated automatically when the role is created and used to reference this role in API operations.
+
+            Always begins with ''role_'' followed by alphanumeric characters and underscores.
+
+            '
+          example: role_1234567890abcdef
+        name:
+          type: string
+          description: 'The human-readable name for this role that describes its function.
+
+            Should be descriptive enough for administrators to understand what access this role provides.
+
+            Use clear, semantic names that reflect the job function or responsibility level.
+
+            Names must be unique within your workspace to avoid confusion during role assignment.
+
+            '
+          example: support.readonly
+        description:
+          type: string
+          description: 'Optional detailed explanation of what this role encompasses and what access it provides.
+
+            Helps team members understand the role''s scope, intended use cases, and security implications.
+
+            Include information about what types of users should receive this role and what they can accomplish.
+
+            Not visible to end users - this is for internal documentation and access control audits.
+
+            '
+          example: Provides read-only access for customer support representatives to view user accounts and support tickets
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          maxItems: 100
+          description: 'Complete list of permissions currently assigned to this role.
+
+            Each permission grants specific access rights that will be inherited by any keys or users assigned this role.
+
+            Use this list to understand the full scope of access provided by this role.
+
+            Permissions can be added or removed from roles without affecting the role''s identity or other properties.
+
+            Empty array indicates a role with no permissions currently assigned.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - id
+      - name
+      additionalProperties: false
+    V2PermissionsCreatePermissionResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2PermissionsCreatePermissionResponseData'
+      additionalProperties: false
+    ConflictErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the request conflicts with the current state of the resource. This occurs when:
+
+        - Attempting to create a resource that already exists
+
+        - Modifying a resource that has been changed by another operation
+
+        - Violating unique constraints or business rules
+
+
+        To resolve this error, check the current state of the resource and adjust your request accordingly.'
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    V2PermissionsListPermissionsResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2PermissionsListPermissionsResponseData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      additionalProperties: false
+    InternalServerErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    V2PermissionsCreateRoleResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2PermissionsCreateRoleResponseData'
+      additionalProperties: false
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    V2PermissionsListPermissionsRequestBody:
+      type: object
+      properties:
+        cursor:
+          type: string
+          maxLength: 1024
+          description: 'Pagination cursor from a previous response to fetch the next page of permissions.
+
+            Include this value when you need to retrieve additional permissions beyond the initial response.
+
+            Each response containing more results than the requested limit includes a cursor for subsequent pages.
+
+
+            Leave empty or omit this field to start from the beginning of the permission list.
+
+            Cursors are temporary and may expire - always handle cases where a cursor becomes invalid.
+
+            '
+          example: eyJrZXkiOiJwZXJtXzEyMzQifQ==
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+          description: Maximum number of permissions to return in a single response.
+          example: 50
+      additionalProperties: false
+    EmptyResponse:
+      type: object
+      additionalProperties: false
+      description: Empty response object by design. A successful response indicates this operation was successfully executed.
+  securitySchemes:
+    rootKey:
+      bearerFormat: root key
+      description: 'Unkey uses API keys (root keys) for authentication. These keys authorize access to management operations in the API.
+
+        To authenticate, include your root key in the Authorization header of each request:
+
+        ```
+
+        Authorization: Bearer unkey_123
+
+        ```
+
+        Root keys have specific permissions attached to them, controlling what operations they can perform. Key permissions follow a hierarchical structure with patterns like `resource.resource_id.action` (e.g., `apis.*.create_key`, `apis.*.read_api`).
+
+        Security best practices:
+
+        - Keep root keys secure and never expose them in client-side code
+
+        - Use different root keys for different environments
+
+        - Rotate keys periodically, especially after team member departures
+
+        - Create keys with minimal necessary permissions following least privilege principle
+
+        - Monitor key usage with audit logs.'
+      scheme: bearer
+      type: http

@@ -1,0 +1,1093 @@
+openapi: 3.1.0
+info:
+  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
+  title: Unkey analytics apis API
+  version: 2.0.0
+servers:
+- url: https://api.unkey.com
+security:
+- rootKey: []
+tags:
+- description: API management operations
+  name: apis
+paths:
+  /v2/apis.createApi:
+    post:
+      description: 'Create an API namespace for organizing keys by environment, service, or product.
+
+
+        Use this to separate production from development keys, isolate different services, or manage multiple products. Each API gets a unique identifier and dedicated infrastructure for secure key operations.
+
+
+        **Important**: API names must be unique within your workspace and cannot be changed after creation.
+
+
+        **Required Permissions**
+
+
+        Your root key must have one of the following permissions:
+
+        - `api.*.create_api` (to create APIs in any workspace)
+
+        '
+      operationId: apis.createApi
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ApisCreateApiRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ApisCreateApiResponseBody'
+          description: 'API namespace created successfully. The response contains the unique API ID for referencing this namespace in key operations.
+
+            '
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Create API Namespace
+      tags:
+      - apis
+      x-speakeasy-name-override: createApi
+  /v2/apis.deleteApi:
+    post:
+      description: 'Permanently delete an API namespace and immediately invalidate all associated keys.
+
+
+        Use this for cleaning up development environments, retiring deprecated services, or removing unused resources.
+
+        All keys in the namespace are immediately marked as deleted and will fail verification with `code=NOT_FOUND`.
+
+
+        **Important**: This operation is immediate and permanent. Verify you have the correct API ID before deletion.
+
+        If delete protection is enabled, disable it first through the dashboard or API configuration.
+
+
+        **Required Permissions**
+
+
+        Your root key must have one of the following permissions:
+
+        - `api.*.delete_api` (to delete any API)
+
+        - `api.<api_id>.delete_api` (to delete a specific API)
+
+        '
+      operationId: apis.deleteApi
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ApisDeleteApiRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ApisDeleteApiResponseBody'
+          description: API namespace deleted successfully. All associated keys are immediately invalidated and will fail verification with `code=NOT_FOUND`.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '412':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PreconditionFailedErrorResponse'
+          description: Delete protection is enabled. Disable protection through the dashboard or API configuration, then retry the deletion.
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Delete API Namespace
+      tags:
+      - apis
+      x-speakeasy-name-override: deleteApi
+  /v2/apis.getApi:
+    post:
+      description: 'Retrieve basic information about an API namespace including its ID and name.
+
+
+        Use this to verify an API exists before performing operations, get the human-readable name when you only have the API ID, or confirm access to a specific namespace. For detailed key information, use the `listKeys` endpoint instead.
+
+
+        **Required Permissions**
+
+
+        Your root key must have one of the following permissions:
+
+        - `api.*.read_api` (to read any API)
+
+        - `api.<api_id>.read_api` (to read a specific API)
+
+        '
+      operationId: apis.getApi
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ApisGetApiRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ApisGetApiResponseBody'
+          description: API information retrieved successfully. Contains the unique API ID and human-readable name.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Get API Namespace
+      tags:
+      - apis
+      x-speakeasy-name-override: getApi
+  /v2/apis.listKeys:
+    post:
+      description: 'Retrieve a paginated list of API keys for dashboard and administrative interfaces.
+
+
+        Use this to build key management dashboards, filter keys by user with `externalId`, or retrieve key details for administrative purposes. Each key includes status, metadata, permissions, and usage limits.
+
+
+        **Important**: Set `decrypt: true` only in secure contexts to retrieve plaintext key values from recoverable keys.
+
+
+        **Required Permissions**
+
+
+        Your root key must have one of the following permissions for basic key listing:
+
+        - `api.*.read_key` (to read keys from any API)
+
+        - `api.<api_id>.read_key` (to read keys from a specific API)
+
+
+        Additionally, you need read access to the API itself:
+
+        - `api.*.read_api` or `api.<api_id>.read_api`
+
+
+        Additional permission required for decrypt functionality:
+
+        - `api.*.decrypt_key` or `api.<api_id>.decrypt_key`
+
+        '
+      operationId: apis.listKeys
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ApisListKeysRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ApisListKeysResponseBody'
+          description: 'Successfully retrieved paginated keys. Use the pagination cursor for additional results when `hasMore: true`.
+
+            '
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: List API Keys
+      tags:
+      - apis
+      x-speakeasy-name-override: listKeys
+components:
+  schemas:
+    ValidationError:
+      additionalProperties: false
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
+    KeyCreditsData:
+      type: object
+      description: Credit configuration and remaining balance for this key.
+      properties:
+        remaining:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Number of credits remaining (null for unlimited).
+          example: 1000
+        refill:
+          $ref: '#/components/schemas/KeyCreditsRefill'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - remaining
+      additionalProperties: false
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    V2ApisListKeysResponseData:
+      type: array
+      maxItems: 100
+      items:
+        $ref: '#/components/schemas/KeyResponseData'
+      description: Array of API keys with complete configuration and metadata.
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
+    UnauthorizedErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+
+        - No authentication token is provided in the request
+
+        - The provided token is invalid, expired, or malformed
+
+        - The token format doesn''t match expected patterns
+
+
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    V2ApisGetApiRequestBody:
+      type: object
+      required:
+      - apiId
+      properties:
+        apiId:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which API to retrieve by its unique identifier.
+
+            Must be a valid API ID that begins with ''api_'' and exists within your workspace.
+
+            '
+          example: api_1234abcd
+      additionalProperties: false
+    KeyResponseData:
+      type: object
+      properties:
+        keyId:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: Unique identifier for this key.
+          example: key_1234567890abcdef
+        start:
+          type: string
+          minLength: 1
+          maxLength: 50
+          description: First few characters of the key for identification.
+          example: sk_test_abc123
+        enabled:
+          type: boolean
+          description: Whether the key is enabled or disabled.
+          example: true
+        name:
+          type: string
+          maxLength: 255
+          description: Human-readable name for this key.
+          example: Production API Key
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: Custom metadata associated with this key.
+          example: null
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        createdAt:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key was created.
+          example: 1701425400000
+        updatedAt:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key was last updated.
+          example: 1701425400000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        lastUsedAt:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Unix timestamp in milliseconds when key was last used for verification. This is an approximated value, accurate to within 5 minutes.
+          example: 1701425400000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        expires:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key expires (if set).
+          example: 1735689600000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        permissions:
+          type: array
+          items:
+            type: string
+            description: List of permission slugs granted to this key.
+          example:
+          - documents.read
+          - documents.write
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        roles:
+          type: array
+          items:
+            type: string
+            description: List of roles assigned to this key.
+          example:
+          - editor
+          - viewer
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        credits:
+          $ref: '#/components/schemas/KeyCreditsData'
+        identity:
+          $ref: '#/components/schemas/Identity'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        plaintext:
+          type: string
+          description: Decrypted key value (only when decrypt=true).
+          example: sk_test_abc123def456
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitResponse'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - keyId
+      - start
+      - createdAt
+      - enabled
+      additionalProperties: false
+    PreconditionFailedErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when one or more conditions specified in the request headers are not met. This typically occurs when:
+
+        - Using conditional requests with If-Match or If-None-Match headers
+
+        - The resource version doesn''t match the expected value
+
+        - Optimistic concurrency control detects a conflict
+
+
+        To resolve this error, fetch the latest version of the resource and retry with updated conditions.'
+    Pagination:
+      type: object
+      properties:
+        cursor:
+          type: string
+          minLength: 1
+          maxLength: 1024
+          description: 'Opaque pagination token for retrieving the next page of results.
+
+            Include this exact value in the cursor field of subsequent requests.
+
+            Cursors are temporary and may expire after extended periods.
+
+            '
+          example: eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==
+        hasMore:
+          type: boolean
+          description: 'Indicates whether additional results exist beyond this page.
+
+            When true, use the cursor to fetch the next page.
+
+            When false, you have reached the end of the result set.
+
+            '
+          example: true
+      required:
+      - hasMore
+      additionalProperties: false
+      description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
+    V2ApisCreateApiRequestBody:
+      type: object
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+          description: 'Unique identifier for this API namespace within your workspace.
+
+            Use descriptive names like ''payment-service-prod'' or ''user-api-dev'' to clearly identify purpose and environment.
+
+            '
+          example: payment-service-production
+      additionalProperties: false
+    Identity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identity ID
+        externalId:
+          type: string
+          description: External identity ID
+        meta:
+          type: object
+          additionalProperties: true
+          description: Identity metadata
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          description: Identity ratelimits
+          items:
+            $ref: '#/components/schemas/RatelimitResponse'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - externalId
+      - id
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    V2ApisGetApiResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2ApisGetApiResponseData'
+      additionalProperties: false
+    V2ApisListKeysResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2ApisListKeysResponseData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      additionalProperties: false
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    V2ApisCreateApiResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2ApisCreateApiResponseData'
+      additionalProperties: false
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    KeyCreditsRefill:
+      type: object
+      description: Configuration for automatic credit refill behavior.
+      properties:
+        interval:
+          type: string
+          enum:
+          - daily
+          - monthly
+          x-speakeasy-unknown-values: allow
+          description: How often credits are automatically refilled.
+          example: daily
+        amount:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 9223372036854776000
+          description: Number of credits to add during each refill cycle.
+          example: 1000
+        refillDay:
+          type: integer
+          minimum: 1
+          maximum: 31
+          description: 'Day of the month for monthly refills (1-31).
+
+            Only required when interval is ''monthly''.
+
+            For days beyond the month''s length, refill occurs on the last day of the month.
+
+            '
+          example: 15
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - interval
+      - amount
+      additionalProperties: false
+    V2ApisCreateApiResponseData:
+      type: object
+      properties:
+        apiId:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier assigned to the newly created API.
+
+            Use this ID for all subsequent operations including key creation, verification, and API management.
+
+            Always begins with ''api_'' followed by a unique alphanumeric sequence.
+
+
+            Store this ID securely as it''s required when:
+
+            - Creating API keys within this namespace
+
+            - Verifying keys associated with this API
+
+            - Managing API settings and metadata
+
+            - Listing keys belonging to this API
+
+
+            This identifier is permanent and cannot be changed after creation.
+
+            '
+          example: api_2cGKbMxRjIzhCxo1IdjH3a
+      required:
+      - apiId
+      additionalProperties: false
+    InternalServerErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    RatelimitResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^rl_[a-zA-Z0-9_]+$
+          description: Unique identifier for this rate limit configuration.
+          example: rl_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Human-readable name for this rate limit.
+          example: api_requests
+        limit:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+          description: Maximum requests allowed within the time window.
+          example: 1000
+        duration:
+          type: integer
+          format: int64
+          minimum: 1000
+          maximum: 2592000000
+          description: Rate limit window duration in milliseconds.
+          example: 3600000
+        autoApply:
+          type: boolean
+          description: Whether this rate limit was automatically applied when verifying the key.
+          example: true
+      required:
+      - id
+      - name
+      - limit
+      - duration
+      - autoApply
+      additionalProperties: false
+    V2ApisGetApiResponseData:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier of this API within Unkey''s system.
+
+            Used in all operations related to this API including key creation, verification, and management.
+
+            Always begins with ''api_'' followed by alphanumeric characters and underscores.
+
+            This identifier is permanent and never changes after API creation.
+
+            '
+          example: api_1234567890abcdef
+        name:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: 'The internal name of this API as specified during creation.
+
+            Used for organization and identification within your workspace.
+
+            Helps distinguish between different environments, services, or access tiers.
+
+            Not visible to end users - this is purely for administrative purposes.
+
+            '
+          example: payment-service-production
+      required:
+      - id
+      - name
+      additionalProperties: false
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    V2ApisListKeysRequestBody:
+      type: object
+      required:
+      - apiId
+      properties:
+        apiId:
+          type: string
+          minLength: 1
+          description: 'The API namespace whose keys you want to list.
+
+            Returns all keys in this API, subject to pagination and filters.
+
+            '
+          example: api_1234abcd
+        limit:
+          type: integer
+          description: 'Maximum number of keys to return per request.
+
+            Balance between response size and number of pagination calls needed.
+
+            '
+          default: 100
+          minimum: 1
+          maximum: 100
+        cursor:
+          type: string
+          description: 'Pagination cursor from previous response to fetch next page.
+
+            Use when `hasMore: true` in previous response.
+
+            '
+          example: key_1234abcd
+        externalId:
+          type: string
+          minLength: 1
+          description: 'Filter keys by external ID to find keys for a specific user or entity.
+
+            Must exactly match the externalId set during key creation.
+
+            '
+          example: user_1234abcd
+        decrypt:
+          type: boolean
+          description: 'When true, attempts to include the plaintext key value in the response. SECURITY WARNING:
+
+            - This requires special permissions on the calling root key
+
+            - Only works for keys created with ''recoverable: true''
+
+            - Exposes sensitive key material in the response
+
+            - Should only be used in secure administrative contexts
+
+            - Never enable this in user-facing applications'
+          default: false
+        revalidateKeysCache:
+          type: boolean
+          default: false
+          description: 'EXPERIMENTAL: Skip the cache and fetch the keys directly from the database. This ensures you see the most recent state, including keys created moments ago. Use this when:
+
+            - You''ve just created a key and need to display it immediately
+
+            - You need absolute certainty about the current key state
+
+            - You''re debugging cache consistency issues
+
+
+            This parameter comes with a performance cost and should be used sparingly.'
+      additionalProperties: false
+    V2ApisDeleteApiResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/EmptyResponse'
+      additionalProperties: false
+    V2ApisDeleteApiRequestBody:
+      type: object
+      required:
+      - apiId
+      properties:
+        apiId:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which API namespace to permanently delete from your workspace.
+
+            Must be a valid API ID that begins with ''api_'' and exists within your workspace.
+
+
+            Before proceeding, ensure you have the correct API ID and understand that this action cannot be undone. If you need to migrate functionality, create replacement keys in a new API namespace and update client applications before deletion.
+
+            '
+          example: api_1234abcd
+      additionalProperties: false
+    EmptyResponse:
+      type: object
+      additionalProperties: false
+      description: Empty response object by design. A successful response indicates this operation was successfully executed.
+  securitySchemes:
+    rootKey:
+      bearerFormat: root key
+      description: 'Unkey uses API keys (root keys) for authentication. These keys authorize access to management operations in the API.
+
+        To authenticate, include your root key in the Authorization header of each request:
+
+        ```
+
+        Authorization: Bearer unkey_123
+
+        ```
+
+        Root keys have specific permissions attached to them, controlling what operations they can perform. Key permissions follow a hierarchical structure with patterns like `resource.resource_id.action` (e.g., `apis.*.create_key`, `apis.*.read_api`).
+
+        Security best practices:
+
+        - Keep root keys secure and never expose them in client-side code
+
+        - Use different root keys for different environments
+
+        - Rotate keys periodically, especially after team member departures
+
+        - Create keys with minimal necessary permissions following least privilege principle
+
+        - Monitor key usage with audit logs.'
+      scheme: bearer
+      type: http

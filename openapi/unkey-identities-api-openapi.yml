@@ -1,0 +1,1199 @@
+openapi: 3.1.0
+info:
+  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
+  title: Unkey analytics identities API
+  version: 2.0.0
+servers:
+- url: https://api.unkey.com
+security:
+- rootKey: []
+tags:
+- description: Identity management operations
+  name: identities
+paths:
+  /v2/identities.createIdentity:
+    post:
+      description: 'Create an identity to group multiple API keys under a single entity. Identities enable shared rate limits and metadata across all associated keys.
+
+
+        Perfect for users with multiple devices, organizations with multiple API keys, or when you need unified rate limiting across different services.
+
+
+        **Important**
+
+        Requires `identity.*.create_identity` permission
+
+        '
+      operationId: identities.createIdentity
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Simple identity
+                value:
+                  externalId: user_123
+              withMetadata:
+                summary: With user data
+                value:
+                  externalId: user_123
+                  meta:
+                    email: alice@example.com
+                    name: Alice Smith
+                    plan: premium
+              withRatelimits:
+                summary: With rate limits
+                value:
+                  externalId: user_123
+                  ratelimits:
+                  - duration: 60000
+                    limit: 1000
+                    name: requests
+            schema:
+              $ref: '#/components/schemas/V2IdentitiesCreateIdentityRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Successfully created identity
+                  value:
+                    meta:
+                      requestId: req_01H9TQPP77V5E48E9SH0BG0ZQX
+              schema:
+                $ref: '#/components/schemas/V2IdentitiesCreateIdentityResponseBody'
+          description: ''
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              examples:
+                missingPermission:
+                  summary: Missing required permission
+                  value:
+                    error:
+                      detail: Your root key requires the 'identity.*.create_identity' permission to perform this operation
+                      status: 403
+                      title: Forbidden
+                      type: forbidden
+                    meta:
+                      requestId: req_0uVwX4yZaAbCdEfGhIjKl
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden - Insufficient permissions (requires `identity.*.create_identity`)
+        '409':
+          content:
+            application/json:
+              examples:
+                identityExists:
+                  summary: Identity already exists
+                  value:
+                    error:
+                      detail: Identity with externalId "user_abc123" already exists in this workspace.
+                      status: 409
+                      title: Conflict
+                      type: conflict
+                    meta:
+                      requestId: req_2wXyZaAbCdEfGhIjKlMnOp
+              schema:
+                $ref: '#/components/schemas/ConflictErrorResponse'
+          description: Conflict - Identity with this externalId already exists
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Create Identity
+      tags:
+      - identities
+      x-speakeasy-name-override: createIdentity
+  /v2/identities.deleteIdentity:
+    post:
+      description: 'Permanently delete an identity. This operation cannot be undone.
+
+
+        Use this for data cleanup, compliance requirements, or when removing entities from your system.
+
+
+        > **Important**
+
+        > Requires `identity.*.delete_identity` permission
+
+        > Associated API keys remain functional but lose shared resources
+
+        > External ID becomes available for reuse immediately
+
+        '
+      operationId: identities.deleteIdentity
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Delete identity
+                value:
+                  identity: user_123
+            schema:
+              $ref: '#/components/schemas/V2IdentitiesDeleteIdentityRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Successful deletion
+                  value:
+                    meta:
+                      requestId: req_01H9TQPP77V5E48E9SH0BG0ZQX
+              schema:
+                $ref: '#/components/schemas/V2IdentitiesDeleteIdentityResponseBody'
+          description: Identity successfully deleted
+        '400':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/problem+json:
+              examples:
+                missingPermission:
+                  summary: Missing required permission
+                  value:
+                    error:
+                      detail: Your root key requires the 'identity.*.delete_identity' permission to perform this operation
+                      status: 403
+                      title: Forbidden
+                      type: forbidden
+                    meta:
+                      requestId: req_0uVwX4yZaAbCdEfGhIjKl
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden - Insufficient permissions (requires `identity.*.delete_identity`)
+        '404':
+          content:
+            application/problem+json:
+              examples:
+                identityNotFound:
+                  summary: Identity not found
+                  value:
+                    error:
+                      detail: Identity with externalId "user_abc123" not found.
+                      status: 404
+                      title: Not Found
+                      type: not_found
+                    meta:
+                      requestId: req_2wXyZaAbCdEfGhIjKlMnOp
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found - Identity with the specified externalId doesn't exist
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Error
+      security:
+      - rootKey: []
+      summary: Delete Identity
+      tags:
+      - identities
+      x-speakeasy-name-override: deleteIdentity
+  /v2/identities.getIdentity:
+    post:
+      description: 'Retrieve an identity by external ID. Returns metadata, rate limits, and other associated data.
+
+
+        Use this to check if an identity exists, view configurations, or build management dashboards.
+
+
+        > **Important**
+
+        > Requires `identity.*.read_identity` permission
+
+        '
+      operationId: identities.getIdentity
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: Get identity
+                value:
+                  identity: user_123
+            schema:
+              $ref: '#/components/schemas/V2IdentitiesGetIdentityRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Identity found
+                  value:
+                    data:
+                      externalId: user_123
+                      id: id_1234567890abcdef
+                      meta:
+                        email: alice@example.com
+                        name: Alice Smith
+                        plan: premium
+                      ratelimits:
+                      - duration: 60000
+                        limit: 1000
+                        name: requests
+                    meta:
+                      requestId: req_01H9TQPP77V5E48E9SH0BG0ZQX
+              schema:
+                $ref: '#/components/schemas/V2IdentitiesGetIdentityResponseBody'
+          description: Successfully retrieved the identity information
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              examples:
+                missingPermission:
+                  summary: Missing required permission
+                  value:
+                    error:
+                      detail: Your root key requires the 'identity.*.read_identity' permission to perform this operation
+                      status: 403
+                      title: Forbidden
+                      type: forbidden
+                    meta:
+                      requestId: req_0uVwX4yZaAbCdEfGhIjKl
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden - Insufficient permissions (requires `identity.*.read_identity`)
+        '404':
+          content:
+            application/json:
+              examples:
+                identityNotFound:
+                  summary: Identity not found
+                  value:
+                    error:
+                      detail: Identity with externalId "user_abc123" not found.
+                      status: 404
+                      title: Not Found
+                      type: not_found
+                    meta:
+                      requestId: req_2wXyZaAbCdEfGhIjKlMnOp
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found - Identity with the specified externalId doesn't exist
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Get Identity
+      tags:
+      - identities
+      x-speakeasy-name-override: getIdentity
+  /v2/identities.listIdentities:
+    post:
+      description: 'Get a paginated list of all identities in your workspace. Returns metadata and rate limit configurations.
+
+
+        Perfect for building management dashboards, auditing configurations, or browsing your identities.
+
+
+        > **Important**
+
+        > Requires `identity.*.read_identity` permission
+
+        '
+      operationId: identities.listIdentities
+      requestBody:
+        content:
+          application/json:
+            examples:
+              basic:
+                summary: List identities
+                value:
+                  limit: 50
+              withCursor:
+                summary: With pagination cursor
+                value:
+                  cursor: cursor_eyJrZXkiOiJrZXlfMTIzNCJ9
+                  limit: 50
+            schema:
+              $ref: '#/components/schemas/V2IdentitiesListIdentitiesRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              examples:
+                success:
+                  summary: Identities retrieved
+                  value:
+                    data:
+                      cursor: cursor_eyJsYXN0SWQiOiJpZF8wMlpZUjNROU5QOEpNNFg4SFdTS1BXNDNKRiJ9
+                      identities:
+                      - externalId: user_123
+                        id: id_01H9TQP8NP8JN3X8HWSKPW43JE
+                        meta:
+                          name: Alice Smith
+                          plan: premium
+                        ratelimits:
+                        - duration: 60000
+                          limit: 1000
+                          name: requests
+                      - externalId: user_456
+                        id: id_02ZYR3Q9NP8JM4X8HWSKPW43JF
+                        meta:
+                          name: Bob Johnson
+                          plan: basic
+                        ratelimits:
+                        - duration: 60000
+                          limit: 500
+                          name: requests
+                      total: 247
+                    meta:
+                      requestId: req_01H9TQPP77V5E48E9SH0BG0ZQX
+              schema:
+                $ref: '#/components/schemas/V2IdentitiesListIdentitiesResponseBody'
+          description: Successfully retrieved the list of identities
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad Request - Invalid parameters
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized - Missing or invalid authentication
+        '403':
+          content:
+            application/json:
+              examples:
+                missingPermission:
+                  summary: Missing required permission
+                  value:
+                    error:
+                      detail: Your root key requires the 'identity.*.read_identity' permission to perform this operation
+                      status: 403
+                      title: Forbidden
+                      type: forbidden
+                    meta:
+                      requestId: req_0uVwX4yZaAbCdEfGhIjKl
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden - Insufficient permissions (requires `identity.*.read_identity`)
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal Server Error
+      security:
+      - rootKey: []
+      summary: List Identities
+      tags:
+      - identities
+      x-speakeasy-name-override: listIdentities
+      x-speakeasy-pagination:
+        inputs:
+        - in: requestBody
+          name: cursor
+          type: cursor
+        outputs:
+          nextCursor: $.data.cursor
+        type: cursor
+  /v2/identities.updateIdentity:
+    post:
+      description: 'Update an identity''s metadata and rate limits. Only specified fields are modified - others remain unchanged.
+
+
+        Perfect for subscription changes, plan upgrades, or updating user information. Changes take effect immediately.
+
+
+        > **Important**
+
+        > Requires `identity.*.update_identity` permission
+
+        > Rate limit changes propagate within 30 seconds
+
+        '
+      operationId: identities.updateIdentity
+      requestBody:
+        content:
+          application/json:
+            examples:
+              updateMetadata:
+                summary: Update metadata
+                value:
+                  identity: user_123
+                  meta:
+                    email: alice@example.com
+                    name: Alice Smith
+                    plan: premium
+            schema:
+              $ref: '#/components/schemas/V2IdentitiesUpdateIdentityRequestBody'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2IdentitiesUpdateIdentityResponseBody'
+          description: Identity successfully updated
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequestErrorResponse'
+          description: Bad request
+        '401':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedErrorResponse'
+          description: Unauthorized
+        '403':
+          content:
+            application/json:
+              examples:
+                missingPermission:
+                  summary: Missing required permission
+                  value:
+                    error:
+                      detail: Your root key requires the 'identity.*.update_identity' permission to perform this operation
+                      status: 403
+                      title: Forbidden
+                      type: forbidden
+                    meta:
+                      requestId: req_0uVwX4yZaAbCdEfGhIjKl
+              schema:
+                $ref: '#/components/schemas/ForbiddenErrorResponse'
+          description: Forbidden - Insufficient permissions (requires `identity.*.update_identity`)
+        '404':
+          content:
+            application/json:
+              examples:
+                identityNotFound:
+                  summary: Identity not found
+                  value:
+                    error:
+                      detail: Identity with externalId "user_123" not found.
+                      status: 404
+                      title: Not Found
+                      type: not_found
+                    meta:
+                      requestId: req_2wXyZaAbCdEfGhIjKlMnOp
+              schema:
+                $ref: '#/components/schemas/NotFoundErrorResponse'
+          description: Not Found - Identity with the specified ID or externalId doesn't exist
+        '429':
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/TooManyRequestsErrorResponse'
+          description: Too Many Requests
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerErrorResponse'
+          description: Internal server error
+      security:
+      - rootKey: []
+      summary: Update Identity
+      tags:
+      - identities
+      x-speakeasy-name-override: updateIdentity
+components:
+  schemas:
+    ValidationError:
+      additionalProperties: false
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    UnauthorizedErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+
+        - No authentication token is provided in the request
+
+        - The provided token is invalid, expired, or malformed
+
+        - The token format doesn''t match expected patterns
+
+
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+    V2IdentitiesListIdentitiesResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      - pagination
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2IdentitiesListIdentitiesResponseData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+      additionalProperties: false
+    V2IdentitiesListIdentitiesRequestBody:
+      type: object
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+          description: The maximum number of identities to return in a single request. Use this to control response size and loading performance.
+          example: 50
+        cursor:
+          type: string
+          description: Pagination cursor from a previous response. Use this to fetch subsequent pages of results when the response contains a cursor value.
+          example: cursor_eyJrZXkiOiJrZXlfMTIzNCJ9
+      additionalProperties: false
+    Pagination:
+      type: object
+      properties:
+        cursor:
+          type: string
+          minLength: 1
+          maxLength: 1024
+          description: 'Opaque pagination token for retrieving the next page of results.
+
+            Include this exact value in the cursor field of subsequent requests.
+
+            Cursors are temporary and may expire after extended periods.
+
+            '
+          example: eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==
+        hasMore:
+          type: boolean
+          description: 'Indicates whether additional results exist beyond this page.
+
+            When true, use the cursor to fetch the next page.
+
+            When false, you have reached the end of the result set.
+
+            '
+          example: true
+      required:
+      - hasMore
+      additionalProperties: false
+      description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
+    Identity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identity ID
+        externalId:
+          type: string
+          description: External identity ID
+        meta:
+          type: object
+          additionalProperties: true
+          description: Identity metadata
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          description: Identity ratelimits
+          items:
+            $ref: '#/components/schemas/RatelimitResponse'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - externalId
+      - id
+    V2IdentitiesGetIdentityRequestBody:
+      type: object
+      properties:
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to retrieve. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
+          example: user_abc123
+      additionalProperties: false
+      required:
+      - identity
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    V2IdentitiesGetIdentityResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/Identity'
+    V2IdentitiesUpdateIdentityResponseBody:
+      type: object
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/Identity'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    RatelimitRequest:
+      type: object
+      required:
+      - name
+      - limit
+      - duration
+      - autoApply
+      properties:
+        name:
+          description: 'The name of this rate limit. This name is used to identify which limit to check during key verification.
+
+
+            Best practices for limit names:
+
+            - Use descriptive, semantic names like ''api_requests'', ''heavy_operations'', or ''downloads''
+
+            - Be consistent with naming conventions across your application
+
+            - Create separate limits for different resource types or operation costs
+
+            - Consider using namespaced names for better organization (e.g., ''files.downloads'', ''compute.training'')
+
+
+            You will reference this exact name when verifying keys to check against this specific limit.'
+          type: string
+          example: api
+          minLength: 3
+          maxLength: 128
+        limit:
+          description: 'The maximum number of operations allowed within the specified time window.
+
+
+            When this limit is reached, verification requests will fail with `code=RATE_LIMITED` until the window resets. The limit should reflect:
+
+            - Your infrastructure capacity and scaling limitations
+
+            - Fair usage expectations for your service
+
+            - Different tier levels for various user types
+
+            - The relative cost of the operations being limited
+
+
+            Higher values allow more frequent access but may impact service performance.'
+          type: integer
+          format: int64
+          minimum: 1
+        duration:
+          description: 'The duration for each ratelimit window in milliseconds.
+
+
+            This controls how long the rate limit counter accumulates before resetting. Common values include:
+
+            - 1000 (1 second): For strict per-second limits on high-frequency operations
+
+            - 60000 (1 minute): For moderate API usage control
+
+            - 3600000 (1 hour): For less frequent but costly operations
+
+            - 86400000 (24 hours): For daily quotas
+
+
+            Shorter windows provide more frequent resets but may allow large burst usage. Longer windows provide more consistent usage patterns but take longer to reset after limit exhaustion.'
+          type: integer
+          format: int64
+          minimum: 1000
+        autoApply:
+          description: Whether this ratelimit should be automatically applied when verifying a key.
+          type: boolean
+          default: false
+    V2IdentitiesCreateIdentityResponseData:
+      type: object
+      properties:
+        identityId:
+          type: string
+          description: The unique identifier of the created identity.
+      required:
+      - identityId
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    ConflictErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the request conflicts with the current state of the resource. This occurs when:
+
+        - Attempting to create a resource that already exists
+
+        - Modifying a resource that has been changed by another operation
+
+        - Violating unique constraints or business rules
+
+
+        To resolve this error, check the current state of the resource and adjust your request accordingly.'
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    V2IdentitiesCreateIdentityRequestBody:
+      type: object
+      required:
+      - externalId
+      properties:
+        externalId:
+          type: string
+          minLength: 1
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_.-]+$
+          description: 'Creates an identity using your system''s unique identifier for a user, organization, or entity.
+
+            Must be stable and unique across your workspace - duplicate externalIds return CONFLICT errors.
+
+            This identifier links Unkey identities to your authentication system, database records, or tenant structure.
+
+
+            Avoid changing externalIds after creation as this breaks the link between your systems.
+
+            Use consistent identifier patterns across your application for easier management and debugging.
+
+            Accepts letters, numbers, underscores, dots, and hyphens for flexible identifier formats.
+
+            Essential for implementing proper multi-tenant isolation and user-specific rate limiting.
+
+            '
+          example: user_123
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: 'Stores arbitrary JSON metadata returned during key verification for contextual information.
+
+            Eliminates additional database lookups during verification, improving performance for stateless services.
+
+            Avoid storing sensitive data here as it''s returned in verification responses.
+
+
+            Large metadata objects increase verification latency and should stay under 10KB total size.
+
+            Use this for subscription details, feature flags, user preferences, and organization information.
+
+            Metadata is returned as-is whenever keys associated with this identity are verified.
+
+            '
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitRequest'
+          description: 'Defines shared rate limits that apply to all keys belonging to this identity.
+
+            Prevents abuse by users with multiple keys by enforcing consistent limits across their entire key portfolio.
+
+            Essential for implementing fair usage policies and tiered access levels in multi-tenant applications.
+
+
+            Rate limit counters are shared across all keys with this identity, regardless of how many keys the user creates.
+
+            During verification, specify which named limits to check for enforcement.
+
+            Identity rate limits supplement any key-specific rate limits that may also be configured.
+
+            - Each named limit can have different thresholds and windows
+
+
+            When verifying keys, you can specify which limits you want to use and all keys attached to this identity will share the limits, regardless of which specific key is used.
+
+            '
+    V2IdentitiesCreateIdentityResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2IdentitiesCreateIdentityResponseData'
+    V2IdentitiesUpdateIdentityRequestBody:
+      type: object
+      properties:
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to update. Accepts either the externalId (your system-generated identifier) or the identityId (internal identifier returned by the identity service).
+          example: user_123
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: 'Replaces all existing metadata with this new metadata object.
+
+            Omitting this field preserves existing metadata, while providing an empty object clears all metadata.
+
+            Avoid storing sensitive data here as it''s returned in verification responses.
+
+            Large metadata objects increase verification latency and should stay under 10KB total size.
+
+            '
+          example:
+            name: Alice Smith
+            email: alice@example.com
+            plan: premium
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitRequest'
+          description: 'Replaces all existing identity rate limits with this complete list of rate limits.
+
+            Omitting this field preserves existing rate limits, while providing an empty array removes all rate limits.
+
+            These limits are shared across all keys belonging to this identity, preventing abuse through multiple keys.
+
+            Rate limit changes take effect immediately but may take up to 30 seconds to propagate across all regions.
+
+            '
+          example:
+          - name: requests
+            limit: 1000
+            duration: 3600000
+            autoApply: true
+      additionalProperties: false
+      required:
+      - identity
+    InternalServerErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    RatelimitResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^rl_[a-zA-Z0-9_]+$
+          description: Unique identifier for this rate limit configuration.
+          example: rl_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Human-readable name for this rate limit.
+          example: api_requests
+        limit:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+          description: Maximum requests allowed within the time window.
+          example: 1000
+        duration:
+          type: integer
+          format: int64
+          minimum: 1000
+          maximum: 2592000000
+          description: Rate limit window duration in milliseconds.
+          example: 3600000
+        autoApply:
+          type: boolean
+          description: Whether this rate limit was automatically applied when verifying the key.
+          example: true
+      required:
+      - id
+      - name
+      - limit
+      - duration
+      - autoApply
+      additionalProperties: false
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    V2IdentitiesDeleteIdentityResponseBody:
+      type: object
+      description: Empty response object. A successful response indicates the identity was deleted successfully.
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - meta
+    V2IdentitiesDeleteIdentityRequestBody:
+      type: object
+      properties:
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to delete. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
+          example: user_123
+      additionalProperties: false
+      required:
+      - identity
+    V2IdentitiesListIdentitiesResponseData:
+      type: array
+      items:
+        $ref: '#/components/schemas/Identity'
+      description: List of identities matching the specified criteria.
+  securitySchemes:
+    rootKey:
+      bearerFormat: root key
+      description: 'Unkey uses API keys (root keys) for authentication. These keys authorize access to management operations in the API.
+
+        To authenticate, include your root key in the Authorization header of each request:
+
+        ```
+
+        Authorization: Bearer unkey_123
+
+        ```
+
+        Root keys have specific permissions attached to them, controlling what operations they can perform. Key permissions follow a hierarchical structure with patterns like `resource.resource_id.action` (e.g., `apis.*.create_key`, `apis.*.read_api`).
+
+        Security best practices:
+
+        - Keep root keys secure and never expose them in client-side code
+
+        - Use different root keys for different environments
+
+        - Rotate keys periodically, especially after team member departures
+
+        - Create keys with minimal necessary permissions following least privilege principle
+
+        - Monitor key usage with audit logs.'
+      scheme: bearer
+      type: http
