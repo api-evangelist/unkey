@@ -1,4 +1,18 @@
 aid: unkey
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/unkey.png
 name: Unkey
 description: >-
   Unkey is the developer platform for modern APIs, providing globally distributed API key management, rate limiting,
@@ -18,36 +32,201 @@ tags:
   - Identity
   - Analytics
 apis:
-  - aid: unkey:unkey-api
-    name: Unkey API
-    description: >-
-      Unkey's REST API providing programmatic access to all platform resources: API namespace management, API key
-      lifecycle (create, verify, update, reroll, delete), identity management, permissions and roles, standalone rate
-      limiting with namespace overrides, key verification analytics via SQL, and deployment operations. All management
-      operations use Bearer authentication with root keys.
-    humanURL: https://www.unkey.com
-    baseURL: https://api.unkey.com
-    tags:
-      - API Keys
-      - Rate Limiting
-      - Identity
-      - Permissions
-      - Analytics
-      - Deployments
-    properties:
-      - type: Documentation
-        url: https://www.unkey.com/docs
-      - type: OpenAPI
-        url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/openapi/unkey-openapi.yml
-      - type: SpectralRules
-        url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
-      - type: JSONSchema
-        url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-analytics-api
+  name: Unkey analytics API
+  description: Analytics query operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - analytics
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-analytics-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-apis-api
+  name: Unkey apis API
+  description: API management operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - apis
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-apis-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-deploy-api
+  name: Unkey deploy API
+  description: Deployment operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - deploy
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-deploy-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-identities-api
+  name: Unkey identities API
+  description: Identity management operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - identities
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-identities-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-keys-api
+  name: Unkey keys API
+  description: API key management operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - keys
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-keys-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-liveness-api
+  name: Unkey liveness API
+  description: Health check operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - liveness
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-liveness-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-permissions-api
+  name: Unkey permissions API
+  description: Permission and role management operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - permissions
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-permissions-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
+- aid: unkey:unkey-ratelimit-api
+  name: Unkey ratelimit API
+  description: Rate limiting operations
+  humanURL: https://www.unkey.com
+  baseURL: https://api.unkey.com
+  tags:
+  - ratelimit
+  properties:
+  - type: OpenAPI
+    url: openapi/unkey-ratelimit-api-openapi.yml
+  - type: Documentation
+    url: https://www.unkey.com/docs
+  - type: SpectralRules
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json
+  - type: JSONSchema
+    url: >-
+      https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/unkey/overview
   - type: AgenticAccess
     url: agentic-access/unkey-agentic-access.yml
   - type: DomainSecurity
