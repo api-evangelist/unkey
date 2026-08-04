@@ -1,0 +1,2302 @@
+{
+  "info": {
+    "_postman_id": "91cce73f-c5b6-4e95-80b0-517ebfdb2762",
+    "name": "Unkey analytics identities API",
+    "description": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:23:04.000Z",
+    "updatedAt": "2026-07-28T03:23:04.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-91cce73f-c5b6-4e95-80b0-517ebfdb2762"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "identities.createIdentity",
+          "item": [
+            {
+              "name": "Create Identity",
+              "id": "626fe304-2848-4a47-9e0a-8a27fa5bf5b5",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ]
+                },
+                "description": "Create an identity to group multiple API keys under a single entity. Identities enable shared rate limits and metadata across all associated keys.\n\nPerfect for users with multiple devices, organizations with multiple API keys, or when you need unified rate limiting across different services.\n\n**Important**\nRequires `identity.*.create_identity` permission\n"
+              },
+              "response": [
+                {
+                  "id": "856531d1-c5fc-410c-970f-6eebc4bb69ae",
+                  "name": "New Response",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"identityId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-856531d1-c5fc-410c-970f-6eebc4bb69ae"
+                },
+                {
+                  "id": "cc3f25c4-e3dc-4896-ae22-f35c9ae72841",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-cc3f25c4-e3dc-4896-ae22-f35c9ae72841"
+                },
+                {
+                  "id": "849d8bbc-db39-4e1b-ab33-0f69ce822ba7",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-849d8bbc-db39-4e1b-ab33-0f69ce822ba7"
+                },
+                {
+                  "id": "e9d052ef-b065-48b3-b1e0-bc1d440bd2c5",
+                  "name": "Forbidden - Insufficient permissions (requires `identity.*.create_identity`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-e9d052ef-b065-48b3-b1e0-bc1d440bd2c5"
+                },
+                {
+                  "id": "b62bbb47-cdf5-4c0c-9fb2-9c6c1c7d9780",
+                  "name": "Conflict - Identity with this externalId already exists",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-b62bbb47-cdf5-4c0c-9fb2-9c6c1c7d9780"
+                },
+                {
+                  "id": "99f24327-094d-4ba1-aee3-88340a77827f",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-99f24327-094d-4ba1-aee3-88340a77827f"
+                },
+                {
+                  "id": "8a6932d0-d07c-41ed-8220-857095afc189",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"externalId\": \"7\",\n  \"meta\": {\n    \"laboris_9\": \"eu dolor\",\n    \"exercitation_5a1\": \"sed\",\n    \"enim_afc\": true,\n    \"dolor_9\": true,\n    \"sunt_e1\": true,\n    \"etc1\": 85897196.79906031,\n    \"ut5c\": true,\n    \"tempor_46\": true,\n    \"irure_9c\": true,\n    \"aliquip8db\": false,\n    \"culpa23\": -12085816.757223532,\n    \"idb\": 19104494,\n    \"ut_5\": 78910005.68360367,\n    \"minim_99\": \"laboris incididunt officia\",\n    \"cillum_344\": \"tempor\",\n    \"ullamco333\": 14569538,\n    \"cupidatatb0\": \"ut eu\",\n    \"ad_3d\": -52874255,\n    \"in_35\": -78117382,\n    \"quis_472\": \"ull\",\n    \"officiab0\": 31327506,\n    \"officia37\": false,\n    \"ullamco_d\": -61874804,\n    \"ea2\": false,\n    \"id1\": 826264,\n    \"Excepteur_83\": 28914517,\n    \"tempor_f_\": false,\n    \"Ut_b7\": false,\n    \"velit6\": -17942148,\n    \"nisi_0\": 71401469,\n    \"labore0\": \"veniam irure\",\n    \"utf\": \"ip\",\n    \"tempor63b\": 43523965,\n    \"occaecat389\": 99889376.77817425,\n    \"ea9d\": false,\n    \"culpa_cc\": -57303889,\n    \"in_76\": -55636117.226282835,\n    \"ipsum_f69\": -9682425,\n    \"aliquip_a2\": \"deserunt id\",\n    \"et_8a\": -79356037,\n    \"amet_ec\": 83163527,\n    \"laborum6_1\": \"pariatur dolore amet\",\n    \"Excepteur_0\": true,\n    \"ea6\": -67418580.31977203,\n    \"reprehenderit_54\": -80040998.4742585,\n    \"et24\": -7920637,\n    \"utadc\": false,\n    \"est15d\": 59153356,\n    \"reprehenderit7d5\": \"anim voluptate in dolor aliquip\",\n    \"proident80d\": \"aliqua adipisicing\",\n    \"occaecatb\": -95633915,\n    \"exercitation_56b\": \"in\",\n    \"quis_43\": true,\n    \"commodo_bd\": true,\n    \"est4e\": false,\n    \"in_ab\": -21032219.950884596,\n    \"minime\": 16937354,\n    \"in_c0\": \"sint\",\n    \"et87\": -29409410,\n    \"tempor_e\": 59659224.98702434,\n    \"esse_b\": -11170137,\n    \"anim_8\": false,\n    \"pariatur__de\": -53846717.716238946,\n    \"laborisb\": \"consectetur pariatur enim mollit ipsum\",\n    \"dolore_3_2\": 23226720,\n    \"occaecat_94\": -35411820.92815243,\n    \"nulla_2e9\": 98226694.70689091,\n    \"sed_f9b\": false,\n    \"ut5f6\": false,\n    \"exbc\": -14802706.701205492,\n    \"laborum0\": -65493866,\n    \"laborum5\": 60404120.06685433\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.createIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.createIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-8a6932d0-d07c-41ed-8220-857095afc189"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:04.000Z",
+              "updatedAt": "2026-07-28T03:23:04.000Z",
+              "uid": "35240-626fe304-2848-4a47-9e0a-8a27fa5bf5b5"
+            }
+          ],
+          "id": "c0447e12-497f-4c75-888f-23e2dd4dbcd3",
+          "createdAt": "2026-07-28T03:23:04.000Z",
+          "updatedAt": "2026-07-28T03:23:04.000Z",
+          "uid": "35240-c0447e12-497f-4c75-888f-23e2dd4dbcd3"
+        },
+        {
+          "name": "identities.deleteIdentity",
+          "item": [
+            {
+              "name": "Delete Identity",
+              "id": "fe893de8-87cb-4862-8a42-3f314f1d09b4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ]
+                },
+                "description": "Permanently delete an identity. This operation cannot be undone.\n\nUse this for data cleanup, compliance requirements, or when removing entities from your system.\n\n> **Important**\n> Requires `identity.*.delete_identity` permission\n> Associated API keys remain functional but lose shared resources\n> External ID becomes available for reuse immediately\n"
+              },
+              "response": [
+                {
+                  "id": "0c4dfc9b-a45c-48bd-98aa-4f0403ce9206",
+                  "name": "Identity successfully deleted",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-0c4dfc9b-a45c-48bd-98aa-4f0403ce9206"
+                },
+                {
+                  "id": "52b9ef03-15d4-4219-acd9-beb4f70dc4c3",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-52b9ef03-15d4-4219-acd9-beb4f70dc4c3"
+                },
+                {
+                  "id": "1d1f495b-3dd2-4fed-9cb2-6e5ee6de3e39",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-1d1f495b-3dd2-4fed-9cb2-6e5ee6de3e39"
+                },
+                {
+                  "id": "4db6f843-0ab4-4df1-ba11-0ec23fb644db",
+                  "name": "Forbidden - Insufficient permissions (requires `identity.*.delete_identity`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-4db6f843-0ab4-4df1-ba11-0ec23fb644db"
+                },
+                {
+                  "id": "5b3915e4-66d3-45c8-a41c-0346ca7c740c",
+                  "name": "Not Found - Identity with the specified externalId doesn't exist",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-5b3915e4-66d3-45c8-a41c-0346ca7c740c"
+                },
+                {
+                  "id": "c5a42c1d-583e-4149-ac37-b9671c48365d",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-c5a42c1d-583e-4149-ac37-b9671c48365d"
+                },
+                {
+                  "id": "7db94631-676d-4541-98cd-339520eb4251",
+                  "name": "Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.deleteIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.deleteIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-7db94631-676d-4541-98cd-339520eb4251"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:04.000Z",
+              "updatedAt": "2026-07-28T03:23:04.000Z",
+              "uid": "35240-fe893de8-87cb-4862-8a42-3f314f1d09b4"
+            }
+          ],
+          "id": "6ab547f6-3dd7-4725-bec3-7ed49bcd9918",
+          "createdAt": "2026-07-28T03:23:04.000Z",
+          "updatedAt": "2026-07-28T03:23:04.000Z",
+          "uid": "35240-6ab547f6-3dd7-4725-bec3-7ed49bcd9918"
+        },
+        {
+          "name": "identities.getIdentity",
+          "item": [
+            {
+              "name": "Get Identity",
+              "id": "84264ee3-0bad-4e9d-885a-0d3ce283bbc7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ]
+                },
+                "description": "Retrieve an identity by external ID. Returns metadata, rate limits, and other associated data.\n\nUse this to check if an identity exists, view configurations, or build management dashboards.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+              },
+              "response": [
+                {
+                  "id": "97159c8d-74a7-4234-89c4-db89acc1135f",
+                  "name": "Successfully retrieved the identity information",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"externalId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"meta\": {\n      \"ut_af\": \"culpa\"\n    },\n    \"ratelimits\": [\n      {\n        \"id\": \"rl_CRPrl_CRP\",\n        \"name\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"duration\": \"<long>\",\n        \"autoApply\": \"<boolean>\"\n      },\n      {\n        \"id\": \"rl_mFuta5DeIWd\",\n        \"name\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"duration\": \"<long>\",\n        \"autoApply\": \"<boolean>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-97159c8d-74a7-4234-89c4-db89acc1135f"
+                },
+                {
+                  "id": "50762df5-0dbd-4193-91b8-f350bda549f3",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-50762df5-0dbd-4193-91b8-f350bda549f3"
+                },
+                {
+                  "id": "62bff4ee-5e4f-4f29-96e0-36e57dd8d489",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-62bff4ee-5e4f-4f29-96e0-36e57dd8d489"
+                },
+                {
+                  "id": "270b7856-e5cb-4f43-aa21-0b6331dddb77",
+                  "name": "Forbidden - Insufficient permissions (requires `identity.*.read_identity`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-270b7856-e5cb-4f43-aa21-0b6331dddb77"
+                },
+                {
+                  "id": "e0ffb765-065e-4ea5-ae20-1ef766b423bf",
+                  "name": "Not Found - Identity with the specified externalId doesn't exist",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-e0ffb765-065e-4ea5-ae20-1ef766b423bf"
+                },
+                {
+                  "id": "909caea5-4ae0-4c12-87f3-4831ec7b1ad5",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-909caea5-4ae0-4c12-87f3-4831ec7b1ad5"
+                },
+                {
+                  "id": "4258fac5-fcb2-40be-8d57-3df486622c5c",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.getIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.getIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-4258fac5-fcb2-40be-8d57-3df486622c5c"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:04.000Z",
+              "updatedAt": "2026-07-28T03:23:04.000Z",
+              "uid": "35240-84264ee3-0bad-4e9d-885a-0d3ce283bbc7"
+            }
+          ],
+          "id": "65cfea23-d639-44c3-ad80-57a39b227b6f",
+          "createdAt": "2026-07-28T03:23:04.000Z",
+          "updatedAt": "2026-07-28T03:23:04.000Z",
+          "uid": "35240-65cfea23-d639-44c3-ad80-57a39b227b6f"
+        },
+        {
+          "name": "identities.listIdentities",
+          "item": [
+            {
+              "name": "List Identities",
+              "id": "e8f35873-6b24-442d-a86e-1b7c13d492a0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ]
+                },
+                "description": "Get a paginated list of all identities in your workspace. Returns metadata and rate limit configurations.\n\nPerfect for building management dashboards, auditing configurations, or browsing your identities.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+              },
+              "response": [
+                {
+                  "id": "e1c6e176-f8d4-4d69-948e-49b70c78f838",
+                  "name": "Successfully retrieved the list of identities",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"externalId\": \"<string>\",\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"mollit_c04\": -35423435.235034615\n      },\n      \"ratelimits\": [\n        {\n          \"id\": \"rl_FPUedI1\",\n          \"name\": \"<string>\",\n          \"limit\": \"<long>\",\n          \"duration\": \"<long>\",\n          \"autoApply\": \"<boolean>\"\n        },\n        {\n          \"id\": \"rl_1FrmEN7JCUn\",\n          \"name\": \"<string>\",\n          \"limit\": \"<long>\",\n          \"duration\": \"<long>\",\n          \"autoApply\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"externalId\": \"<string>\",\n      \"id\": \"<string>\",\n      \"meta\": {\n        \"dolore_726\": 77503972,\n        \"commodo_504\": \"deserunt sed\"\n      },\n      \"ratelimits\": [\n        {\n          \"id\": \"rl_LEwiAX\",\n          \"name\": \"<string>\",\n          \"limit\": \"<long>\",\n          \"duration\": \"<long>\",\n          \"autoApply\": \"<boolean>\"\n        },\n        {\n          \"id\": \"rl_UBjpGfv_q\",\n          \"name\": \"<string>\",\n          \"limit\": \"<long>\",\n          \"duration\": \"<long>\",\n          \"autoApply\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-e1c6e176-f8d4-4d69-948e-49b70c78f838"
+                },
+                {
+                  "id": "cd57c834-790a-4fc2-a4b1-e9d69e5f81af",
+                  "name": "Bad Request - Invalid parameters",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-cd57c834-790a-4fc2-a4b1-e9d69e5f81af"
+                },
+                {
+                  "id": "940824f8-5449-4fcb-9d5d-3a71aa89d703",
+                  "name": "Unauthorized - Missing or invalid authentication",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-940824f8-5449-4fcb-9d5d-3a71aa89d703"
+                },
+                {
+                  "id": "283664c5-bf93-46f8-85cd-72f03f514500",
+                  "name": "Forbidden - Insufficient permissions (requires `identity.*.read_identity`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-283664c5-bf93-46f8-85cd-72f03f514500"
+                },
+                {
+                  "id": "7efda488-9e97-43b8-bf12-00fdcb503d19",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-7efda488-9e97-43b8-bf12-00fdcb503d19"
+                },
+                {
+                  "id": "9d2142fa-1a53-4b82-8d3d-538c5f9400b6",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.listIdentities",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.listIdentities"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-9d2142fa-1a53-4b82-8d3d-538c5f9400b6"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:04.000Z",
+              "updatedAt": "2026-07-28T03:23:04.000Z",
+              "uid": "35240-e8f35873-6b24-442d-a86e-1b7c13d492a0"
+            }
+          ],
+          "id": "717430dd-a06b-4928-a0c8-cc81a6afa9bc",
+          "createdAt": "2026-07-28T03:23:04.000Z",
+          "updatedAt": "2026-07-28T03:23:04.000Z",
+          "uid": "35240-717430dd-a06b-4928-a0c8-cc81a6afa9bc"
+        },
+        {
+          "name": "identities.updateIdentity",
+          "item": [
+            {
+              "name": "Update Identity",
+              "id": "c233da7a-a903-467a-b684-b6bb0ec6ceb2",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ]
+                },
+                "description": "Update an identity's metadata and rate limits. Only specified fields are modified - others remain unchanged.\n\nPerfect for subscription changes, plan upgrades, or updating user information. Changes take effect immediately.\n\n> **Important**\n> Requires `identity.*.update_identity` permission\n> Rate limit changes propagate within 30 seconds\n"
+              },
+              "response": [
+                {
+                  "id": "294904d9-49ba-40fe-a58a-f98b51993796",
+                  "name": "Identity successfully updated",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"data\": {\n    \"externalId\": \"<string>\",\n    \"id\": \"<string>\",\n    \"meta\": {\n      \"nostrudf70\": true\n    },\n    \"ratelimits\": [\n      {\n        \"id\": \"rl_fA9HB3\",\n        \"name\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"duration\": \"<long>\",\n        \"autoApply\": \"<boolean>\"\n      },\n      {\n        \"id\": \"rl_0xXb9wKGr\",\n        \"name\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"duration\": \"<long>\",\n        \"autoApply\": \"<boolean>\"\n      }\n    ]\n  },\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-294904d9-49ba-40fe-a58a-f98b51993796"
+                },
+                {
+                  "id": "497a28de-eef0-47d0-8826-322b1f2a7744",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-497a28de-eef0-47d0-8826-322b1f2a7744"
+                },
+                {
+                  "id": "3c576cb4-53b7-41cf-97b7-4cda6d6a2c01",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-3c576cb4-53b7-41cf-97b7-4cda6d6a2c01"
+                },
+                {
+                  "id": "10af9ce2-cec7-4791-ad70-939584e69d7a",
+                  "name": "Forbidden - Insufficient permissions (requires `identity.*.update_identity`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-10af9ce2-cec7-4791-ad70-939584e69d7a"
+                },
+                {
+                  "id": "dc7a73f7-d7f5-438f-b1a8-15f2583e9e05",
+                  "name": "Not Found - Identity with the specified ID or externalId doesn't exist",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-dc7a73f7-d7f5-438f-b1a8-15f2583e9e05"
+                },
+                {
+                  "id": "8e367f94-d6d8-4a2a-9c2f-9b3f0f7dd974",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-8e367f94-d6d8-4a2a-9c2f-9b3f0f7dd974"
+                },
+                {
+                  "id": "c81b9522-824d-4a6c-9e96-06974277f446",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"consequat_43\": \"pariatur off\",\n    \"commodoe_c\": 89038383,\n    \"adipisicing_07d\": -99857322,\n    \"veniam_e_\": true,\n    \"occaecat_c6c\": true,\n    \"pariatur_33c\": \"non reprehen\",\n    \"aliquip_3c\": true,\n    \"exercitationf\": true,\n    \"officia_11\": \"velit E\",\n    \"ut_1\": 88107501.07660058,\n    \"dolor_7\": \"enim\",\n    \"et_30\": 10725586.168763667,\n    \"labore_d\": 49198695,\n    \"aute_67\": true,\n    \"pariaturc58\": \"qui tempor laborum\",\n    \"esse_0\": \"ut in\",\n    \"est_c2\": -89303184.36661206,\n    \"dolor981\": true,\n    \"commodo51f\": true,\n    \"laborum_fa\": 97037805.41709751,\n    \"sit37_\": \"dolore\",\n    \"in_48\": -21137071.96885106,\n    \"proident19_\": 45290686.09459436,\n    \"aute_c6\": \"cillum commodo ullamco in\",\n    \"sit8fa\": \"id voluptate\",\n    \"anim_ed0\": \"esse eu nulla\",\n    \"Ut_0\": true,\n    \"dolor16\": -2942817.0892874748,\n    \"cillum_d2\": 33289936,\n    \"aute3\": 30494283,\n    \"Lorem_4\": 41451102.94255376,\n    \"magna__6\": \"ut eiusmod\",\n    \"sint_3\": 56026850.33724749,\n    \"et_3d2\": -33495077\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/identities.updateIdentity",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "identities.updateIdentity"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:04.000Z",
+                  "updatedAt": "2026-07-28T03:23:04.000Z",
+                  "uid": "35240-c81b9522-824d-4a6c-9e96-06974277f446"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:04.000Z",
+              "updatedAt": "2026-07-28T03:23:04.000Z",
+              "uid": "35240-c233da7a-a903-467a-b684-b6bb0ec6ceb2"
+            }
+          ],
+          "id": "05da5373-b0a3-453e-9b59-c18b9380ebd5",
+          "createdAt": "2026-07-28T03:23:04.000Z",
+          "updatedAt": "2026-07-28T03:23:04.000Z",
+          "uid": "35240-05da5373-b0a3-453e-9b59-c18b9380ebd5"
+        }
+      ],
+      "id": "b080d880-bc85-49e6-acaa-420362b3b688",
+      "createdAt": "2026-07-28T03:23:04.000Z",
+      "updatedAt": "2026-07-28T03:23:04.000Z",
+      "uid": "35240-b080d880-bc85-49e6-acaa-420362b3b688"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.unkey.com"
+    }
+  ]
+}

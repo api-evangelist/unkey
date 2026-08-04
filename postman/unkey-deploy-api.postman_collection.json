@@ -1,0 +1,967 @@
+{
+  "info": {
+    "_postman_id": "1295a7d4-319e-4a0f-9611-df06706dd412",
+    "name": "Unkey analytics deploy API",
+    "description": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:23:02.000Z",
+    "updatedAt": "2026-07-28T03:23:03.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-1295a7d4-319e-4a0f-9611-df06706dd412"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "deploy.createDeployment",
+          "item": [
+            {
+              "name": "Create Deployment",
+              "id": "796a06dc-68e1-42da-b1ff-9355f2eddd63",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "deploy.createDeployment"
+                  ]
+                },
+                "description": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nCreates a new deployment for a project using either a pre-built Docker image or build context.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+              },
+              "response": [
+                {
+                  "id": "e9b43964-8a96-4c5b-92d8-82d13dcc2233",
+                  "name": "Deployment created successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"deploymentId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-e9b43964-8a96-4c5b-92d8-82d13dcc2233"
+                },
+                {
+                  "id": "26fd8965-1c2d-4bc8-b09c-43d59d6a25e7",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-26fd8965-1c2d-4bc8-b09c-43d59d6a25e7"
+                },
+                {
+                  "id": "3d219e17-0783-4ea7-904c-abd3c7a1a3ed",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-3d219e17-0783-4ea7-904c-abd3c7a1a3ed"
+                },
+                {
+                  "id": "a125f61b-32d7-45c8-8245-510721e76547",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-a125f61b-32d7-45c8-8245-510721e76547"
+                },
+                {
+                  "id": "f000e853-76b4-4fc0-8bb9-fd52052b6f2b",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-f000e853-76b4-4fc0-8bb9-fd52052b6f2b"
+                },
+                {
+                  "id": "10167cb2-8bfb-4b51-80df-2b415442217a",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-10167cb2-8bfb-4b51-80df-2b415442217a"
+                },
+                {
+                  "id": "edf2345c-b242-46a4-9f75-e82486ccfe10",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"project\": \"<string>\",\n  \"app\": \"<string>\",\n  \"branch\": \"<string>\",\n  \"environmentSlug\": \"<string>\",\n  \"dockerImage\": \"<string>\",\n  \"keyspaceId\": \"<string>\",\n  \"gitCommit\": {\n    \"commitSha\": \"<string>\",\n    \"commitMessage\": \"<string>\",\n    \"authorHandle\": \"<string>\",\n    \"authorAvatarUrl\": \"<string>\",\n    \"timestamp\": \"<long>\"\n  }\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.createDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.createDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-edf2345c-b242-46a4-9f75-e82486ccfe10"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:03.000Z",
+              "updatedAt": "2026-07-28T03:23:03.000Z",
+              "uid": "35240-796a06dc-68e1-42da-b1ff-9355f2eddd63"
+            }
+          ],
+          "id": "0a2eb8d4-1c63-4d5f-a055-c22114cb416c",
+          "createdAt": "2026-07-28T03:23:03.000Z",
+          "updatedAt": "2026-07-28T03:23:03.000Z",
+          "uid": "35240-0a2eb8d4-1c63-4d5f-a055-c22114cb416c"
+        },
+        {
+          "name": "deploy.getDeployment",
+          "item": [
+            {
+              "name": "Get Deployment",
+              "id": "e86c7317-2d08-4c45-ba28-f174e0f4d3da",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "deploy.getDeployment"
+                  ]
+                },
+                "description": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nRetrieves deployment information including status, error messages, and steps.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+              },
+              "response": [
+                {
+                  "id": "4b0a6f8a-6f5d-4728-b2a6-2f8f9af58b67",
+                  "name": "Deployment retrieved successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"id\": \"<string>\",\n    \"status\": \"READY\",\n    \"errorMessage\": \"<string>\",\n    \"hostnames\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"steps\": [\n      {\n        \"status\": \"<string>\",\n        \"message\": \"<string>\",\n        \"errorMessage\": \"<string>\",\n        \"createdAt\": \"<long>\"\n      },\n      {\n        \"status\": \"<string>\",\n        \"message\": \"<string>\",\n        \"errorMessage\": \"<string>\",\n        \"createdAt\": \"<long>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-4b0a6f8a-6f5d-4728-b2a6-2f8f9af58b67"
+                },
+                {
+                  "id": "d7b51bc0-dc08-4210-aee5-c7eec7860d37",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-d7b51bc0-dc08-4210-aee5-c7eec7860d37"
+                },
+                {
+                  "id": "9ad4fdcd-d9e5-4d27-8610-a987a0245398",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-9ad4fdcd-d9e5-4d27-8610-a987a0245398"
+                },
+                {
+                  "id": "2d224188-a1d5-4278-b58c-e1dc3ac7d615",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-2d224188-a1d5-4278-b58c-e1dc3ac7d615"
+                },
+                {
+                  "id": "712e8bb3-2978-4642-9c32-63c4dfeefc64",
+                  "name": "Not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-712e8bb3-2978-4642-9c32-63c4dfeefc64"
+                },
+                {
+                  "id": "7fe66789-fd02-4999-b9b5-c1e5d1337d25",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-7fe66789-fd02-4999-b9b5-c1e5d1337d25"
+                },
+                {
+                  "id": "f19c2e34-a3be-4114-a0f5-6c73242bf04b",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"deploymentId\": \"d_pYWCETOBWGJ\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/deploy.getDeployment",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "deploy.getDeployment"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:03.000Z",
+                  "updatedAt": "2026-07-28T03:23:03.000Z",
+                  "uid": "35240-f19c2e34-a3be-4114-a0f5-6c73242bf04b"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:03.000Z",
+              "updatedAt": "2026-07-28T03:23:03.000Z",
+              "uid": "35240-e86c7317-2d08-4c45-ba28-f174e0f4d3da"
+            }
+          ],
+          "id": "6e692afa-7ac8-47ce-bb51-17e84a19d071",
+          "createdAt": "2026-07-28T03:23:03.000Z",
+          "updatedAt": "2026-07-28T03:23:03.000Z",
+          "uid": "35240-6e692afa-7ac8-47ce-bb51-17e84a19d071"
+        }
+      ],
+      "id": "afb7eda7-9645-487e-bf47-aa096a2e0d56",
+      "createdAt": "2026-07-28T03:23:03.000Z",
+      "updatedAt": "2026-07-28T03:23:03.000Z",
+      "uid": "35240-afb7eda7-9645-487e-bf47-aa096a2e0d56"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.unkey.com"
+    }
+  ]
+}

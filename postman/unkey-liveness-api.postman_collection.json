@@ -1,0 +1,209 @@
+{
+  "info": {
+    "_postman_id": "4af2f720-1f06-4e33-862d-b3c57f30879d",
+    "name": "Unkey analytics liveness API",
+    "description": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:23:25.000Z",
+    "updatedAt": "2026-07-28T03:23:25.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-4af2f720-1f06-4e33-862d-b3c57f30879d"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "liveness",
+          "item": [
+            {
+              "name": "Health Check",
+              "id": "8ad116a1-09ca-44d7-b42d-8aef65242678",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/v2/liveness",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "liveness"
+                  ]
+                },
+                "description": "Check if the Unkey API service is healthy and ready to handle requests.\n\nUse this for load balancer health checks, monitoring systems, and orchestration platforms. No authentication required with minimal processing overhead.\n\n**Required Permissions**\n\nNone - this endpoint requires no authentication.\n\n**Side Effects**\n\nNone - this is a read-only health check that does not modify any data or state.\n"
+              },
+              "response": [
+                {
+                  "id": "067b0266-515a-4474-a829-91c1a0a2d1e9",
+                  "name": "Service is healthy and ready to process requests. Returns 'OK' message for normal operation.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/liveness",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "liveness"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"message\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:26.000Z",
+                  "updatedAt": "2026-07-28T03:23:26.000Z",
+                  "uid": "35240-067b0266-515a-4474-a829-91c1a0a2d1e9"
+                },
+                {
+                  "id": "40eea006-c84d-4120-beca-c0234c9d2111",
+                  "name": "New Response",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/liveness",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "liveness"
+                      ]
+                    }
+                  },
+                  "status": "Precondition Failed",
+                  "code": 412,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:26.000Z",
+                  "updatedAt": "2026-07-28T03:23:26.000Z",
+                  "uid": "35240-40eea006-c84d-4120-beca-c0234c9d2111"
+                },
+                {
+                  "id": "32e386ed-dd28-434a-bd33-0eb598fefec5",
+                  "name": "Service is unhealthy and unable to process requests properly. Significant service issue requiring immediate attention.\n",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/liveness",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "liveness"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:26.000Z",
+                  "updatedAt": "2026-07-28T03:23:26.000Z",
+                  "uid": "35240-32e386ed-dd28-434a-bd33-0eb598fefec5"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:25.000Z",
+              "updatedAt": "2026-07-28T03:23:25.000Z",
+              "uid": "35240-8ad116a1-09ca-44d7-b42d-8aef65242678"
+            }
+          ],
+          "id": "760a57d8-22e0-4d88-b04c-0a20d078fe63",
+          "createdAt": "2026-07-28T03:23:25.000Z",
+          "updatedAt": "2026-07-28T03:23:25.000Z",
+          "uid": "35240-760a57d8-22e0-4d88-b04c-0a20d078fe63"
+        }
+      ],
+      "id": "9e84e241-8d64-45ab-bb92-e03d2093770c",
+      "createdAt": "2026-07-28T03:23:25.000Z",
+      "updatedAt": "2026-07-28T03:23:25.000Z",
+      "uid": "35240-9e84e241-8d64-45ab-bb92-e03d2093770c"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.unkey.com"
+    }
+  ]
+}

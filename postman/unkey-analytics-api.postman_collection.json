@@ -1,0 +1,617 @@
+{
+  "info": {
+    "_postman_id": "b78bfe0b-5a83-481e-844f-f290f1937d63",
+    "name": "Unkey analytics API",
+    "description": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:23:00.000Z",
+    "updatedAt": "2026-07-28T03:23:01.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-b78bfe0b-5a83-481e-844f-f290f1937d63"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "analytics.getVerifications",
+          "item": [
+            {
+              "name": "Query Key Verification Data",
+              "id": "c09fb82c-628b-4eab-99d9-1d06e4d41ae4",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "analytics.getVerifications"
+                  ]
+                },
+                "description": "Execute custom SQL queries against your key verification analytics.\nFor complete documentation including available tables, columns, data types, query examples, see the schema reference in the API documentation.\n"
+              },
+              "response": [
+                {
+                  "id": "3becf433-dbdf-429f-b782-06ea1daab0eb",
+                  "name": "Query executed successfully",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"voluptateb8d\": \"reprehenderit eu anim\"\n    },\n    {\n      \"id_6\": -89242150\n    }\n  ]\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-3becf433-dbdf-429f-b782-06ea1daab0eb"
+                },
+                {
+                  "id": "2b9628d5-9b80-4c8c-b6da-ba8dd6cd504e",
+                  "name": "Invalid SQL query or blocked operation",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-2b9628d5-9b80-4c8c-b6da-ba8dd6cd504e"
+                },
+                {
+                  "id": "f3a77dd4-77e1-4e5a-91dc-4dec2f881f04",
+                  "name": "Missing or invalid authentication",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-f3a77dd4-77e1-4e5a-91dc-4dec2f881f04"
+                },
+                {
+                  "id": "4b3a3832-34fd-4c0d-9204-c8bb4d8ab7b3",
+                  "name": "Insufficient permissions",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-4b3a3832-34fd-4c0d-9204-c8bb4d8ab7b3"
+                },
+                {
+                  "id": "24ccc8fe-f346-4ae3-b74a-b9f28f90a243",
+                  "name": "Referenced API or identity not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-24ccc8fe-f346-4ae3-b74a-b9f28f90a243"
+                },
+                {
+                  "id": "60466417-c6fe-4966-b35e-1027804bb681",
+                  "name": "Query exceeds resource limits (timeout, memory, rows scanned, or result size)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+                  "code": 422,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-60466417-c6fe-4966-b35e-1027804bb681"
+                },
+                {
+                  "id": "162095e2-2c67-45ee-ae4c-9d9c46e2aac4",
+                  "name": "Query quota exceeded",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-162095e2-2c67-45ee-ae4c-9d9c46e2aac4"
+                },
+                {
+                  "id": "37127679-d4ef-41b7-a57a-b98ac5155d93",
+                  "name": "Query execution failed",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-37127679-d4ef-41b7-a57a-b98ac5155d93"
+                },
+                {
+                  "id": "b21c76b3-6bba-4d86-85b2-8102c92eabba",
+                  "name": "Connection to the database failed",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"query\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/analytics.getVerifications",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "analytics.getVerifications"
+                      ]
+                    }
+                  },
+                  "status": "Service Unavailable",
+                  "code": 503,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:01.000Z",
+                  "updatedAt": "2026-07-28T03:23:01.000Z",
+                  "uid": "35240-b21c76b3-6bba-4d86-85b2-8102c92eabba"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:01.000Z",
+              "updatedAt": "2026-07-28T03:23:01.000Z",
+              "uid": "35240-c09fb82c-628b-4eab-99d9-1d06e4d41ae4"
+            }
+          ],
+          "id": "c573b61c-e4db-4d48-992d-e07edfbcff0e",
+          "createdAt": "2026-07-28T03:23:01.000Z",
+          "updatedAt": "2026-07-28T03:23:01.000Z",
+          "uid": "35240-c573b61c-e4db-4d48-992d-e07edfbcff0e"
+        }
+      ],
+      "id": "066d7f27-fce8-4601-9440-cdc37ac17434",
+      "createdAt": "2026-07-28T03:23:01.000Z",
+      "updatedAt": "2026-07-28T03:23:01.000Z",
+      "uid": "35240-066d7f27-fce8-4601-9440-cdc37ac17434"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.unkey.com"
+    }
+  ]
+}

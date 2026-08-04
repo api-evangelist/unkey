@@ -1,0 +1,2937 @@
+{
+  "info": {
+    "_postman_id": "01d372ed-c556-471d-b834-ee3e7710a7c5",
+    "name": "Unkey analytics ratelimit API",
+    "description": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T03:23:28.000Z",
+    "updatedAt": "2026-07-28T03:23:28.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-01d372ed-c556-471d-b834-ee3e7710a7c5"
+  },
+  "item": [
+    {
+      "name": "v2",
+      "item": [
+        {
+          "name": "ratelimit.deleteOverride",
+          "item": [
+            {
+              "name": "Delete Ratelimit Override",
+              "id": "5a89d261-fa3f-4df3-b472-806c8add299b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.deleteOverride"
+                  ]
+                },
+                "description": "Permanently remove a rate limit override. Affected identifiers immediately revert to the namespace default.\n\nUse this to remove temporary overrides, reset identifiers to standard limits, or clean up outdated rules.\n\n**Important:** Deletion is immediate and permanent. The override cannot be recovered and must be recreated if needed again.\n\n**Permissions:** Requires `ratelimit.*.delete_override` or `ratelimit.<namespace_id>.delete_override`\n"
+              },
+              "response": [
+                {
+                  "id": "b23729a8-a0c5-43b9-acae-6db7c14e74f6",
+                  "name": "Override successfully deleted. Affected identifiers now use default limits.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {}\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-b23729a8-a0c5-43b9-acae-6db7c14e74f6"
+                },
+                {
+                  "id": "63dcf3d1-b8c7-40a5-b915-0a15f8530b82",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-63dcf3d1-b8c7-40a5-b915-0a15f8530b82"
+                },
+                {
+                  "id": "3411911d-a908-42bc-bad8-e831267cd03a",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-3411911d-a908-42bc-bad8-e831267cd03a"
+                },
+                {
+                  "id": "d2dd02b5-a0fc-4367-a1b3-3f6ffba3ceed",
+                  "name": "Forbidden - Insufficient permissions (requires `ratelimit.*.delete_override`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-d2dd02b5-a0fc-4367-a1b3-3f6ffba3ceed"
+                },
+                {
+                  "id": "cccef16e-1e3a-48d3-8647-05fa96f6bafb",
+                  "name": "Not Found - Override or namespace not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-cccef16e-1e3a-48d3-8647-05fa96f6bafb"
+                },
+                {
+                  "id": "c7299f0e-9810-449c-94e7-29ce3cf176b4",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-c7299f0e-9810-449c-94e7-29ce3cf176b4"
+                },
+                {
+                  "id": "4732bff2-c2b0-4478-b210-f4ca9eff7e0a",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.deleteOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.deleteOverride"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-4732bff2-c2b0-4478-b210-f4ca9eff7e0a"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-5a89d261-fa3f-4df3-b472-806c8add299b"
+            }
+          ],
+          "id": "ae60967d-3223-4ad6-b89d-32ecb0bfd3ba",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-ae60967d-3223-4ad6-b89d-32ecb0bfd3ba"
+        },
+        {
+          "name": "ratelimit.getOverride",
+          "item": [
+            {
+              "name": "Get Ratelimit Override",
+              "id": "7ea682e4-cdad-41df-af14-a58136fa51a0",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.getOverride"
+                  ]
+                },
+                "description": "Retrieve the configuration of a specific rate limit override by its identifier.\n\nUse this to inspect override configurations, audit rate limiting policies, or debug rate limiting behavior.\n\n**Important:** The identifier must match exactly as specified when creating the override, including wildcard patterns.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+              },
+              "response": [
+                {
+                  "id": "8ffc2324-ee23-44b7-b64e-34b6cfee4b9e",
+                  "name": "Override found and returned successfully.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"overrideId\": \"<string>\",\n    \"duration\": \"<long>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-8ffc2324-ee23-44b7-b64e-34b6cfee4b9e"
+                },
+                {
+                  "id": "af5d5cd0-e9b8-48de-a5e8-721ed29b2ded",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-af5d5cd0-e9b8-48de-a5e8-721ed29b2ded"
+                },
+                {
+                  "id": "af097e1f-3ad2-47e9-b8e2-5b032b745679",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-af097e1f-3ad2-47e9-b8e2-5b032b745679"
+                },
+                {
+                  "id": "d543b372-e91c-42fd-bf93-121a7ed855a9",
+                  "name": "Forbidden - Insufficient permissions (requires `ratelimit.*.read_override`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-d543b372-e91c-42fd-bf93-121a7ed855a9"
+                },
+                {
+                  "id": "933d6090-cc6a-46ed-a079-90a9ec2c5b70",
+                  "name": "Not Found - Override or namespace not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-933d6090-cc6a-46ed-a079-90a9ec2c5b70"
+                },
+                {
+                  "id": "1a1774ca-7212-4bac-ac94-31f276a2f728",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-1a1774ca-7212-4bac-ac94-31f276a2f728"
+                },
+                {
+                  "id": "746d9fef-b7f6-4554-b1fa-beea3c9ff87f",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.getOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.getOverride"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-746d9fef-b7f6-4554-b1fa-beea3c9ff87f"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-7ea682e4-cdad-41df-af14-a58136fa51a0"
+            }
+          ],
+          "id": "33a04e4a-442a-4cea-a8da-4218474e9cdd",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-33a04e4a-442a-4cea-a8da-4218474e9cdd"
+        },
+        {
+          "name": "ratelimit.limit",
+          "item": [
+            {
+              "name": "Apply Rate Limiting",
+              "id": "160022be-82d3-40d0-87ef-1177ac22b87b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.limit"
+                  ]
+                },
+                "description": "Check and enforce rate limits for any identifier (user ID, IP address, API client, etc.).\n\nUse this for rate limiting beyond API keys - limit users by ID, IPs by address, or any custom identifier. Supports namespace organization, variable costs, and custom overrides.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether the limit is exceeded \u2014 check the `success` field in the response to determine if the request should be allowed. A 429 may be returned if the workspace exceeds its API rate limit. Other 4xx responses indicate auth, namespace existence/deletion, or validation errors (e.g., 410 Gone for deleted namespaces). 5xx responses indicate server errors.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `ratelimit.*.limit` (to check limits in any namespace)\n- `ratelimit.<namespace_id>.limit` (to check limits in a specific namespace)\n"
+              },
+              "response": [
+                {
+                  "id": "d0e1a75b-0772-4fe5-9910-65a91072bfdf",
+                  "name": "Rate limit check completed successfully. Check the `success` field to determine if the request is allowed.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"limit\": \"<long>\",\n    \"remaining\": \"<long>\",\n    \"reset\": \"<long>\",\n    \"success\": \"<boolean>\",\n    \"overrideId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-d0e1a75b-0772-4fe5-9910-65a91072bfdf"
+                },
+                {
+                  "id": "7ce4b28b-e033-4f84-95fa-6ca8f402f480",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-7ce4b28b-e033-4f84-95fa-6ca8f402f480"
+                },
+                {
+                  "id": "604d360d-ebc2-4238-83ac-c238118618f3",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-604d360d-ebc2-4238-83ac-c238118618f3"
+                },
+                {
+                  "id": "8b3ec7c6-2eba-43d0-8b6b-e2fd38898ca4",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-8b3ec7c6-2eba-43d0-8b6b-e2fd38898ca4"
+                },
+                {
+                  "id": "49f47398-01c3-4a31-bfaf-640b91c0d1e8",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-49f47398-01c3-4a31-bfaf-640b91c0d1e8"
+                },
+                {
+                  "id": "cc143e0e-8065-4e3b-bc6f-f5f9af942cbb",
+                  "name": "Gone - Namespace has been deleted",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-cc143e0e-8065-4e3b-bc6f-f5f9af942cbb"
+                },
+                {
+                  "id": "32964709-cb89-4c85-9afc-9b48da328848",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-32964709-cb89-4c85-9afc-9b48da328848"
+                },
+                {
+                  "id": "05602ee9-787c-4e8c-9572-54164ea29e3a",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\",\n  \"cost\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.limit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.limit"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-05602ee9-787c-4e8c-9572-54164ea29e3a"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-160022be-82d3-40d0-87ef-1177ac22b87b"
+            }
+          ],
+          "id": "bb0ebf8e-9663-4115-986e-c2db261d97cd",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-bb0ebf8e-9663-4115-986e-c2db261d97cd"
+        },
+        {
+          "name": "ratelimit.listOverrides",
+          "item": [
+            {
+              "name": "List Ratelimit Overrides",
+              "id": "0a5f9617-ba31-4b7a-b71b-f0fcaa79f624",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.listOverrides"
+                  ]
+                },
+                "description": "Retrieve a paginated list of all rate limit overrides in a namespace.\n\nUse this to audit rate limiting policies, build admin dashboards, or manage override configurations.\n\n**Important:** Results are paginated. Use the cursor parameter to retrieve additional pages when more results are available.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+              },
+              "response": [
+                {
+                  "id": "6dae917c-e41c-4f96-b77c-4c001da0cf67",
+                  "name": "Overrides retrieved successfully. Includes pagination metadata if more results are available.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": [\n    {\n      \"overrideId\": \"<string>\",\n      \"duration\": \"<long>\",\n      \"identifier\": \"<string>\",\n      \"limit\": \"<long>\"\n    },\n    {\n      \"overrideId\": \"<string>\",\n      \"duration\": \"<long>\",\n      \"identifier\": \"<string>\",\n      \"limit\": \"<long>\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": \"<boolean>\",\n    \"cursor\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-6dae917c-e41c-4f96-b77c-4c001da0cf67"
+                },
+                {
+                  "id": "b9b0bf39-1060-4c83-8d84-13b2e18065c4",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-b9b0bf39-1060-4c83-8d84-13b2e18065c4"
+                },
+                {
+                  "id": "55ba523f-ddad-4839-ac42-49f39cac68c0",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-55ba523f-ddad-4839-ac42-49f39cac68c0"
+                },
+                {
+                  "id": "5eb43a5a-c81e-4b39-8bcb-8ec7bb80ea12",
+                  "name": "Forbidden - Insufficient permissions (requires `ratelimit.*.read_override`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-5eb43a5a-c81e-4b39-8bcb-8ec7bb80ea12"
+                },
+                {
+                  "id": "1cc541e0-1183-427f-985a-ded4903c0be8",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-1cc541e0-1183-427f-985a-ded4903c0be8"
+                },
+                {
+                  "id": "f4b5fe47-fa07-4e98-9d38-42ba7ec07251",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-f4b5fe47-fa07-4e98-9d38-42ba7ec07251"
+                },
+                {
+                  "id": "fa060b5b-3ec6-49d4-9092-1e1f90b1a75e",
+                  "name": "Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"cursor\": \"<string>\",\n  \"limit\": 10\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.listOverrides",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.listOverrides"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-fa060b5b-3ec6-49d4-9092-1e1f90b1a75e"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-0a5f9617-ba31-4b7a-b71b-f0fcaa79f624"
+            }
+          ],
+          "id": "68867225-e983-4ab0-b6c0-faacdb66cdb8",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-68867225-e983-4ab0-b6c0-faacdb66cdb8"
+        },
+        {
+          "name": "ratelimit.multiLimit",
+          "item": [
+            {
+              "name": "Apply Multiple Rate Limit Checks",
+              "id": "6968cee3-3a74-4de4-8ae1-bd359b197cc7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.multiLimit"
+                  ]
+                },
+                "description": "Check and enforce multiple rate limits in a single request for any identifiers (user IDs, IP addresses, API clients, etc.).\n\nUse this to efficiently check multiple rate limits at once. Each rate limit check is independent and returns its own result with a top-level `passed` indicator showing if all checks succeeded.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether limits are exceeded \u2014 check the `passed` field to see if all limits passed, or the `success` field in each individual result. A 429 may be returned if the workspace exceeds its API rate limit. Other 4xx responses indicate auth, namespace existence/deletion, or validation errors (e.g., 410 Gone for deleted namespaces). 5xx responses indicate server errors.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `ratelimit.*.limit` (to check limits in any namespace)\n- `ratelimit.<namespace_id>.limit` (to check limits in all specific namespaces being checked)\n"
+              },
+              "response": [
+                {
+                  "id": "9eb8e1d5-f7b3-48cd-af25-dd484fb18525",
+                  "name": "All rate limit checks completed successfully. Check the `success` field in each result to determine if the corresponding request is allowed.\n",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"passed\": \"<boolean>\",\n    \"limits\": [\n      {\n        \"namespace\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"remaining\": \"<long>\",\n        \"reset\": \"<long>\",\n        \"passed\": \"<boolean>\",\n        \"overrideId\": \"<string>\"\n      },\n      {\n        \"namespace\": \"<string>\",\n        \"identifier\": \"<string>\",\n        \"limit\": \"<long>\",\n        \"remaining\": \"<long>\",\n        \"reset\": \"<long>\",\n        \"passed\": \"<boolean>\",\n        \"overrideId\": \"<string>\"\n      }\n    ]\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-9eb8e1d5-f7b3-48cd-af25-dd484fb18525"
+                },
+                {
+                  "id": "ddd4a25d-3bcc-4cdf-b7fb-eeb24b98939d",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-ddd4a25d-3bcc-4cdf-b7fb-eeb24b98939d"
+                },
+                {
+                  "id": "203ebec3-0a93-49c3-8a5f-faf84f45558f",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-203ebec3-0a93-49c3-8a5f-faf84f45558f"
+                },
+                {
+                  "id": "dfa8d6b3-9651-4138-9771-7e055bd14624",
+                  "name": "Forbidden",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-dfa8d6b3-9651-4138-9771-7e055bd14624"
+                },
+                {
+                  "id": "f5e48c7b-1a37-4b68-a24d-3fc03f389b61",
+                  "name": "Not Found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-f5e48c7b-1a37-4b68-a24d-3fc03f389b61"
+                },
+                {
+                  "id": "1dd75297-8184-4aa8-ad7f-b611290ec3bc",
+                  "name": "Gone - Namespace has been deleted",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Gone",
+                  "code": 410,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-1dd75297-8184-4aa8-ad7f-b611290ec3bc"
+                },
+                {
+                  "id": "05f77162-a399-475f-8045-a37e353a4f5d",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-05f77162-a399-475f-8045-a37e353a4f5d"
+                },
+                {
+                  "id": "88bb3847-35dc-4fa1-ba98-ef921a84f5eb",
+                  "name": "Internal server error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n  {\n    \"namespace\": \"<string>\",\n    \"identifier\": \"<string>\",\n    \"limit\": \"<long>\",\n    \"duration\": \"<long>\",\n    \"cost\": 1\n  }\n]",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.multiLimit",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.multiLimit"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-88bb3847-35dc-4fa1-ba98-ef921a84f5eb"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-6968cee3-3a74-4de4-8ae1-bd359b197cc7"
+            }
+          ],
+          "id": "648da06c-6861-4d34-bcb8-0c8be1dec0ce",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-648da06c-6861-4d34-bcb8-0c8be1dec0ce"
+        },
+        {
+          "name": "ratelimit.setOverride",
+          "item": [
+            {
+              "name": "Set Ratelimit Override",
+              "id": "89f3da62-a074-4645-b246-3f408d25ac84",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{bearerToken}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "v2",
+                    "ratelimit.setOverride"
+                  ]
+                },
+                "description": "Create or update a custom rate limit for specific identifiers, bypassing the namespace default.\n\nUse this to create premium tiers with higher limits, apply stricter limits to specific users, or implement emergency throttling.\n\n**Important:** Overrides take effect immediately and completely replace the default limit for matching identifiers. Use wildcard patterns (e.g., `premium_*`) to match multiple identifiers.\n\n**Permissions:** Requires `ratelimit.*.set_override` or `ratelimit.<namespace_id>.set_override`\n"
+              },
+              "response": [
+                {
+                  "id": "bc220db9-20e5-45b7-be0c-1eee99744027",
+                  "name": "Override successfully created or updated and is now active.",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"data\": {\n    \"overrideId\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-bc220db9-20e5-45b7-be0c-1eee99744027"
+                },
+                {
+                  "id": "43f10ca4-e30a-4bc0-ad31-eb5fe72ae5f7",
+                  "name": "Bad request",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"detail\": \"<string>\",\n    \"errors\": [\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      },\n      {\n        \"location\": \"<string>\",\n        \"message\": \"<string>\",\n        \"fix\": \"<string>\"\n      }\n    ],\n    \"status\": \"<integer>\",\n    \"title\": \"<string>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-43f10ca4-e30a-4bc0-ad31-eb5fe72ae5f7"
+                },
+                {
+                  "id": "3ecf0ad2-f8da-47e7-af95-386501cc50e1",
+                  "name": "Unauthorized",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-3ecf0ad2-f8da-47e7-af95-386501cc50e1"
+                },
+                {
+                  "id": "18094be7-3d9a-46ab-9c01-1915c8bbef7f",
+                  "name": "Forbidden - Insufficient permissions (requires `ratelimit.*.set_override`)",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Forbidden",
+                  "code": 403,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-18094be7-3d9a-46ab-9c01-1915c8bbef7f"
+                },
+                {
+                  "id": "de109462-ed7a-4d3a-a0ac-589073cf8987",
+                  "name": "Not Found - Namespace not found",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-de109462-ed7a-4d3a-a0ac-589073cf8987"
+                },
+                {
+                  "id": "10ca6d3e-1eef-4dca-9267-ac820dd46346",
+                  "name": "Too Many Requests",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/problem+json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/problem+json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-10ca6d3e-1eef-4dca-9267-ac820dd46346"
+                },
+                {
+                  "id": "0a5df42a-483c-42dd-958e-7bbdbe19d6a0",
+                  "name": "Internal Server Error",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"namespace\": \"<string>\",\n  \"identifier\": \"<string>\",\n  \"limit\": \"<long>\",\n  \"duration\": \"<long>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/v2/ratelimit.setOverride",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "v2",
+                        "ratelimit.setOverride"
+                      ]
+                    }
+                  },
+                  "status": "Internal Server Error",
+                  "code": 500,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"meta\": {\n    \"requestId\": \"<string>\"\n  },\n  \"error\": {\n    \"title\": \"<string>\",\n    \"detail\": \"<string>\",\n    \"status\": \"<integer>\",\n    \"type\": \"<string>\"\n  }\n}",
+                  "createdAt": "2026-07-28T03:23:28.000Z",
+                  "updatedAt": "2026-07-28T03:23:28.000Z",
+                  "uid": "35240-0a5df42a-483c-42dd-958e-7bbdbe19d6a0"
+                }
+              ],
+              "createdAt": "2026-07-28T03:23:28.000Z",
+              "updatedAt": "2026-07-28T03:23:28.000Z",
+              "uid": "35240-89f3da62-a074-4645-b246-3f408d25ac84"
+            }
+          ],
+          "id": "70fc0126-dbe3-4966-bc0f-57ca95265139",
+          "createdAt": "2026-07-28T03:23:28.000Z",
+          "updatedAt": "2026-07-28T03:23:28.000Z",
+          "uid": "35240-70fc0126-dbe3-4966-bc0f-57ca95265139"
+        }
+      ],
+      "id": "c7ce95ad-e112-4c29-9fc9-f41223a9e585",
+      "createdAt": "2026-07-28T03:23:28.000Z",
+      "updatedAt": "2026-07-28T03:23:28.000Z",
+      "uid": "35240-c7ce95ad-e112-4c29-9fc9-f41223a9e585"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.unkey.com"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "provider": "unkey",
+  "sources": [
+    "unkey-analytics-api-openapi.yml",
+    "unkey-apis-api-openapi.yml",
+    "unkey-deploy-api-openapi.yml",
+    "unkey-identities-api-openapi.yml",
+    "unkey-keys-api-openapi.yml",
+    "unkey-liveness-api-openapi.yml",
+    "unkey-permissions-api-openapi.yml",
+    "unkey-ratelimit-api-openapi.yml"
+  ],
+  "outputs": [
+    "unkey-analytics-api-openapi.yml",
+    "unkey-apis-api-openapi.yml",
+    "unkey-deploy-api-openapi.yml",
+    "unkey-identities-api-openapi.yml",
+    "unkey-keys-api-openapi.yml",
+    "unkey-liveness-api-openapi.yml",
+    "unkey-permissions-api-openapi.yml",
+    "unkey-ratelimit-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
