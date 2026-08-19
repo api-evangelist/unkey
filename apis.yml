@@ -21,7 +21,7 @@ description: Unkey is the developer platform for modern APIs, providing globally
 url: https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/apis.yml
 created: '2026-03-16'
 modified: '2026-08-08'
-specificationVersion: '0.19'
+specificationVersion: '0.23'
 type: Index
 tags:
 - API Keys
