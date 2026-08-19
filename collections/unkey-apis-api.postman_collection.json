@@ -1,0 +1,1725 @@
+{
+  "item": [
+    {
+      "id": "00e54be1-bbb6-43a5-af4f-fbe0e2ac1802",
+      "name": "apis",
+      "description": {
+        "content": "API management operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0ed46e91-3227-4c21-9010-daf537303e3b",
+          "name": "Create API Namespace",
+          "request": {
+            "name": "Create API Namespace",
+            "description": {
+              "content": "Create an API namespace for organizing keys by environment, service, or product.\n\nUse this to separate production from development keys, isolate different services, or manage multiple products. Each API gets a unique identifier and dedicated infrastructure for secure key operations.\n\n**Important**: API names must be unique within your workspace and cannot be changed after creation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.create_api` (to create APIs in any workspace)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "apis.createApi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "563f9ca3-59e3-410a-9bdf-c50a195c75e0",
+              "name": "API namespace created successfully. The response contains the unique API ID for referencing this namespace in key operations.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"apiId\": \"api_2cGKbMxRjIzhCxo1IdjH3a\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "782d548a-54f3-4873-abe8-0069988ae4bc",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "91cdf948-ac1a-40e0-acfd-0ed5590cc185",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ab697ce3-959f-4a5b-af1c-9b71b3f83edd",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4be3b70-1ed2-4afd-b403-cd40e2a00a36",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46910a83-a0df-43b7-a674-62228e241edc",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.createApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"payment-service-production\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61b20c56-54cd-4e2f-8949-9c58289a0718",
+          "name": "Delete API Namespace",
+          "request": {
+            "name": "Delete API Namespace",
+            "description": {
+              "content": "Permanently delete an API namespace and immediately invalidate all associated keys.\n\nUse this for cleaning up development environments, retiring deprecated services, or removing unused resources.\nAll keys in the namespace are immediately marked as deleted and will fail verification with `code=NOT_FOUND`.\n\n**Important**: This operation is immediate and permanent. Verify you have the correct API ID before deletion.\nIf delete protection is enabled, disable it first through the dashboard or API configuration.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.delete_api` (to delete any API)\n- `api.<api_id>.delete_api` (to delete a specific API)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "apis.deleteApi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe8bb405-a335-486c-8548-ccd2623cfe61",
+              "name": "API namespace deleted successfully. All associated keys are immediately invalidated and will fail verification with `code=NOT_FOUND`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "002eff70-ef47-40c4-aa2f-53b3a77aa11a",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1a30a65a-4e80-415e-a1e3-a448f7906e66",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8d1823c6-b2fa-457e-823f-1dbe7a1819b5",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0876d39e-832e-4b7d-85bd-7b8683bee58e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffc8d563-8cbb-40d9-9b40-782aa34d970e",
+              "name": "Delete protection is enabled. Disable protection through the dashboard or API configuration, then retry the deletion.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Precondition Failed",
+              "code": 412,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f35c23e-e9c5-4bae-b0f7-a465b325892d",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5fd25b92-2198-4f91-87a4-05796758da23",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.deleteApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d175d182-b514-492f-a7c6-071092255313",
+          "name": "Get API Namespace",
+          "request": {
+            "name": "Get API Namespace",
+            "description": {
+              "content": "Retrieve basic information about an API namespace including its ID and name.\n\nUse this to verify an API exists before performing operations, get the human-readable name when you only have the API ID, or confirm access to a specific namespace. For detailed key information, use the `listKeys` endpoint instead.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.read_api` (to read any API)\n- `api.<api_id>.read_api` (to read a specific API)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "apis.getApi"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0d34e2ca-4b43-4ea1-81d7-b5b86fa58cf9",
+              "name": "API information retrieved successfully. Contains the unique API ID and human-readable name.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"id\": \"api_1234567890abcdef\",\n    \"name\": \"payment-service-production\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bae31716-3967-463e-a5bf-c1c417b44324",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e31536e0-037f-48f5-ab64-e0b38ef12f59",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cedfe4b4-38d8-4461-b184-973d8f929674",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56f49c36-e430-4ca3-9f21-5c4765e908e7",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "28171c74-c4f4-4caf-9f12-3cb8477ae68f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7c37534-c120-4b13-a55e-b84551bc1cf9",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.getApi"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "764b3c04-f66b-442a-a9dc-9f148021ff79",
+          "name": "List API Keys",
+          "request": {
+            "name": "List API Keys",
+            "description": {
+              "content": "Retrieve a paginated list of API keys for dashboard and administrative interfaces.\n\nUse this to build key management dashboards, filter keys by user with `externalId`, or retrieve key details for administrative purposes. Each key includes status, metadata, permissions, and usage limits.\n\n**Important**: Set `decrypt: true` only in secure contexts to retrieve plaintext key values from recoverable keys.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions for basic key listing:\n- `api.*.read_key` (to read keys from any API)\n- `api.<api_id>.read_key` (to read keys from a specific API)\n\nAdditionally, you need read access to the API itself:\n- `api.*.read_api` or `api.<api_id>.read_api`\n\nAdditional permission required for decrypt functionality:\n- `api.*.decrypt_key` or `api.<api_id>.decrypt_key`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "apis.listKeys"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiId\": \"<string>\",\n  \"limit\": 100,\n  \"cursor\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ffe0e742-0bf3-4b82-8f3f-1600c0d1ddac",
+              "name": "Successfully retrieved paginated keys. Use the pagination cursor for additional results when `hasMore: true`.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": [\n    {\n      \"keyId\": \"key_1234567890abcdef\",\n      \"start\": \"sk_test_abc123\",\n      \"createdAt\": 1701425400000,\n      \"enabled\": true,\n      \"name\": \"Production API Key\",\n      \"meta\": {\n        \"key_0\": \"string\",\n        \"key_1\": 2571,\n        \"key_2\": \"string\",\n        \"key_3\": 7974,\n        \"key_4\": true,\n        \"key_5\": \"string\",\n        \"key_6\": 5172.35984517955,\n        \"key_7\": \"string\",\n        \"key_8\": \"string\",\n        \"key_9\": true,\n        \"key_10\": 1000.5010827660799,\n        \"key_11\": 2121.6021257739694,\n        \"key_12\": 2640,\n        \"key_13\": true,\n        \"key_14\": false,\n        \"key_15\": true,\n        \"key_16\": 5488.19318981584,\n        \"key_17\": \"string\",\n        \"key_18\": 2428.382461887607,\n        \"key_19\": 5094.370206534514,\n        \"key_20\": false,\n        \"key_21\": \"string\",\n        \"key_22\": true,\n        \"key_23\": 8693,\n        \"key_24\": \"string\",\n        \"key_25\": 6861,\n        \"key_26\": \"string\",\n        \"key_27\": \"string\",\n        \"key_28\": 7218.301287455295,\n        \"key_29\": 7431.371283941158,\n        \"key_30\": false,\n        \"key_31\": 1798,\n        \"key_32\": false,\n        \"key_33\": 606,\n        \"key_34\": 5538.008842374436,\n        \"key_35\": \"string\",\n        \"key_36\": true,\n        \"key_37\": \"string\",\n        \"key_38\": \"string\",\n        \"key_39\": true,\n        \"key_40\": 9807,\n        \"key_41\": \"string\"\n      },\n      \"updatedAt\": 1701425400000,\n      \"lastUsedAt\": 1701425400000,\n      \"expires\": 1735689600000,\n      \"permissions\": [\n        \"documents.read\",\n        \"documents.write\"\n      ],\n      \"roles\": [\n        \"editor\",\n        \"viewer\"\n      ],\n      \"credits\": {\n        \"remaining\": 1000,\n        \"refill\": {\n          \"interval\": \"daily\",\n          \"amount\": 1000,\n          \"refillDay\": 15\n        }\n      },\n      \"identity\": {\n        \"externalId\": \"string\",\n        \"id\": \"string\",\n        \"meta\": {\n          \"key_0\": true,\n          \"key_1\": false\n        },\n        \"ratelimits\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"autoApply\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"autoApply\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"plaintext\": \"sk_test_abc123def456\",\n      \"ratelimits\": [\n        {\n          \"id\": \"rl_1234567890abcdef\",\n          \"name\": \"api_requests\",\n          \"limit\": 1000,\n          \"duration\": 3600000,\n          \"autoApply\": true\n        },\n        {\n          \"id\": \"rl_1234567890abcdef\",\n          \"name\": \"api_requests\",\n          \"limit\": 1000,\n          \"duration\": 3600000,\n          \"autoApply\": true\n        }\n      ]\n    },\n    {\n      \"keyId\": \"key_1234567890abcdef\",\n      \"start\": \"sk_test_abc123\",\n      \"createdAt\": 1701425400000,\n      \"enabled\": true,\n      \"name\": \"Production API Key\",\n      \"meta\": {\n        \"key_0\": 1932.353973548686,\n        \"key_1\": 3677.7042964110597,\n        \"key_2\": 4613.728879151031,\n        \"key_3\": 6508.652070217492,\n        \"key_4\": true,\n        \"key_5\": 806.7005483650413,\n        \"key_6\": 5912.4565405469275,\n        \"key_7\": \"string\",\n        \"key_8\": false,\n        \"key_9\": 1038.588399879078,\n        \"key_10\": \"string\"\n      },\n      \"updatedAt\": 1701425400000,\n      \"lastUsedAt\": 1701425400000,\n      \"expires\": 1735689600000,\n      \"permissions\": [\n        \"documents.read\",\n        \"documents.write\"\n      ],\n      \"roles\": [\n        \"editor\",\n        \"viewer\"\n      ],\n      \"credits\": {\n        \"remaining\": 1000,\n        \"refill\": {\n          \"interval\": \"daily\",\n          \"amount\": 1000,\n          \"refillDay\": 15\n        }\n      },\n      \"identity\": {\n        \"externalId\": \"string\",\n        \"id\": \"string\",\n        \"meta\": {\n          \"key_0\": false\n        },\n        \"ratelimits\": [\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"autoApply\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          },\n          {\n            \"id\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"name\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"limit\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"duration\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"autoApply\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        ]\n      },\n      \"plaintext\": \"sk_test_abc123def456\",\n      \"ratelimits\": [\n        {\n          \"id\": \"rl_1234567890abcdef\",\n          \"name\": \"api_requests\",\n          \"limit\": 1000,\n          \"duration\": 3600000,\n          \"autoApply\": true\n        },\n        {\n          \"id\": \"rl_1234567890abcdef\",\n          \"name\": \"api_requests\",\n          \"limit\": 1000,\n          \"duration\": 3600000,\n          \"autoApply\": true\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": true,\n    \"cursor\": \"eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3d259a56-f36e-4bbd-b79b-32528caf8e83",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4c84f2ae-9d88-46f5-bdfd-1dc28f07d826",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a155e981-4f56-4a13-98d6-49e2766543d4",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bf00fd6-3a69-4b8c-aa29-f33a8ead25e0",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "47af9681-1a7b-4998-807e-f148e3db5192",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a6d4fdb3-3618-4afe-ab01-eb9066889e04",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "apis.listKeys"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiId\": \"api_1234abcd\",\n  \"limit\": 100,\n  \"cursor\": \"key_1234abcd\",\n  \"externalId\": \"user_1234abcd\",\n  \"decrypt\": false,\n  \"revalidateKeysCache\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unkey.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "be24432e-3495-417f-b6c2-d0373108426b",
+    "name": "Unkey analytics apis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+      "type": "text/plain"
+    }
+  }
+}

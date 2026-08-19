@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics identities API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "identities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.createIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an identity to group multiple API keys under a single entity. Identities enable shared rate limits and metadata across all associated keys.\n\nPerfect for users with multiple devices, organizations with multiple API keys, or when you need unified rate limiting across different services.\n\n**Important**\nRequires `identity.*.create_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "Delete Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.deleteIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete an identity. This operation cannot be undone.\n\nUse this for data cleanup, compliance requirements, or when removing entities from your system.\n\n> **Important**\n> Requires `identity.*.delete_identity` permission\n> Associated API keys remain functional but lose shared resources\n> External ID becomes available for reuse immediately\n"
+        },
+        {
+          "info": {
+            "name": "Get Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.getIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve an identity by external ID. Returns metadata, rate limits, and other associated data.\n\nUse this to check if an identity exists, view configurations, or build management dashboards.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "List Identities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.listIdentities",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a paginated list of all identities in your workspace. Returns metadata and rate limit configurations.\n\nPerfect for building management dashboards, auditing configurations, or browsing your identities.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n"
+        },
+        {
+          "info": {
+            "name": "Update Identity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/identities.updateIdentity",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update an identity's metadata and rate limits. Only specified fields are modified - others remain unchanged.\n\nPerfect for subscription changes, plan upgrades, or updating user information. Changes take effect immediately.\n\n> **Important**\n> Requires `identity.*.update_identity` permission\n> Rate limit changes propagate within 30 seconds\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

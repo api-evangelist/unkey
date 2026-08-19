@@ -1,0 +1,2093 @@
+{
+  "item": [
+    {
+      "id": "53d7ace0-0ff6-4158-a483-68ea9a80c6fe",
+      "name": "identities",
+      "description": {
+        "content": "Identity management operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a5d62016-d24b-4105-a4da-e48f2e03b6ae",
+          "name": "Create Identity",
+          "request": {
+            "name": "Create Identity",
+            "description": {
+              "content": "Create an identity to group multiple API keys under a single entity. Identities enable shared rate limits and metadata across all associated keys.\n\nPerfect for users with multiple devices, organizations with multiple API keys, or when you need unified rate limiting across different services.\n\n**Important**\nRequires `identity.*.create_identity` permission\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities.createIdentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"externalId\": \"<string>\",\n  \"meta\": {\n    \"key_0\": 6772.301588420083,\n    \"key_1\": \"string\",\n    \"key_2\": false,\n    \"key_3\": false,\n    \"key_4\": 8787.680793798727,\n    \"key_5\": \"string\",\n    \"key_6\": true,\n    \"key_7\": \"string\",\n    \"key_8\": true,\n    \"key_9\": 9484.892113578382,\n    \"key_10\": false,\n    \"key_11\": 3095.3269104677215,\n    \"key_12\": 3318.3933082394233,\n    \"key_13\": 8118.041491083967,\n    \"key_14\": \"string\",\n    \"key_15\": 5464,\n    \"key_16\": true,\n    \"key_17\": \"string\",\n    \"key_18\": \"string\",\n    \"key_19\": 7678,\n    \"key_20\": \"string\",\n    \"key_21\": false,\n    \"key_22\": true,\n    \"key_23\": 3020.394480082822,\n    \"key_24\": 4680,\n    \"key_25\": true,\n    \"key_26\": \"string\"\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c060366c-91a0-4ca3-a745-7a2f7949a072",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_01H9TQPP77V5E48E9SH0BG0ZQX\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a1e525f-7480-48c1-968e-24a75e7af9e4",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38a43cf0-2794-43d4-8b38-3cd5019da8f7",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "57a906e1-0e4c-44d2-869f-60a1082a6153",
+              "name": "Forbidden - Insufficient permissions (requires `identity.*.create_identity`)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Your root key requires the 'identity.*.create_identity' permission to perform this operation\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"forbidden\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_0uVwX4yZaAbCdEfGhIjKl\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b4736ca-eaf8-458d-b376-b1b35f0da276",
+              "name": "Conflict - Identity with this externalId already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Identity with externalId \\\"user_abc123\\\" already exists in this workspace.\",\n    \"status\": 409,\n    \"title\": \"Conflict\",\n    \"type\": \"conflict\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_2wXyZaAbCdEfGhIjKlMnOp\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cc0f5c8-78dc-4404-84a1-1f2a44013691",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "009aaba6-8bce-4e32-99d5-eb01de394754",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.createIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "346b0f2f-ad56-4f89-b8b0-74563f2cee11",
+          "name": "Delete Identity",
+          "request": {
+            "name": "Delete Identity",
+            "description": {
+              "content": "Permanently delete an identity. This operation cannot be undone.\n\nUse this for data cleanup, compliance requirements, or when removing entities from your system.\n\n> **Important**\n> Requires `identity.*.delete_identity` permission\n> Associated API keys remain functional but lose shared resources\n> External ID becomes available for reuse immediately\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities.deleteIdentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b248013b-9a20-4f10-a7db-8831d588cc5f",
+              "name": "Identity successfully deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_01H9TQPP77V5E48E9SH0BG0ZQX\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d1f81445-72c8-42c2-9bf9-1cfcd74adeb9",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a65ac661-7794-4ff8-8772-83ded1ba0d40",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10da4113-edb2-4a9e-84d6-9f11d8e3c3ec",
+              "name": "Forbidden - Insufficient permissions (requires `identity.*.delete_identity`)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Your root key requires the 'identity.*.delete_identity' permission to perform this operation\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"forbidden\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_0uVwX4yZaAbCdEfGhIjKl\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d9a6cf4-e709-4da1-88e1-3614023dbc80",
+              "name": "Not Found - Identity with the specified externalId doesn't exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Identity with externalId \\\"user_abc123\\\" not found.\",\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"not_found\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_2wXyZaAbCdEfGhIjKlMnOp\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90a2b196-4375-40ef-ac14-16c817b1928c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07f414e4-3cfe-42a3-84b1-f426cddb5c7a",
+              "name": "Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.deleteIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "761d43b1-2072-44f2-b8d4-f2f166625c27",
+          "name": "Get Identity",
+          "request": {
+            "name": "Get Identity",
+            "description": {
+              "content": "Retrieve an identity by external ID. Returns metadata, rate limits, and other associated data.\n\nUse this to check if an identity exists, view configurations, or build management dashboards.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities.getIdentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9aee07ad-12bb-4164-b7c1-fc95056d9403",
+              "name": "Successfully retrieved the identity information",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"externalId\": \"user_123\",\n    \"id\": \"id_1234567890abcdef\",\n    \"meta\": {\n      \"email\": \"alice@example.com\",\n      \"name\": \"Alice Smith\",\n      \"plan\": \"premium\"\n    },\n    \"ratelimits\": [\n      {\n        \"duration\": 60000,\n        \"limit\": 1000,\n        \"name\": \"requests\"\n      }\n    ]\n  },\n  \"meta\": {\n    \"requestId\": \"req_01H9TQPP77V5E48E9SH0BG0ZQX\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4f6cb893-1677-4e61-9563-20e12d50ab8b",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f68ba032-353b-4b34-9cee-e9bf91d4e75e",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "257c5f5d-23aa-4955-a244-45f33d3235c4",
+              "name": "Forbidden - Insufficient permissions (requires `identity.*.read_identity`)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Your root key requires the 'identity.*.read_identity' permission to perform this operation\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"forbidden\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_0uVwX4yZaAbCdEfGhIjKl\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8002bba-47f5-4572-bde9-2d76f1e69c0f",
+              "name": "Not Found - Identity with the specified externalId doesn't exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Identity with externalId \\\"user_abc123\\\" not found.\",\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"not_found\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_2wXyZaAbCdEfGhIjKlMnOp\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99b14e1d-2e41-43dc-90dc-e624639bd1d0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53e8d17e-784d-48ab-8092-6a6aee24de75",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.getIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e9ce6193-4ea4-4f39-9fd9-9284b305107d",
+          "name": "List Identities",
+          "request": {
+            "name": "List Identities",
+            "description": {
+              "content": "Get a paginated list of all identities in your workspace. Returns metadata and rate limit configurations.\n\nPerfect for building management dashboards, auditing configurations, or browsing your identities.\n\n> **Important**\n> Requires `identity.*.read_identity` permission\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities.listIdentities"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "734bedec-df2d-4452-9fd4-7fd134ab9cc8",
+              "name": "Successfully retrieved the list of identities",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"cursor\": \"cursor_eyJsYXN0SWQiOiJpZF8wMlpZUjNROU5QOEpNNFg4SFdTS1BXNDNKRiJ9\",\n    \"identities\": [\n      {\n        \"externalId\": \"user_123\",\n        \"id\": \"id_01H9TQP8NP8JN3X8HWSKPW43JE\",\n        \"meta\": {\n          \"name\": \"Alice Smith\",\n          \"plan\": \"premium\"\n        },\n        \"ratelimits\": [\n          {\n            \"duration\": 60000,\n            \"limit\": 1000,\n            \"name\": \"requests\"\n          }\n        ]\n      },\n      {\n        \"externalId\": \"user_456\",\n        \"id\": \"id_02ZYR3Q9NP8JM4X8HWSKPW43JF\",\n        \"meta\": {\n          \"name\": \"Bob Johnson\",\n          \"plan\": \"basic\"\n        },\n        \"ratelimits\": [\n          {\n            \"duration\": 60000,\n            \"limit\": 500,\n            \"name\": \"requests\"\n          }\n        ]\n      }\n    ],\n    \"total\": 247\n  },\n  \"meta\": {\n    \"requestId\": \"req_01H9TQPP77V5E48E9SH0BG0ZQX\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31bd094e-3b7b-41fd-9dc9-0df7d4734031",
+              "name": "Bad Request - Invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "facfd567-b23f-43c2-938f-ce8d2445977a",
+              "name": "Unauthorized - Missing or invalid authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "184a8a54-ab74-4967-b6db-ffc9823b8e2e",
+              "name": "Forbidden - Insufficient permissions (requires `identity.*.read_identity`)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Your root key requires the 'identity.*.read_identity' permission to perform this operation\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"forbidden\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_0uVwX4yZaAbCdEfGhIjKl\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d574509-82f9-4248-a02e-51190ab6ae65",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "19bb14f0-5ef7-4a41-9839-31e91ba116b0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.listIdentities"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c92ce8b2-e392-40a4-9bfb-f1df5e9240ba",
+          "name": "Update Identity",
+          "request": {
+            "name": "Update Identity",
+            "description": {
+              "content": "Update an identity's metadata and rate limits. Only specified fields are modified - others remain unchanged.\n\nPerfect for subscription changes, plan upgrades, or updating user information. Changes take effect immediately.\n\n> **Important**\n> Requires `identity.*.update_identity` permission\n> Rate limit changes propagate within 30 seconds\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "identities.updateIdentity"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identity\": \"<string>\",\n  \"meta\": {\n    \"key_0\": true,\n    \"key_1\": 2594.6319911797864\n  },\n  \"ratelimits\": [\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    },\n    {\n      \"name\": \"<string>\",\n      \"limit\": \"<long>\",\n      \"duration\": \"<long>\",\n      \"autoApply\": false\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ae1b602d-571f-4165-9ff3-b7aaea0f0989",
+              "name": "Identity successfully updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"externalId\": \"string\",\n    \"id\": \"string\",\n    \"meta\": {\n      \"key_0\": 231.73770470622634,\n      \"key_1\": 7741,\n      \"key_2\": \"string\"\n    },\n    \"ratelimits\": [\n      {\n        \"id\": \"rl_1234567890abcdef\",\n        \"name\": \"api_requests\",\n        \"limit\": 1000,\n        \"duration\": 3600000,\n        \"autoApply\": true\n      },\n      {\n        \"id\": \"rl_1234567890abcdef\",\n        \"name\": \"api_requests\",\n        \"limit\": 1000,\n        \"duration\": 3600000,\n        \"autoApply\": true\n      }\n    ]\n  },\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b9044dfe-5e71-46fd-af56-6c2c7c2c23d0",
+              "name": "Bad request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43c0f11d-04de-4123-81a5-a995e7115818",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2a3f0b73-b7e2-4a25-8ac4-4b55f81bd8c3",
+              "name": "Forbidden - Insufficient permissions (requires `identity.*.update_identity`)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Your root key requires the 'identity.*.update_identity' permission to perform this operation\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"forbidden\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_0uVwX4yZaAbCdEfGhIjKl\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cf982ded-2167-474f-b5c2-2409cf50ff7f",
+              "name": "Not Found - Identity with the specified ID or externalId doesn't exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": {\n    \"detail\": \"Identity with externalId \\\"user_123\\\" not found.\",\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"not_found\"\n  },\n  \"meta\": {\n    \"requestId\": \"req_2wXyZaAbCdEfGhIjKlMnOp\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "550f654f-4455-4311-9fa2-4642576a179a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "323c6462-525a-4794-bb0e-addb331519ce",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "identities.updateIdentity"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"identity\": \"user_123\",\n  \"meta\": {\n    \"email\": \"alice@example.com\",\n    \"name\": \"Alice Smith\",\n    \"plan\": \"premium\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unkey.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c3211dc4-f13e-48a5-b1af-4eb4c2906b2b",
+    "name": "Unkey analytics identities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+      "type": "text/plain"
+    }
+  }
+}

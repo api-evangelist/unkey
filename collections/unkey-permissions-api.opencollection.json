@@ -1,0 +1,176 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics permissions API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "permissions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.createPermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new permission to define specific actions or capabilities in your RBAC system. Permissions can be assigned directly to API keys or included in roles.\n\nUse hierarchical naming patterns like `documents.read`, `admin.users.delete`, or `billing.invoices.create` for clear organization.\n\n**Important:** Permission names must be unique within the workspace. Once created, permissions are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permis"
+        },
+        {
+          "info": {
+            "name": "Create Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.createRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create a new role to group related permissions for easier management. Roles enable consistent permission assignment across multiple API keys.\n\n**Important:** Role names must be unique within the workspace. Once created, roles are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.create_role`\n"
+        },
+        {
+          "info": {
+            "name": "Delete Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.deletePermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a permission from your workspace. This also removes the permission from all API keys and roles.\n\n**Important:** This operation cannot be undone and immediately affects all API keys and roles that had this permission assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_permission`\n"
+        },
+        {
+          "info": {
+            "name": "Delete Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.deleteRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Remove a role from your workspace. This also removes the role from all assigned API keys.\n\n**Important:** This operation cannot be undone and immediately affects all API keys that had this role assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_role`\n"
+        },
+        {
+          "info": {
+            "name": "Get Permission",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.getPermission",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve details about a specific permission including its name, description, and metadata.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n"
+        },
+        {
+          "info": {
+            "name": "Get Role",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.getRole",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve details about a specific role including its assigned permissions.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n"
+        },
+        {
+          "info": {
+            "name": "List Permissions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.listPermissions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all permissions in your workspace.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n"
+        },
+        {
+          "info": {
+            "name": "List Roles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/permissions.listRoles",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve all roles in your workspace including their assigned permissions.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

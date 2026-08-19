@@ -1,0 +1,3305 @@
+{
+  "item": [
+    {
+      "id": "c5b3577a-3041-4613-874f-fb6faa649c6e",
+      "name": "permissions",
+      "description": {
+        "content": "Permission and role management operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2b659605-cc45-4ab4-a240-5012cd113913",
+          "name": "Create Permission",
+          "request": {
+            "name": "Create Permission",
+            "description": {
+              "content": "Create a new permission to define specific actions or capabilities in your RBAC system. Permissions can be assigned directly to API keys or included in roles.\n\nUse hierarchical naming patterns like `documents.read`, `admin.users.delete`, or `billing.invoices.create` for clear organization.\n\n**Important:** Permission names must be unique within the workspace. Once created, permissions are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.create_permission`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.createPermission"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"slug\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "166bc49b-07fd-44c1-b38f-d642d550b217",
+              "name": "Permission created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"permissionId\": \"perm_1234567890abcdef\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fe5099d9-366a-4e6b-82b7-10a19d2c3e83",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "65efc9f0-fdea-4e8c-b6c6-c77cc29cbffe",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "566fb674-36d3-4af4-8096-7b665ef20614",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7e221427-ef61-4b93-ab8b-440e0e30af78",
+              "name": "Conflict - permission with that name already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "407abd31-fd8a-408f-97ff-b3519b3406a9",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2432ebba-3698-42d6-845a-a630e916b7a3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"users.read\",\n  \"slug\": \"users-read\",\n  \"description\": \"Grants read-only access to user profile information, account settings, and subscription status.\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c3acee09-41f1-42b9-a723-e284d584d5bc",
+          "name": "Create Role",
+          "request": {
+            "name": "Create Role",
+            "description": {
+              "content": "Create a new role to group related permissions for easier management. Roles enable consistent permission assignment across multiple API keys.\n\n**Important:** Role names must be unique within the workspace. Once created, roles are immediately available for assignment.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.create_role`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.createRole"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3e1f9cd6-3d0a-4b37-ae79-e1026a7c5e21",
+              "name": "Role created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"roleId\": \"role_1234567890abcdef\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "829b2613-de35-4fec-89b5-90114213aa5b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "05d335bc-c296-447b-8dab-fee0b9ad89aa",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ddd0baf7-00a9-4db4-b8c1-877d0cc46628",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "026403e2-160c-4c4d-8878-b61e9588b221",
+              "name": "Conflict - A role with this name already exists",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43d8c876-1526-4290-9535-db7e9110b116",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "afc5e28a-d64d-419e-9ae6-e05887e802a0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.createRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Can read and write content\",\n  \"name\": \"content.editor\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ac75ce28-d230-47c5-bfba-4e7d8584eee3",
+          "name": "Delete Permission",
+          "request": {
+            "name": "Delete Permission",
+            "description": {
+              "content": "Remove a permission from your workspace. This also removes the permission from all API keys and roles.\n\n**Important:** This operation cannot be undone and immediately affects all API keys and roles that had this permission assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_permission`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.deletePermission"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permission\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3dca113f-0d65-4c5a-aaba-7a50f50e14ca",
+              "name": "Permission deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3f357a72-b1b4-4dc9-a498-bbeb4e52bfa0",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a2b9487a-18af-4009-9c1d-70dbac1dfde6",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b0c1e210-e637-4885-a079-8c4068fceee6",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d0bd5951-9d50-436d-ae98-de9066e603e6",
+              "name": "Not Found - The specified permission does not exist",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5cb8076f-e43a-4517-b790-7620b95dc06a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "14222ed6-82de-49d0-a918-cc1ae04d4b4a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deletePermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permissionId\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d074a7c-8369-4774-b2c2-36e424ac4149",
+          "name": "Delete Role",
+          "request": {
+            "name": "Delete Role",
+            "description": {
+              "content": "Remove a role from your workspace. This also removes the role from all assigned API keys.\n\n**Important:** This operation cannot be undone and immediately affects all API keys that had this role assigned.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.delete_role`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.deleteRole"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ff0f8371-f7df-4284-9be0-210cf1f5eb79",
+              "name": "Role deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ef87af6e-5d8f-4511-980c-0bfcf0a7d47e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c298b82c-3100-4a6d-a7fb-85d888a2e308",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "025b8ab8-dbd3-42f4-8e45-1df313a3f888",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bf55e67-4f54-45cd-9637-ef086cdfd5fe",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c00308c-7868-4411-81e6-2621a45dc1b3",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.deleteRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_dns_manager\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79ea42c7-ce14-41df-9779-dad2eb729064",
+          "name": "Get Permission",
+          "request": {
+            "name": "Get Permission",
+            "description": {
+              "content": "Retrieve details about a specific permission including its name, description, and metadata.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.getPermission"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"permission\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ac5ce94b-f88d-468b-88ed-3b58875c5980",
+              "name": "Permission retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"id\": \"perm_1234567890abcdef\",\n    \"name\": \"users.read\",\n    \"slug\": \"users-read\",\n    \"description\": \"Allows reading user profile information and account details\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8158fd0d-3996-48ce-9003-958f469dc714",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec0b9b6c-c135-4ad5-a010-c8cbf8fa5eb4",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ba57fd39-c2e8-4f85-838f-baa702d2a030",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "be76831d-700b-4a1d-a380-3ebd0aaa88fc",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54d37aad-48da-4091-86ea-f221a27f6c48",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "02cfbbe7-8285-4d65-b5d7-95a7ef5c3493",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getPermission"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"permission\": \"perm_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6bd00696-7736-4635-b77c-bda886c618f9",
+          "name": "Get Role",
+          "request": {
+            "name": "Get Role",
+            "description": {
+              "content": "Retrieve details about a specific role including its assigned permissions.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.getRole"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da2c8559-b7b9-47dd-b827-4cf6478e0d9d",
+              "name": "Role retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": {\n    \"id\": \"role_1234567890abcdef\",\n    \"name\": \"support.readonly\",\n    \"description\": \"Provides read-only access for customer support representatives to view user accounts and support tickets\",\n    \"permissions\": [\n      {\n        \"id\": \"perm_1234567890abcdef\",\n        \"name\": \"users.read\",\n        \"slug\": \"users-read\",\n        \"description\": \"Allows reading user profile information and account details\"\n      },\n      {\n        \"id\": \"perm_1234567890abcdef\",\n        \"name\": \"users.read\",\n        \"slug\": \"users-read\",\n        \"description\": \"Allows reading user profile information and account details\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "15bd4dd6-1c69-4f77-8831-51e5f229cf96",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "dde27dee-4566-433c-9be2-69d3524042ad",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e8fd5d0c-30fa-48be-ba01-a1334251c717",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ce12d8dc-988b-4202-81f8-d4ae057c7ae7",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "64205088-e45f-46d2-b4a9-4ef465da3ea5",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90175e09-e61a-4488-967d-28f45ff2225c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.getRole"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"role\": \"role_1234567890abcdef\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cafb8b37-2e79-4a1a-a6fb-3be656e039d9",
+          "name": "List Permissions",
+          "request": {
+            "name": "List Permissions",
+            "description": {
+              "content": "Retrieve all permissions in your workspace.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_permission`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.listPermissions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cursor\": \"<string>\",\n  \"limit\": 100\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe564bdd-1eea-4c76-8758-4ee6b04ac7cb",
+              "name": "Permissions retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": [\n    {\n      \"id\": \"perm_1234567890abcdef\",\n      \"name\": \"users.read\",\n      \"slug\": \"users-read\",\n      \"description\": \"Allows reading user profile information and account details\"\n    },\n    {\n      \"id\": \"perm_1234567890abcdef\",\n      \"name\": \"users.read\",\n      \"slug\": \"users-read\",\n      \"description\": \"Allows reading user profile information and account details\"\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": true,\n    \"cursor\": \"eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e22d33d-e541-4dd3-ac5c-5bce224f6f65",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "029cfae3-dc7f-4c5d-8ed0-5d499df38658",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eec2190f-429a-4347-a42e-562dfb80a30d",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "177abe30-cfa3-4830-8b9f-e02101ee832c",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3dfc017a-6027-4bd9-af86-7726f0b17b20",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listPermissions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cursor\": \"eyJrZXkiOiJwZXJtXzEyMzQifQ==\",\n  \"limit\": 50\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f21d228b-2027-47d9-b541-2f15647a2949",
+          "name": "List Roles",
+          "request": {
+            "name": "List Roles",
+            "description": {
+              "content": "Retrieve all roles in your workspace including their assigned permissions.\nResults are paginated and sorted by their id.\n\n**Required Permissions**\n\nYour root key must have the following permission:\n- `rbac.*.read_role`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "permissions.listRoles"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"limit\": 100,\n  \"cursor\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "63c12eec-b827-4a06-9747-13ecda8d98bd",
+              "name": "Roles retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"data\": [\n    {\n      \"id\": \"role_1234567890abcdef\",\n      \"name\": \"support.readonly\",\n      \"description\": \"Provides read-only access for customer support representatives to view user accounts and support tickets\",\n      \"permissions\": [\n        {\n          \"id\": \"perm_1234567890abcdef\",\n          \"name\": \"users.read\",\n          \"slug\": \"users-read\",\n          \"description\": \"Allows reading user profile information and account details\"\n        },\n        {\n          \"id\": \"perm_1234567890abcdef\",\n          \"name\": \"users.read\",\n          \"slug\": \"users-read\",\n          \"description\": \"Allows reading user profile information and account details\"\n        }\n      ]\n    },\n    {\n      \"id\": \"role_1234567890abcdef\",\n      \"name\": \"support.readonly\",\n      \"description\": \"Provides read-only access for customer support representatives to view user accounts and support tickets\",\n      \"permissions\": [\n        {\n          \"id\": \"perm_1234567890abcdef\",\n          \"name\": \"users.read\",\n          \"slug\": \"users-read\",\n          \"description\": \"Allows reading user profile information and account details\"\n        },\n        {\n          \"id\": \"perm_1234567890abcdef\",\n          \"name\": \"users.read\",\n          \"slug\": \"users-read\",\n          \"description\": \"Allows reading user profile information and account details\"\n        }\n      ]\n    }\n  ],\n  \"pagination\": {\n    \"hasMore\": true,\n    \"cursor\": \"eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec049e41-df5d-4aa0-bb05-9f41c005ae45",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"detail\": \"Property foo is required but is missing.\",\n    \"errors\": [\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      },\n      {\n        \"location\": \"body.permissions[0].name\",\n        \"message\": \"Must be at least 3 characters long\",\n        \"fix\": \"Ensure the name uses only alphanumeric characters, underscores, and hyphens\"\n      }\n    ],\n    \"status\": 404,\n    \"title\": \"Not Found\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "829f1c18-f50f-429f-a78e-8dce1f0bb6d5",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d48f32e-c7b3-436e-94ec-576b200efbc3",
+              "name": "Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b070be20-a4f5-48de-ad15-5163d4875a6e",
+              "name": "Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92efcef7-5ccb-4ed0-a77a-69529409b0e7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/problem+json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/problem+json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d20e686a-3e83-4dba-9f38-c07364fa7091",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "permissions.listRoles"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"limit\": 50,\n  \"cursor\": \"eyJrZXkiOiJyb2xlXzEyMzQifQ==\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"meta\": {\n    \"requestId\": \"req_123\"\n  },\n  \"error\": {\n    \"title\": \"Not Found\",\n    \"detail\": \"Property foo is required but is missing.\",\n    \"status\": 404,\n    \"type\": \"https://unkey.com/docs/errors/unkey/resource/not_found\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.unkey.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "15401dc5-d5dd-485f-a924-9e13ecc84505",
+    "name": "Unkey analytics permissions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action.",
+      "type": "text/plain"
+    }
+  }
+}

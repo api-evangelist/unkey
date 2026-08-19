@@ -1,0 +1,100 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics apis API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "apis",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.createApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create an API namespace for organizing keys by environment, service, or product.\n\nUse this to separate production from development keys, isolate different services, or manage multiple products. Each API gets a unique identifier and dedicated infrastructure for secure key operations.\n\n**Important**: API names must be unique within your workspace and cannot be changed after creation.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.create_api` (to creat"
+        },
+        {
+          "info": {
+            "name": "Delete API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.deleteApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently delete an API namespace and immediately invalidate all associated keys.\n\nUse this for cleaning up development environments, retiring deprecated services, or removing unused resources.\nAll keys in the namespace are immediately marked as deleted and will fail verification with `code=NOT_FOUND`.\n\n**Important**: This operation is immediate and permanent. Verify you have the correct API ID before deletion.\nIf delete protection is enabled, disable it first through the dashboard or API conf"
+        },
+        {
+          "info": {
+            "name": "Get API Namespace",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.getApi",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve basic information about an API namespace including its ID and name.\n\nUse this to verify an API exists before performing operations, get the human-readable name when you only have the API ID, or confirm access to a specific namespace. For detailed key information, use the `listKeys` endpoint instead.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions:\n- `api.*.read_api` (to read any API)\n- `api.<api_id>.read_api` (to read a specific API)\n"
+        },
+        {
+          "info": {
+            "name": "List API Keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/apis.listKeys",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of API keys for dashboard and administrative interfaces.\n\nUse this to build key management dashboards, filter keys by user with `externalId`, or retrieve key details for administrative purposes. Each key includes status, metadata, permissions, and usage limits.\n\n**Important**: Set `decrypt: true` only in secure contexts to retrieve plaintext key values from recoverable keys.\n\n**Required Permissions**\n\nYour root key must have one of the following permissions for basic ke"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

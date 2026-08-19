@@ -1,0 +1,62 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics deploy API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deploy",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/deploy.createDeployment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nCreates a new deployment for a project using either a pre-built Docker image or build context.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+        },
+        {
+          "info": {
+            "name": "Get Deployment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/deploy.getDeployment",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "**INTERNAL** - This endpoint is internal and may change without notice.\nNot recommended for production use.\n\nRetrieves deployment information including status, error messages, and steps.\n\n**Authentication**: Requires a valid root key with appropriate permissions.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

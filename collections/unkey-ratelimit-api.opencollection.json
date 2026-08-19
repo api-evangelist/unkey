@@ -1,0 +1,138 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics ratelimit API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "ratelimit",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Delete Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.deleteOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Permanently remove a rate limit override. Affected identifiers immediately revert to the namespace default.\n\nUse this to remove temporary overrides, reset identifiers to standard limits, or clean up outdated rules.\n\n**Important:** Deletion is immediate and permanent. The override cannot be recovered and must be recreated if needed again.\n\n**Permissions:** Requires `ratelimit.*.delete_override` or `ratelimit.<namespace_id>.delete_override`\n"
+        },
+        {
+          "info": {
+            "name": "Get Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.getOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the configuration of a specific rate limit override by its identifier.\n\nUse this to inspect override configurations, audit rate limiting policies, or debug rate limiting behavior.\n\n**Important:** The identifier must match exactly as specified when creating the override, including wildcard patterns.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+        },
+        {
+          "info": {
+            "name": "Apply Rate Limiting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.limit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check and enforce rate limits for any identifier (user ID, IP address, API client, etc.).\n\nUse this for rate limiting beyond API keys - limit users by ID, IPs by address, or any custom identifier. Supports namespace organization, variable costs, and custom overrides.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether the limit is exceeded — check the `success` field in the response to determine if the request should be allowed. A 429 may be returned if the workspace exc"
+        },
+        {
+          "info": {
+            "name": "List Ratelimit Overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.listOverrides",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a paginated list of all rate limit overrides in a namespace.\n\nUse this to audit rate limiting policies, build admin dashboards, or manage override configurations.\n\n**Important:** Results are paginated. Use the cursor parameter to retrieve additional pages when more results are available.\n\n**Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`\n"
+        },
+        {
+          "info": {
+            "name": "Apply Multiple Rate Limit Checks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.multiLimit",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Check and enforce multiple rate limits in a single request for any identifiers (user IDs, IP addresses, API clients, etc.).\n\nUse this to efficiently check multiple rate limits at once. Each rate limit check is independent and returns its own result with a top-level `passed` indicator showing if all checks succeeded.\n\n**Response Codes**: Rate limit checks return HTTP 200 regardless of whether limits are exceeded — check the `passed` field to see if all limits passed, or the `success` field in eac"
+        },
+        {
+          "info": {
+            "name": "Set Ratelimit Override",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.unkey.com/v2/ratelimit.setOverride",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Create or update a custom rate limit for specific identifiers, bypassing the namespace default.\n\nUse this to create premium tiers with higher limits, apply stricter limits to specific users, or implement emergency throttling.\n\n**Important:** Overrides take effect immediately and completely replace the default limit for matching identifiers. Use wildcard patterns (e.g., `premium_*`) to match multiple identifiers.\n\n**Permissions:** Requires `ratelimit.*.set_override` or `ratelimit.<namespace_id>.s"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

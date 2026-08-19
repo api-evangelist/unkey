@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Unkey analytics liveness API",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "liveness",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Health Check",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.unkey.com/v2/liveness"
+          },
+          "docs": "Check if the Unkey API service is healthy and ready to handle requests.\n\nUse this for load balancer health checks, monitoring systems, and orchestration platforms. No authentication required with minimal processing overhead.\n\n**Required Permissions**\n\nNone - this endpoint requires no authentication.\n\n**Side Effects**\n\nNone - this is a read-only health check that does not modify any data or state.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
