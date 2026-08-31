@@ -101,7 +101,7 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
-  - Deploy
+  - deploy
   tags_raw:
   - deploy
   properties:
@@ -167,7 +167,7 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
-  - Liveness
+  - liveness
   tags_raw:
   - liveness
   properties:
@@ -211,7 +211,7 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
-  - Rate-Limit
+  - ratelimit
   tags_raw:
   - ratelimit
   properties:
