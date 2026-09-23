@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
-  title: Unkey analytics ratelimit API
+  description: Unkey's API provides programmatic access for all resources within our platform.
+  title: Unkey Ratelimit API
   version: 2.0.0
 servers:
 - url: https://api.unkey.com
@@ -9,7 +9,7 @@ security:
 - rootKey: []
 tags:
 - description: Rate limiting operations
-  name: ratelimit
+  name: Rate Limit
 paths:
   /v2/ratelimit.deleteOverride:
     post:
@@ -22,9 +22,7 @@ paths:
         **Important:** Deletion is immediate and permanent. The override cannot be recovered and must be recreated if needed again.
 
 
-        **Permissions:** Requires `ratelimit.*.delete_override` or `ratelimit.<namespace_id>.delete_override`
-
-        '
+        **Permissions:** Requires `ratelimit.*.delete_override` or `ratelimit..delete_override`'
       operationId: ratelimit.deleteOverride
       requestBody:
         content:
@@ -112,7 +110,7 @@ paths:
       - rootKey: []
       summary: Delete Ratelimit Override
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: deleteOverride
   /v2/ratelimit.getOverride:
     post:
@@ -125,9 +123,7 @@ paths:
         **Important:** The identifier must match exactly as specified when creating the override, including wildcard patterns.
 
 
-        **Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`
-
-        '
+        **Permissions:** Requires `ratelimit.*.read_override` or `ratelimit..read_override`'
       operationId: ratelimit.getOverride
       requestBody:
         content:
@@ -215,7 +211,7 @@ paths:
       - rootKey: []
       summary: Get Ratelimit Override
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: getOverride
   /v2/ratelimit.limit:
     post:
@@ -235,9 +231,7 @@ paths:
 
         - `ratelimit.*.limit` (to check limits in any namespace)
 
-        - `ratelimit.<namespace_id>.limit` (to check limits in a specific namespace)
-
-        '
+        - `ratelimit..limit` (to check limits in a specific namespace)'
       operationId: ratelimit.limit
       requestBody:
         content:
@@ -355,7 +349,7 @@ paths:
       - rootKey: []
       summary: Apply Rate Limiting
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: limit
   /v2/ratelimit.listOverrides:
     post:
@@ -368,9 +362,7 @@ paths:
         **Important:** Results are paginated. Use the cursor parameter to retrieve additional pages when more results are available.
 
 
-        **Permissions:** Requires `ratelimit.*.read_override` or `ratelimit.<namespace_id>.read_override`
-
-        '
+        **Permissions:** Requires `ratelimit.*.read_override` or `ratelimit..read_override`'
       operationId: ratelimit.listOverrides
       requestBody:
         content:
@@ -447,7 +439,7 @@ paths:
       - rootKey: []
       summary: List Ratelimit Overrides
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: listOverrides
   /v2/ratelimit.multiLimit:
     post:
@@ -467,9 +459,7 @@ paths:
 
         - `ratelimit.*.limit` (to check limits in any namespace)
 
-        - `ratelimit.<namespace_id>.limit` (to check limits in all specific namespaces being checked)
-
-        '
+        - `ratelimit..limit` (to check limits in all specific namespaces being checked)'
       operationId: ratelimit.multiLimit
       requestBody:
         content:
@@ -630,7 +620,7 @@ paths:
       - rootKey: []
       summary: Apply Multiple Rate Limit Checks
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: multiLimit
   /v2/ratelimit.setOverride:
     post:
@@ -643,9 +633,7 @@ paths:
         **Important:** Overrides take effect immediately and completely replace the default limit for matching identifiers. Use wildcard patterns (e.g., `premium_*`) to match multiple identifiers.
 
 
-        **Permissions:** Requires `ratelimit.*.set_override` or `ratelimit.<namespace_id>.set_override`
-
-        '
+        **Permissions:** Requires `ratelimit.*.set_override` or `ratelimit..set_override`'
       operationId: ratelimit.setOverride
       requestBody:
         content:
@@ -737,10 +725,139 @@ paths:
       - rootKey: []
       summary: Set Ratelimit Override
       tags:
-      - ratelimit
+      - Rate Limit
       x-speakeasy-name-override: setOverride
 components:
   schemas:
+    V2RatelimitDeleteOverrideRequestBody:
+      description: 'Deletes an existing rate limit override. This permanently removes a custom rate limit rule, reverting affected identifiers back to the default rate limits for the namespace.
+
+
+        Use this endpoint when you need to:
+
+        - Remove special rate limit rules that are no longer needed
+
+        - Reset entities back to standard rate limits
+
+        - Clean up temporary overrides
+
+        - Remove outdated tiering or custom limit rules
+
+        - Fix misconfigured overrides
+
+
+        Once deleted, the override cannot be recovered, and the operation takes effect immediately.'
+      additionalProperties: false
+      properties:
+        namespace:
+          description: The id or name of the namespace containing the override.
+          type: string
+          minLength: 1
+          maxLength: 255
+        identifier:
+          description: 'The exact identifier pattern of the override to delete. This must match exactly as it was specified when creating the override.
+
+
+            Important notes:
+
+            - This is case-sensitive and must match exactly
+
+            - Include any wildcards (*) that were part of the original pattern
+
+            - For example, if the override was created for ''premium_*'', you must use ''premium_*'' here, not a specific ID
+
+
+            After deletion, any identifiers previously affected by this override will immediately revert to using the default rate limit for the namespace.'
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - namespace
+      - identifier
+      type: object
+    V2RatelimitSetOverrideResponseData:
+      type: object
+      properties:
+        overrideId:
+          description: 'The unique identifier for the newly created or updated rate limit override. This ID can be used to:
+
+
+            - Reference this specific override in subsequent API calls
+
+            - Delete or modify this override later
+
+            - Track which override is being applied in rate limit responses
+
+            - Associate override effects with specific rules in analytics
+
+
+            Store this ID if you need to manage the override in the future.'
+          type: string
+      required:
+      - overrideId
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
+    V2RatelimitGetOverrideRequestBody:
+      description: 'Gets the configuration of an existing rate limit override. Use this to retrieve details about custom rate limit rules that have been created for specific identifiers within a namespace.
+
+
+        This endpoint is useful for:
+
+        - Verifying override configurations
+
+        - Checking current limits for specific entities
+
+        - Auditing rate limit policies
+
+        - Debugging rate limiting behavior
+
+        - Retrieving override settings for modification'
+      additionalProperties: false
+      properties:
+        namespace:
+          description: The id or name of the namespace containing the override.
+          type: string
+          minLength: 1
+          maxLength: 255
+        identifier:
+          description: 'The exact identifier pattern for the override you want to retrieve. This must match exactly as it was specified when creating the override.
+
+
+            Important notes:
+
+            - This is case-sensitive and must match exactly
+
+            - Include any wildcards (*) that were part of the original pattern
+
+            - For example, if the override was created for ''premium_*'', you must use ''premium_*'' here, not a specific ID like ''premium_user1''
+
+
+            This field is used to look up the specific override configuration for this pattern.'
+          type: string
+          minLength: 1
+          maxLength: 255
+      required:
+      - namespace
+      - identifier
+      type: object
     V2RatelimitListOverridesRequestBody:
       additionalProperties: false
       properties:
@@ -771,110 +888,6 @@ components:
       required:
       - namespace
       type: object
-    V2RatelimitGetOverrideResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/RatelimitOverride'
-    ValidationError:
-      additionalProperties: false
-      properties:
-        location:
-          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
-
-            - ''body.name'' (field in request body)
-
-            - ''body.items[3].tags'' (nested array element)
-
-            - ''path.apiId'' (path parameter)
-
-            - ''query.limit'' (query parameter)
-
-            Use this location to identify exactly which part of your request needs correction.'
-          type: string
-          example: body.permissions[0].name
-        message:
-          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
-          type: string
-          example: Must be at least 3 characters long
-        fix:
-          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
-          type: string
-          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
-      required:
-      - location
-      - message
-      type: object
-      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
-      additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
-    NotFoundErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the requested resource cannot be found. This occurs when:
-
-        - The specified resource ID doesn''t exist in your workspace
-
-        - The resource has been deleted or moved
-
-        - The resource exists but is not accessible with current permissions
-
-
-        To resolve this error, verify the resource ID is correct and that you have access to it.'
-    UnauthorizedErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
-
-        - No authentication token is provided in the request
-
-        - The provided token is invalid, expired, or malformed
-
-        - The token format doesn''t match expected patterns
-
-
-        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
     Pagination:
       type: object
       properties:
@@ -904,17 +917,7 @@ components:
       - hasMore
       additionalProperties: false
       description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
-    V2RatelimitLimitResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2RatelimitLimitResponseData'
-    TooManyRequestsErrorResponse:
+    InternalServerErrorResponse:
       type: object
       required:
       - meta
@@ -924,18 +927,118 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
 
 
-        The rate limit resets automatically after the time window expires. To avoid this error:
+        When you encounter this error:
 
-        - Implement exponential backoff when retrying requests
+        - The request ID in the response can help Unkey support investigate the issue
 
-        - Cache results where appropriate to reduce request frequency
+        - The error is likely temporary and retrying may succeed
 
-        - Check the error detail message for specific quota information
+        - If the error persists, contact Unkey support with the request ID'
+    V2RatelimitMultiLimitResponseData:
+      type: object
+      description: Container for multi-limit rate limit check results
+      required:
+      - passed
+      - limits
+      properties:
+        passed:
+          type: boolean
+          description: 'Overall success indicator for all rate limit checks. This is true if ALL individual rate limit checks passed (all have success: true), and false if ANY check failed.
 
-        - Contact support if you need a higher quota for your use case'
+
+            Use this as a quick indicator to determine if the request should proceed.'
+        limits:
+          type: array
+          description: Array of individual rate limit check results, one for each rate limit check in the request
+          items:
+            $ref: '#/components/schemas/V2RatelimitMultiLimitCheck'
+    RatelimitOverride:
+      type: object
+      additionalProperties: false
+      properties:
+        overrideId:
+          description: The unique identifier of this specific rate limit override. This ID is generated when the override is created and can be used for management operations like updating or deleting the override.
+          type: string
+          minLength: 1
+          maxLength: 255
+        duration:
+          description: The duration in milliseconds for this override's rate limit window. This may differ from the default duration for the namespace, allowing custom time windows for specific entities. After this duration elapses, the rate limit counter for affected identifiers resets to zero.
+          format: int64
+          type: integer
+          minimum: 1000
+        identifier:
+          description: 'The identifier pattern this override applies to. This determines which entities receive the custom rate limit.
+
+
+            This can be:
+
+            - An exact identifier for a specific entity
+
+            - A pattern with wildcards for matching multiple entities
+
+
+            Wildcard examples:
+
+            - ''admin_*'' matches any identifier starting with ''admin_''
+
+            - ''*_test'' matches any identifier ending with ''_test''
+
+            - ''*premium*'' matches any identifier containing ''premium''
+
+
+            More complex patterns can combine multiple wildcards. Detailed documentation on pattern matching rules is available at https://www.unkey.com/docs/ratelimiting/overrides#wildcard-rules'
+          type: string
+          minLength: 1
+          maxLength: 255
+        limit:
+          description: 'The maximum number of requests allowed for entities matching this override. This replaces the default limit for the namespace when applied.
+
+
+            Common use cases:
+
+            - Higher limits for premium customers
+
+            - Reduced limits for abusive or suspicious entities
+
+            - Zero limit to completely block specific patterns
+
+            - Custom tier-based limits for different customer segments'
+          format: int64
+          type: integer
+          minimum: 0
+      required:
+      - overrideId
+      - duration
+      - identifier
+      - limit
+    V2RatelimitDeleteOverrideResponseData:
+      type: object
+      additionalProperties: false
+      description: Empty response object. A successful response indicates the override was successfully deleted. The operation is immediate - as soon as this response is received, the override no longer exists and affected identifiers have reverted to using the default rate limit for the namespace. No other data is returned as part of the deletion operation.
+    V2RatelimitDeleteOverrideResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2RatelimitDeleteOverrideResponseData'
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
     V2RatelimitSetOverrideRequestBody:
       description: 'Sets a new or overwrites an existing rate limit override. Overrides allow you to apply special rate limit rules to specific identifiers, providing custom limits that differ from the default.
 
@@ -1023,26 +1126,153 @@ components:
       - limit
       - duration
       type: object
-    V2RatelimitSetOverrideResponseData:
+    ValidationError:
+      additionalProperties: false
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
+    V2RatelimitGetOverrideResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/RatelimitOverride'
+    V2RatelimitLimitResponseData:
       type: object
       properties:
+        limit:
+          description: 'The maximum number of operations allowed within the time window. This reflects either the default limit specified in the request or an override limit if one exists for this identifier.
+
+
+            This value helps clients understand their total quota for the current window.'
+          format: int64
+          type: integer
+        remaining:
+          description: 'The number of operations remaining in the current window before the rate limit is exceeded. Applications should use this value to:
+
+
+            - Implement client-side throttling before hitting limits
+
+            - Display usage information to end users
+
+            - Trigger alerts when approaching limits
+
+            - Adjust request patterns based on available capacity
+
+
+            When this reaches zero, requests will be rejected until the window resets.'
+          format: int64
+          type: integer
+        reset:
+          description: 'The Unix timestamp in milliseconds when the rate limit window will reset and ''remaining'' will return to ''limit''.
+
+
+            This timestamp enables clients to:
+
+            - Calculate and display wait times to users
+
+            - Implement intelligent retry mechanisms
+
+            - Schedule requests to resume after the reset
+
+            - Implement exponential backoff when needed
+
+
+            The reset time is based on a sliding window from the first request in the current window.'
+          format: int64
+          type: integer
+        success:
+          description: 'Whether the request passed the rate limit check. If true, the request is allowed to proceed. If false, the request has exceeded the rate limit and should be blocked or rejected.
+
+
+            You MUST check this field to determine if the request should proceed, as the endpoint always returns `HTTP 200` even when rate limited.'
+          type: boolean
         overrideId:
-          description: 'The unique identifier for the newly created or updated rate limit override. This ID can be used to:
+          description: 'If a rate limit override was applied for this identifier, this field contains the ID of the override that was used. Empty when no override is in effect.
 
 
-            - Reference this specific override in subsequent API calls
+            This can be useful for:
 
-            - Delete or modify this override later
+            - Debugging which override rule was matched
 
-            - Track which override is being applied in rate limit responses
+            - Tracking the effects of specific overrides
 
-            - Associate override effects with specific rules in analytics
-
-
-            Store this ID if you need to manage the override in the future.'
+            - Understanding why limits differ from default values'
+          type: string
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - limit
+      - remaining
+      - reset
+      - success
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
           type: string
       required:
-      - overrideId
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
     GoneErrorResponse:
       type: object
       required:
@@ -1063,65 +1293,136 @@ components:
 
 
         To resolve this error, contact support if you need the resource restored.'
-    RatelimitOverride:
+    TooManyRequestsErrorResponse:
       type: object
-      additionalProperties: false
-      properties:
-        overrideId:
-          description: The unique identifier of this specific rate limit override. This ID is generated when the override is created and can be used for management operations like updating or deleting the override.
-          type: string
-          minLength: 1
-          maxLength: 255
-        duration:
-          description: The duration in milliseconds for this override's rate limit window. This may differ from the default duration for the namespace, allowing custom time windows for specific entities. After this duration elapses, the rate limit counter for affected identifiers resets to zero.
-          format: int64
-          type: integer
-          minimum: 1000
-        identifier:
-          description: 'The identifier pattern this override applies to. This determines which entities receive the custom rate limit.
-
-
-            This can be:
-
-            - An exact identifier for a specific entity
-
-            - A pattern with wildcards for matching multiple entities
-
-
-            Wildcard examples:
-
-            - ''admin_*'' matches any identifier starting with ''admin_''
-
-            - ''*_test'' matches any identifier ending with ''_test''
-
-            - ''*premium*'' matches any identifier containing ''premium''
-
-
-            More complex patterns can combine multiple wildcards. Detailed documentation on pattern matching rules is available at https://www.unkey.com/docs/ratelimiting/overrides#wildcard-rules'
-          type: string
-          minLength: 1
-          maxLength: 255
-        limit:
-          description: 'The maximum number of requests allowed for entities matching this override. This replaces the default limit for the namespace when applied.
-
-
-            Common use cases:
-
-            - Higher limits for premium customers
-
-            - Reduced limits for abusive or suspicious entities
-
-            - Zero limit to completely block specific patterns
-
-            - Custom tier-based limits for different customer segments'
-          format: int64
-          type: integer
-          minimum: 0
       required:
-      - overrideId
-      - duration
-      - identifier
-      - limit
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    V2RatelimitLimitResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2RatelimitLimitResponseData'
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    V2RatelimitMultiLimitRequestBody:
+      type: array
+      description: Array of rate limit checks to perform
+      minItems: 1
+      maxItems: 100
+      items:
+        $ref: '#/components/schemas/V2RatelimitLimitRequestBody'
+    V2RatelimitListOverridesResponseData:
+      type: array
+      items:
+        $ref: '#/components/schemas/RatelimitOverride'
+    V2RatelimitListOverridesResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2RatelimitListOverridesResponseData'
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+    UnauthorizedErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+
+        - No authentication token is provided in the request
+
+        - The provided token is invalid, expired, or malformed
+
+        - The token format doesn''t match expected patterns
+
+
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+    V2RatelimitSetOverrideResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2RatelimitSetOverrideResponseData'
+    V2RatelimitMultiLimitResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2RatelimitMultiLimitResponseData'
     V2RatelimitMultiLimitCheck:
       type: object
       properties:
@@ -1199,170 +1500,6 @@ components:
       - remaining
       - reset
       - passed
-    V2RatelimitMultiLimitResponseData:
-      type: object
-      description: Container for multi-limit rate limit check results
-      required:
-      - passed
-      - limits
-      properties:
-        passed:
-          type: boolean
-          description: 'Overall success indicator for all rate limit checks. This is true if ALL individual rate limit checks passed (all have success: true), and false if ANY check failed.
-
-
-            Use this as a quick indicator to determine if the request should proceed.'
-        limits:
-          type: array
-          description: Array of individual rate limit check results, one for each rate limit check in the request
-          items:
-            $ref: '#/components/schemas/V2RatelimitMultiLimitCheck'
-    BadRequestErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BadRequestErrorDetails'
-      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
-    V2RatelimitMultiLimitRequestBody:
-      type: array
-      description: Array of rate limit checks to perform
-      minItems: 1
-      maxItems: 100
-      items:
-        $ref: '#/components/schemas/V2RatelimitLimitRequestBody'
-    V2RatelimitListOverridesResponseData:
-      type: array
-      items:
-        $ref: '#/components/schemas/RatelimitOverride'
-    V2RatelimitDeleteOverrideResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2RatelimitDeleteOverrideResponseData'
-    ForbiddenErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
-
-        - The root key doesn''t have the required permissions for this endpoint
-
-        - The operation requires elevated privileges that the current key lacks
-
-        - Access to the requested resource is restricted based on workspace settings
-
-
-        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
-    V2RatelimitDeleteOverrideResponseData:
-      type: object
-      additionalProperties: false
-      description: Empty response object. A successful response indicates the override was successfully deleted. The operation is immediate - as soon as this response is received, the override no longer exists and affected identifiers have reverted to using the default rate limit for the namespace. No other data is returned as part of the deletion operation.
-    V2RatelimitSetOverrideResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2RatelimitSetOverrideResponseData'
-    V2RatelimitDeleteOverrideRequestBody:
-      description: 'Deletes an existing rate limit override. This permanently removes a custom rate limit rule, reverting affected identifiers back to the default rate limits for the namespace.
-
-
-        Use this endpoint when you need to:
-
-        - Remove special rate limit rules that are no longer needed
-
-        - Reset entities back to standard rate limits
-
-        - Clean up temporary overrides
-
-        - Remove outdated tiering or custom limit rules
-
-        - Fix misconfigured overrides
-
-
-        Once deleted, the override cannot be recovered, and the operation takes effect immediately.'
-      additionalProperties: false
-      properties:
-        namespace:
-          description: The id or name of the namespace containing the override.
-          type: string
-          minLength: 1
-          maxLength: 255
-        identifier:
-          description: 'The exact identifier pattern of the override to delete. This must match exactly as it was specified when creating the override.
-
-
-            Important notes:
-
-            - This is case-sensitive and must match exactly
-
-            - Include any wildcards (*) that were part of the original pattern
-
-            - For example, if the override was created for ''premium_*'', you must use ''premium_*'' here, not a specific ID
-
-
-            After deletion, any identifiers previously affected by this override will immediately revert to using the default rate limit for the namespace.'
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
-      - namespace
-      - identifier
-      type: object
-    InternalServerErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
-
-
-        When you encounter this error:
-
-        - The request ID in the response can help Unkey support investigate the issue
-
-        - The error is likely temporary and retrying may succeed
-
-        - If the error persists, contact Unkey support with the request ID'
-    V2RatelimitListOverridesResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2RatelimitListOverridesResponseData'
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
     V2RatelimitLimitRequestBody:
       additionalProperties: false
       properties:
@@ -1438,155 +1575,6 @@ components:
       - limit
       - duration
       type: object
-    V2RatelimitMultiLimitResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2RatelimitMultiLimitResponseData'
-    V2RatelimitGetOverrideRequestBody:
-      description: 'Gets the configuration of an existing rate limit override. Use this to retrieve details about custom rate limit rules that have been created for specific identifiers within a namespace.
-
-
-        This endpoint is useful for:
-
-        - Verifying override configurations
-
-        - Checking current limits for specific entities
-
-        - Auditing rate limit policies
-
-        - Debugging rate limiting behavior
-
-        - Retrieving override settings for modification'
-      additionalProperties: false
-      properties:
-        namespace:
-          description: The id or name of the namespace containing the override.
-          type: string
-          minLength: 1
-          maxLength: 255
-        identifier:
-          description: 'The exact identifier pattern for the override you want to retrieve. This must match exactly as it was specified when creating the override.
-
-
-            Important notes:
-
-            - This is case-sensitive and must match exactly
-
-            - Include any wildcards (*) that were part of the original pattern
-
-            - For example, if the override was created for ''premium_*'', you must use ''premium_*'' here, not a specific ID like ''premium_user1''
-
-
-            This field is used to look up the specific override configuration for this pattern.'
-          type: string
-          minLength: 1
-          maxLength: 255
-      required:
-      - namespace
-      - identifier
-      type: object
-    BaseError:
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
-          example: Property foo is required but is missing.
-          type: string
-        status:
-          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
-          example: 404
-          format: int
-          type: integer
-        title:
-          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
-          example: Not Found
-          type: string
-        type:
-          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
-          example: https://unkey.com/docs/errors/unkey/resource/not_found
-          type: string
-      required:
-      - title
-      - detail
-      - status
-      - type
-      type: object
-      additionalProperties: false
-      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    V2RatelimitLimitResponseData:
-      type: object
-      properties:
-        limit:
-          description: 'The maximum number of operations allowed within the time window. This reflects either the default limit specified in the request or an override limit if one exists for this identifier.
-
-
-            This value helps clients understand their total quota for the current window.'
-          format: int64
-          type: integer
-        remaining:
-          description: 'The number of operations remaining in the current window before the rate limit is exceeded. Applications should use this value to:
-
-
-            - Implement client-side throttling before hitting limits
-
-            - Display usage information to end users
-
-            - Trigger alerts when approaching limits
-
-            - Adjust request patterns based on available capacity
-
-
-            When this reaches zero, requests will be rejected until the window resets.'
-          format: int64
-          type: integer
-        reset:
-          description: 'The Unix timestamp in milliseconds when the rate limit window will reset and ''remaining'' will return to ''limit''.
-
-
-            This timestamp enables clients to:
-
-            - Calculate and display wait times to users
-
-            - Implement intelligent retry mechanisms
-
-            - Schedule requests to resume after the reset
-
-            - Implement exponential backoff when needed
-
-
-            The reset time is based on a sliding window from the first request in the current window.'
-          format: int64
-          type: integer
-        success:
-          description: 'Whether the request passed the rate limit check. If true, the request is allowed to proceed. If false, the request has exceeded the rate limit and should be blocked or rejected.
-
-
-            You MUST check this field to determine if the request should proceed, as the endpoint always returns `HTTP 200` even when rate limited.'
-          type: boolean
-        overrideId:
-          description: 'If a rate limit override was applied for this identifier, this field contains the ID of the override that was used. Empty when no override is in effect.
-
-
-            This can be useful for:
-
-            - Debugging which override rule was matched
-
-            - Tracking the effects of specific overrides
-
-            - Understanding why limits differ from default values'
-          type: string
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - limit
-      - remaining
-      - reset
-      - success
   securitySchemes:
     rootKey:
       bearerFormat: root key

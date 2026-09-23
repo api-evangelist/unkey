@@ -1,14 +1,7 @@
 {
   "provider": "unkey",
   "sources": [
-    "unkey-analytics-api-openapi.yml",
-    "unkey-apis-api-openapi.yml",
-    "unkey-deploy-api-openapi.yml",
-    "unkey-identities-api-openapi.yml",
-    "unkey-keys-api-openapi.yml",
-    "unkey-liveness-api-openapi.yml",
-    "unkey-permissions-api-openapi.yml",
-    "unkey-ratelimit-api-openapi.yml"
+    "_original/unkey-openapi.yml"
   ],
   "outputs": [
     "unkey-analytics-api-openapi.yml",
@@ -20,9 +13,25 @@
     "unkey-permissions-api-openapi.yml",
     "unkey-ratelimit-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 2 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "unkey-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: unkey-ap-is-api-openapi.yml, unkey-rate-limit-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 8 total)"
+  ],
+  "skipped": [
+    "unkey-analytics-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-ap-is-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-deploy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-identities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-keys-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-liveness-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-permissions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "unkey-rate-limit-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

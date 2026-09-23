@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
-  title: Unkey analytics keys API
+  description: Unkey's API provides programmatic access for all resources within our platform.
+  title: Unkey Keys API
   version: 2.0.0
 servers:
 - url: https://api.unkey.com
@@ -9,7 +9,7 @@ security:
 - rootKey: []
 tags:
 - description: API key management operations
-  name: keys
+  name: Keys
 paths:
   /v2/keys.addPermissions:
     post:
@@ -29,15 +29,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes permissions available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes permissions available for verification within 30 seconds across all regions.'
       operationId: keys.addPermissions
       requestBody:
         content:
@@ -92,7 +90,7 @@ paths:
       - rootKey: []
       summary: Add Key Permissions
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: addPermissions
   /v2/keys.addRoles:
     post:
@@ -112,15 +110,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes role assignments available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes role assignments available for verification within 30 seconds across all regions.'
       operationId: keys.addRoles
       requestBody:
         content:
@@ -175,7 +171,7 @@ paths:
       - rootKey: []
       summary: Add Key Roles
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: addRoles
   /v2/keys.createKey:
     post:
@@ -204,9 +200,7 @@ paths:
 
         - `api.*.create_key` (create keys in any API)
 
-        - `api.<api_id>.create_key` (create keys in specific API)
-
-        '
+        - `api..create_key` (create keys in specific API)'
       operationId: keys.createKey
       requestBody:
         content:
@@ -261,7 +255,7 @@ paths:
       - rootKey: []
       summary: Create API Key
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: createKey
   /v2/keys.deleteKey:
     post:
@@ -281,9 +275,7 @@ paths:
 
         - `api.*.delete_key` (to delete keys in any API)
 
-        - `api.<api_id>.delete_key` (to delete keys in a specific API)
-
-        '
+        - `api..delete_key` (to delete keys in a specific API)'
       operationId: keys.deleteKey
       requestBody:
         content:
@@ -340,7 +332,7 @@ paths:
       - rootKey: []
       summary: Delete API Keys
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: deleteKey
   /v2/keys.getKey:
     post:
@@ -360,14 +352,12 @@ paths:
 
         - `api.*.read_key` (to read keys from any API)
 
-        - `api.<api_id>.read_key` (to read keys from a specific API)
+        - `api..read_key` (to read keys from a specific API)
 
 
         Additional permission required for decrypt functionality:
 
-        - `api.*.decrypt_key` or `api.<api_id>.decrypt_key`
-
-        '
+        - `api.*.decrypt_key` or `api..decrypt_key`'
       operationId: keys.getKey
       requestBody:
         content:
@@ -424,7 +414,7 @@ paths:
       - rootKey: []
       summary: Get API Key
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: getKey
   /v2/keys.migrateKeys:
     post:
@@ -437,9 +427,7 @@ paths:
 
         - `api.*.create_key` (to migrate keys to any API)
 
-        - `api.<api_id>.create_key` (to migrate keys to a specific API)
-
-        '
+        - `api..create_key` (to migrate keys to a specific API)'
       operationId: keys.migrateKeys
       requestBody:
         content:
@@ -494,7 +482,7 @@ paths:
       - rootKey: []
       summary: Migrate API Key(s)
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: migrateKeys
   /v2/keys.removePermissions:
     post:
@@ -514,15 +502,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes permission changes available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes permission changes available for verification within 30 seconds across all regions.'
       operationId: keys.removePermissions
       requestBody:
         content:
@@ -577,7 +563,7 @@ paths:
       - rootKey: []
       summary: Remove Key Permissions
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: removePermissions
   /v2/keys.removeRoles:
     post:
@@ -597,15 +583,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes role changes available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes role changes available for verification within 30 seconds across all regions.'
       operationId: keys.removeRoles
       requestBody:
         content:
@@ -660,11 +644,66 @@ paths:
       - rootKey: []
       summary: Remove Key Roles
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: removeRoles
   /v2/keys.rerollKey:
     post:
-      description: "Generate a new API key while preserving the configuration from an existing key.\n\nThis operation creates a fresh key with a new token while maintaining all settings from the original key:\n- Permissions and roles\n- Custom metadata\n- Rate limit configurations\n- Identity associations\n- Remaining credits\n- Recovery settings\n\n**Key Generation:**\n- The system attempts to extract the prefix from the original key\n- If prefix extraction fails, the default API prefix is used\n- Key length follows the API's default byte configuration (or 16 bytes if not specified)\n\n**Original Key Handling:**\n- The original key will be revoked after the duration specified in `expiration`\n- Set `expiration` to 0 to revoke immediately\n- This allows for graceful key rotation with an overlap period\n\nCommon use cases include:\n- Rotating keys for security compliance\n- Issuing replacement keys for compromised credentials\n- Creating backup keys with identical permissions\n\n**Important:** Analytics and usage metrics are tracked at both the key level AND identity level. If the original key has an identity, the new key will inherit it, allowing you to track usage across both individual keys and the overall identity.\n\n**Required Permissions**\n\n Your root key must have:\n - `api.*.create_key` or `api.<api_id>.create_key`\n - `api.*.encrypt_key` or `api.<api_id>.encrypt_key` (only when the original key is recoverable)\n"
+      description: 'Generate a new API key while preserving the configuration from an existing key.
+
+
+        This operation creates a fresh key with a new token while maintaining all settings from the original key:
+
+        - Permissions and roles
+
+        - Custom metadata
+
+        - Rate limit configurations
+
+        - Identity associations
+
+        - Remaining credits
+
+        - Recovery settings
+
+
+        **Key Generation:**
+
+        - The system attempts to extract the prefix from the original key
+
+        - If prefix extraction fails, the default API prefix is used
+
+        - Key length follows the API''s default byte configuration (or 16 bytes if not specified)
+
+
+        **Original Key Handling:**
+
+        - The original key will be revoked after the duration specified in `expiration`
+
+        - Set `expiration` to 0 to revoke immediately
+
+        - This allows for graceful key rotation with an overlap period
+
+
+        Common use cases include:
+
+        - Rotating keys for security compliance
+
+        - Issuing replacement keys for compromised credentials
+
+        - Creating backup keys with identical permissions
+
+
+        **Important:** Analytics and usage metrics are tracked at both the key level AND identity level. If the original key has an identity, the new key will inherit it, allowing you to track usage across both individual keys and the overall identity.
+
+
+        **Required Permissions**
+
+
+        Your root key must have:
+
+        - `api.*.create_key` or `api..create_key`
+
+        - `api.*.encrypt_key` or `api..encrypt_key` (only when the original key is recoverable)'
       operationId: keys.rerollKey
       requestBody:
         content:
@@ -719,7 +758,7 @@ paths:
       - rootKey: []
       summary: Reroll Key
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: rerollKey
   /v2/keys.setPermissions:
     post:
@@ -739,15 +778,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes permission changes available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes permission changes available for verification within 30 seconds across all regions.'
       operationId: keys.setPermissions
       requestBody:
         content:
@@ -802,7 +839,7 @@ paths:
       - rootKey: []
       summary: Set Key Permissions
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: setPermissions
   /v2/keys.setRoles:
     post:
@@ -822,15 +859,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Invalidates the key cache for immediate effect, and makes role changes available for verification within 30 seconds across all regions.
-
-        '
+        Invalidates the key cache for immediate effect, and makes role changes available for verification within 30 seconds across all regions.'
       operationId: keys.setRoles
       requestBody:
         content:
@@ -885,7 +920,7 @@ paths:
       - rootKey: []
       summary: Set Key Roles
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: setRoles
   /v2/keys.updateCredits:
     post:
@@ -905,15 +940,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        Credit updates remove the key from cache immediately. Setting credits to unlimited automatically clears any existing refill settings. Changes take effect instantly but may take up to 30 seconds to propagate to all edge regions.
-
-        '
+        Credit updates remove the key from cache immediately. Setting credits to unlimited automatically clears any existing refill settings. Changes take effect instantly but may take up to 30 seconds to propagate to all edge regions.'
       operationId: keys.updateCredits
       requestBody:
         content:
@@ -970,7 +1003,7 @@ paths:
       - rootKey: []
       summary: Update Key Credits
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: updateCredits
   /v2/keys.updateKey:
     post:
@@ -990,15 +1023,13 @@ paths:
 
         - `api.*.update_key` (to update keys in any API)
 
-        - `api.<api_id>.update_key` (to update keys in a specific API)
+        - `api..update_key` (to update keys in a specific API)
 
 
         **Side Effects**
 
 
-        If you specify an `externalId` that doesn''t exist, a new identity will be automatically created and linked to the key. Permission updates will auto-create any permissions that don''t exist in your workspace. Changes take effect immediately but may take up to 30 seconds to propagate to all edge regions due to cache invalidation.
-
-        '
+        If you specify an `externalId` that doesn''t exist, a new identity will be automatically created and linked to the key. Permission updates will auto-create any permissions that don''t exist in your workspace. Changes take effect immediately but may take up to 30 seconds to propagate to all edge regions due to cache invalidation.'
       operationId: keys.updateKey
       requestBody:
         content:
@@ -1062,7 +1093,7 @@ paths:
       - rootKey: []
       summary: Update Key Settings
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: updateKey
   /v2/keys.verifyKey:
     post:
@@ -1091,12 +1122,10 @@ paths:
 
         - `api.*.verify_key` (verify keys in any API)
 
-        - `api.<api_id>.verify_key` (verify keys in specific API)
+        - `api..verify_key` (verify keys in specific API)
 
 
-        **Note**: If your root key has no verify permissions at all, you will receive a `403 Forbidden` error. If your root key has verify permissions for a different API than the key you''re verifying, you will receive a `200` response with `code: NOT_FOUND` to avoid leaking key existence.
-
-        '
+        **Note**: If your root key has no verify permissions at all, you will receive a `403 Forbidden` error. If your root key has verify permissions for a different API than the key you''re verifying, you will receive a `200` response with `code: NOT_FOUND` to avoid leaking key existence.'
       operationId: keys.verifyKey
       requestBody:
         content:
@@ -1179,7 +1208,7 @@ paths:
       - rootKey: []
       summary: Verify API Key
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: verifyKey
   /v2/keys.whoami:
     post:
@@ -1193,12 +1222,10 @@ paths:
 
         - `api.*.read_key` (to read keys from any API)
 
-        - `api.<api_id>.read_key` (to read keys from a specific API)
+        - `api..read_key` (to read keys from a specific API)
 
 
-        If your rootkey lacks permissions but the key exists, we may return a 404 status here to prevent leaking the existance of a key to unauthorized clients. If you believe that a key should exist, but receive a 404, please double check your root key has the correct permissions.
-
-        '
+        If your rootkey lacks permissions but the key exists, we may return a 404 status here to prevent leaking the existance of a key to unauthorized clients. If you believe that a key should exist, but receive a 404, please double check your root key has the correct permissions.'
       operationId: keys.whoami
       requestBody:
         content:
@@ -1255,205 +1282,103 @@ paths:
       - rootKey: []
       summary: Get API Key by Hash
       tags:
-      - keys
+      - Keys
       x-speakeasy-name-override: whoami
 components:
   schemas:
-    V2KeysVerifyKeyResponseData:
+    KeyCreditsRefill:
       type: object
-      additionalProperties: false
+      description: Configuration for automatic credit refill behavior.
       properties:
-        valid:
-          type: boolean
-          description: 'The primary verification result. If true, the key is valid
-
-            and can be used. If false, check the ''code'' field to understand why verification
-
-            failed. Your application should always check this field first before proceeding.
-
-            '
-        code:
+        interval:
           type: string
           enum:
-          - VALID
-          - NOT_FOUND
-          - FORBIDDEN
-          - INSUFFICIENT_PERMISSIONS
-          - USAGE_EXCEEDED
-          - RATE_LIMITED
-          - DISABLED
-          - EXPIRED
+          - daily
+          - monthly
           x-speakeasy-unknown-values: allow
-          description: 'A machine-readable code indicating the verification status
-
-            or failure reason. Values: `VALID` (key is valid and passed all checks), `NOT_FOUND` (key doesn''t
-
-            exist or belongs to wrong API), `FORBIDDEN` (key lacks required permissions), `INSUFFICIENT_PERMISSIONS`
-
-            (key lacks specific required permissions for this request), `USAGE_EXCEEDED` (key has no remaining credits), `RATE_LIMITED` (key exceeded rate limits), `DISABLED` (key was explicitly disabled),
-
-            `EXPIRED` (key has passed its expiration date).
-
-            '
-        keyId:
-          type: string
-          description: 'The unique identifier of the verified key in Unkey''s system.
-
-            Use this ID for operations like updating or revoking the key. This field
-
-            is returned for both valid and invalid keys (except when `code=NOT_FOUND`).
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        name:
-          type: string
-          description: 'The human-readable name assigned to this key during creation.
-
-            This is useful for displaying in logs or admin interfaces to identify
-
-            the key''s purpose.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        meta:
-          type: object
-          additionalProperties: true
-          description: 'Custom metadata associated with the key. This can include any
-
-            JSON-serializable data you stored with the key during creation or updates,
-
-            such as plan information, feature flags, or user details. Use this to
-
-            avoid additional database lookups for contextual information needed during
-
-            API calls.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        expires:
+          description: How often credits are automatically refilled.
+          example: daily
+        amount:
           type: integer
           format: int64
-          description: 'Unix timestamp (in milliseconds) when the key will expire.
-
-            If omitted, the key has no expiration. You can use this to
-
-            warn users about upcoming expirations or to understand the validity period.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        credits:
+          minimum: 1
+          maximum: 9223372036854776000
+          description: Number of credits to add during each refill cycle.
+          example: 1000
+        refillDay:
           type: integer
-          format: int64
-          description: 'The number of requests/credits remaining for this key. If omitted,
+          minimum: 1
+          maximum: 31
+          description: 'Day of the month for monthly refills (1-31).
 
-            the key has unlimited usage. This value decreases with
+            Only required when interval is ''monthly''.
 
-            each verification (based on the ''cost'' parameter) unless explicit credit
-
-            refills are configured.
-
-            '
-        enabled:
-          type: boolean
-          description: 'Indicates if the key is currently enabled. Disabled keys will
-
-            always fail verification with `code=DISABLED`. This is useful for implementing
-
-            temporary suspensions without deleting the key.
+            For days beyond the month''s length, refill occurs on the last day of the month.
 
             '
-        permissions:
-          type: array
-          items:
-            type: string
-          description: 'A list of all permission names assigned to this key, either
-
-            directly or through roles. These permissions determine what actions the
-
-            key can perform. Only returned when permissions were checked during verification
-
-            or when the key fails with `code=FORBIDDEN`.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        roles:
-          type: array
-          items:
-            type: string
-          description: 'A list of all role names assigned to this key. Roles are collections
-
-            of permissions that grant access to specific functionality. Only returned
-
-            when permissions were checked during verification.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        identity:
-          $ref: '#/components/schemas/Identity'
-          description: 'Information about the identity associated with this key. Identities
-
-            allow multiple keys to share resources (like rate limits) and represent
-
-            the same user or entity across different applications or devices.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        ratelimits:
-          type: array
-          items:
-            $ref: '#/components/schemas/VerifyKeyRatelimitData'
-            description: The ratelimits that got checked
+          example: 15
           x-go-type-skip-optional-pointer: true
           x-go-type-skip-optional-pointer-with-omitzero: true
       required:
-      - valid
-      - code
-    V2KeysSetPermissionsResponseData:
-      type: array
-      description: 'Complete list of all permissions now directly assigned to the key after the set operation has completed.
+      - interval
+      - amount
+      additionalProperties: false
+    Permission:
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'The unique identifier for this permission within Unkey''s system.
 
+            Generated automatically when the permission is created and used to reference this permission in API operations.
 
-        The response includes:
+            Always begins with ''perm_'' followed by alphanumeric characters and underscores.
 
-        - The comprehensive, updated set of direct permissions (reflecting the complete replacement)
+            '
+          example: perm_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: 'The human-readable name for this permission that describes its purpose.
 
-        - Both ID and name for each permission for easy reference
+            Should be descriptive enough for developers to understand what access it grants.
 
+            Use clear, semantic names that reflect the resources or actions being permitted.
 
-        Important notes:
+            Names must be unique within your workspace to avoid confusion and conflicts.
 
-        - This only shows direct permissions, not those granted through roles
+            '
+          example: users.read
+        slug:
+          pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: The unique URL-safe identifier for this permission.
+          example: users-read
+        description:
+          type: string
+          maxLength: 512
+          description: 'Optional detailed explanation of what this permission grants access to.
 
-        - An empty array means the key has no direct permissions assigned
+            Helps team members understand the scope and implications of granting this permission.
 
-        - For a complete permission picture including roles, use keys.getKey instead'
-      items:
-        $ref: '#/components/schemas/Permission'
-    V2KeysRemovePermissionsResponseData:
-      type: array
-      description: 'Complete list of all permissions directly assigned to the key after the removal operation (remaining permissions only).
+            Include information about what resources can be accessed and what actions can be performed.
 
+            Not visible to end users - this is for internal documentation and team clarity.
 
-        Notes:
-
-        - This list does NOT include permissions granted through roles
-
-        - For a complete permission picture, use `/v2/keys.getKey` instead
-
-        - An empty array indicates the key has no direct permissions assigned
-
-        - Any cached versions of the key are immediately invalidated to ensure consistency
-
-        - Changes to permissions take effect within seconds for new verifications'
-      items:
-        $ref: '#/components/schemas/Permission'
+            '
+          example: Allows reading user profile information and account details
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - id
+      - name
+      - slug
     UpdateKeyCreditsRefill:
       type:
       - object
@@ -1491,262 +1416,6 @@ components:
       - interval
       - amount
       additionalProperties: false
-    ValidationError:
-      additionalProperties: false
-      properties:
-        location:
-          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
-
-            - ''body.name'' (field in request body)
-
-            - ''body.items[3].tags'' (nested array element)
-
-            - ''path.apiId'' (path parameter)
-
-            - ''query.limit'' (query parameter)
-
-            Use this location to identify exactly which part of your request needs correction.'
-          type: string
-          example: body.permissions[0].name
-        message:
-          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
-          type: string
-          example: Must be at least 3 characters long
-        fix:
-          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
-          type: string
-          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
-      required:
-      - location
-      - message
-      type: object
-      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
-    KeyCreditsData:
-      type: object
-      description: Credit configuration and remaining balance for this key.
-      properties:
-        remaining:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          minimum: 0
-          maximum: 9223372036854776000
-          description: Number of credits remaining (null for unlimited).
-          example: 1000
-        refill:
-          $ref: '#/components/schemas/KeyCreditsRefill'
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - remaining
-      additionalProperties: false
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
-      additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    V2KeysMigrateKeyData:
-      type: object
-      properties:
-        hash:
-          type: string
-          minLength: 3
-          description: The current hash of the key on your side
-          example: your_already_hashed_key
-        name:
-          type: string
-          minLength: 1
-          maxLength: 255
-          description: 'Sets a human-readable identifier for internal organization and dashboard display.
-
-            Never exposed to end users, only visible in management interfaces and API responses.
-
-            Avoid generic names like "API Key" when managing multiple keys for the same user or service.
-
-            '
-          example: Payment Service Production Key
-        externalId:
-          type: string
-          minLength: 1
-          maxLength: 255
-          description: 'Links this key to a user or entity in your system using your own identifier.
-
-            Returned during verification to identify the key owner without additional database lookups.
-
-            Essential for user-specific analytics, billing, and multi-tenant key management.
-
-            Use your primary user ID, organization ID, or tenant ID for best results.
-
-            Accepts letters, numbers, underscores, dots, and hyphens for flexible identifier formats.
-
-            '
-          example: user_1234abcd
-        meta:
-          type: object
-          additionalProperties: true
-          maxProperties: 100
-          description: 'Stores arbitrary JSON metadata returned during key verification for contextual information.
-
-            Eliminates additional database lookups during verification, improving performance for stateless services.
-
-            Avoid storing sensitive data here as it''s returned in verification responses.
-
-            Large metadata objects increase verification latency and should stay under 10KB total size.
-
-            '
-          example:
-            plan: enterprise
-            featureFlags:
-              betaAccess: true
-              concurrentConnections: 10
-            customerName: Acme Corp
-            billing:
-              tier: premium
-              renewal: '2024-12-31'
-        roles:
-          type: array
-          maxItems: 100
-          items:
-            type: string
-            minLength: 1
-            maxLength: 100
-          description: 'Assigns existing roles to this key for permission management through role-based access control.
-
-            Roles must already exist in your workspace before assignment.
-
-            During verification, all permissions from assigned roles are checked against requested permissions.
-
-            Roles provide a convenient way to group permissions and apply consistent access patterns across multiple keys.
-
-            '
-          example:
-          - api_admin
-          - billing_reader
-        permissions:
-          type: array
-          maxItems: 1000
-          items:
-            type: string
-            minLength: 1
-            maxLength: 100
-          description: 'Grants specific permissions directly to this key without requiring role membership.
-
-            Wildcard permissions like `documents.*` grant access to all sub-permissions including `documents.read` and `documents.write`.
-
-            Direct permissions supplement any permissions inherited from assigned roles.
-
-            '
-          example:
-          - documents.read
-          - documents.write
-          - settings.view
-        expires:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4102444800000
-          description: 'Sets when this key automatically expires as a Unix timestamp in milliseconds.
-
-            Verification fails with code=EXPIRED immediately after this time passes.
-
-            Omitting this field creates a permanent key that never expires.
-
-
-            Avoid setting timestamps in the past as they immediately invalidate the key.
-
-            Keys expire based on server time, not client time, which prevents timezone-related issues.
-
-            Essential for trial periods, temporary access, and security compliance requiring key rotation.
-
-            '
-        enabled:
-          type: boolean
-          default: true
-          description: 'Controls whether the key is active immediately upon creation.
-
-            When set to `false`, the key exists but all verification attempts fail with `code=DISABLED`.
-
-            Useful for pre-creating keys that will be activated later or for keys requiring manual approval.
-
-            Most keys should be created with `enabled=true` for immediate use.
-
-            '
-          example: true
-        credits:
-          $ref: '#/components/schemas/KeyCreditsData'
-          description: 'Controls usage-based limits through credit consumption with optional automatic refills.
-
-            Unlike rate limits which control frequency, credits control total usage with global consistency.
-
-            Essential for implementing usage-based pricing, subscription tiers, and hard usage quotas.
-
-            Omitting this field creates unlimited usage, while setting null is not allowed during creation.
-
-            '
-        ratelimits:
-          type: array
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/RatelimitRequest'
-          description: 'Defines time-based rate limits that protect against abuse by controlling request frequency.
-
-            Unlike credits which track total usage, rate limits reset automatically after each window expires.
-
-            Multiple rate limits can control different operation types with separate thresholds and windows.
-
-            Essential for preventing API abuse while maintaining good performance for legitimate usage.
-
-            '
-          example:
-          - name: requests
-            limit: 100
-            duration: 60000
-            autoApply: true
-          - name: heavy_operations
-            limit: 10
-            duration: 3600000
-            autoApply: false
-      additionalProperties: false
-      required:
-      - hash
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
-    V2KeysMigrateKeysMigration:
-      type: object
-      required:
-      - hash
-      - keyId
-      properties:
-        hash:
-          type: string
-          description: The hash provided in the migration request
-          example: sha256_abc123def456
-        keyId:
-          type: string
-          description: The unique identifier for this key in Unkey's system. This is NOT the actual API key, but a reference ID used for management operations like updating or deleting the key. Store this ID in your database to reference the key later. This ID is not sensitive and can be logged or displayed in dashboards.
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-    EmptyResponse:
-      type: object
-      additionalProperties: false
-      description: Empty response object by design. A successful response indicates this operation was successfully executed.
     V2KeysUpdateKeyResponseBody:
       type: object
       required:
@@ -1758,7 +1427,150 @@ components:
         data:
           $ref: '#/components/schemas/EmptyResponse'
       additionalProperties: false
-    V2KeysRemovePermissionsRequestBody:
+    V2KeysVerifyKeyRequestBody:
+      type: object
+      additionalProperties: false
+      required:
+      - key
+      properties:
+        key:
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: 'The API key to verify, exactly as provided by your user.
+
+            Include any prefix - even small changes will cause verification to fail.
+
+            '
+          example: sk_1234abcdef
+        tags:
+          type: array
+          items:
+            type: string
+            minLength: 1
+            maxLength: 512
+          maxItems: 20
+          description: 'Attaches metadata tags for analytics and monitoring without affecting verification outcomes.
+
+            Enables segmentation of API usage in dashboards by endpoint, client version, region, or custom dimensions.
+
+            Use ''key=value'' format for compatibility with most analytics tools and clear categorization.
+
+            Avoid including sensitive data in tags as they may appear in logs and analytics reports.
+
+            '
+          example:
+          - endpoint=/users/profile
+          - method=GET
+          - region=us-east-1
+          - clientVersion=2.3.0
+          - feature=premium
+        permissions:
+          type: string
+          minLength: 1
+          maxLength: 1000
+          description: 'Checks if the key has the specified permission(s) using a query syntax.
+
+            Supports single permissions, logical operators (AND, OR), and parentheses for grouping.
+
+            Examples:
+
+            - Single permission: "documents.read"
+
+            - Multiple permissions: "documents.read AND documents.write"
+
+            - Complex queries: "(documents.read OR documents.write) AND users.view"
+
+            Verification fails if the key lacks the required permissions through direct assignment or role inheritance.
+
+            '
+          example: documents.read AND users.view
+        credits:
+          $ref: '#/components/schemas/KeysVerifyKeyCredits'
+        ratelimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/KeysVerifyKeyRatelimit'
+          description: 'Enforces time-based rate limiting during verification to prevent abuse and ensure fair usage.
+
+            Omitting this field skips rate limit checks entirely, relying only on configured key rate limits.
+
+            Multiple rate limits can be checked simultaneously, each with different costs and temporary overrides.
+
+            Rate limit checks are optimized for performance but may allow brief bursts during high concurrency.
+
+            '
+        migrationId:
+          type: string
+          maxLength: 256
+          description: Migrate keys on demand from your previous system. Reach out for migration support at support@unkey.dev
+          example: m_1234abcd
+    V2KeysUpdateCreditsRequestBody:
+      type: object
+      required:
+      - keyId
+      - operation
+      properties:
+        keyId:
+          type: string
+          description: The ID of the key to update (begins with `key_`). This is the database reference ID for the key, not the actual API key string that users authenticate with. This ID uniquely identifies which key's credits will be updated.
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+          minLength: 3
+        value:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: 'The credit value to use with the specified operation. The meaning depends on the operation: for ''set'', this becomes the new remaining credits value; for ''increment'', this amount is added to current credits; for ''decrement'', this amount is subtracted from current credits.
+
+
+            Set to null when using ''set'' operation to make the key unlimited (removes usage restrictions entirely). When decrementing, if the result would be negative, remaining credits are automatically set to zero. Credits are consumed during successful key verification, and when credits reach zero, verification fails with `code=USAGE_EXCEEDED`.
+
+
+            Required when using ''increment'' or ''decrement'' operations. Optional for ''set'' operation (null creates unlimited usage).
+
+            '
+          example: 1000
+        operation:
+          type: string
+          enum:
+          - set
+          - increment
+          - decrement
+          x-speakeasy-unknown-values: allow
+          description: 'Defines how to modify the key''s remaining credits. Use ''set'' to replace current credits with a specific value or unlimited usage, ''increment'' to add credits for plan upgrades or credit purchases, and ''decrement'' to reduce credits for refunds or policy violations.
+
+            '
+          example: set
+      additionalProperties: false
+    V2KeysMigrateKeysRequestBody:
+      type: object
+      properties:
+        migrationId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: Identifier of the configured migration provider/strategy to use (e.g., "your_company"). You will receive this from Unkey's support staff.
+          example: your_company
+        apiId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          description: The ID of the API that the keys should be inserted into
+          example: api_123456789
+        keys:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/V2KeysMigrateKeyData'
+      additionalProperties: false
+      required:
+      - migrationId
+      - apiId
+      - keys
+    V2KeysSetPermissionsRequestBody:
       type: object
       required:
       - keyId
@@ -1769,7 +1581,7 @@ components:
           minLength: 3
           maxLength: 255
           pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key to remove permissions from using the database identifier returned from `keys.createKey`.
+          description: 'Specifies which key receives the additional permissions using the database identifier returned from `keys.createKey`.
 
             Do not confuse this with the actual API key string that users include in requests.
 
@@ -1777,43 +1589,86 @@ components:
           example: key_2cGKbMxRyIzhCxo1Idjz8q
         permissions:
           type: array
-          minItems: 1
-          maxItems: 1000
-          description: 'Removes direct permissions from the key without affecting role-based permissions.
+          description: 'The permissions to set for this key.
 
 
-            You can either use a permission slug, or the permission ID.
+            This is a complete replacement operation - it overwrites all existing direct permissions with this new set.
 
 
-            After removal, verification checks for these permissions will fail unless granted through roles.
+            Key behaviors:
 
-            '
+            - Providing an empty array removes all direct permissions from the key
+
+            - This only affects direct permissions - permissions granted through roles are not affected
+
+            - All existing direct permissions not included in this list will be removed
+
+
+            Any permissions that do not exist will be auto created if the root key has permissions, otherwise this operation will fail with a 403 error.'
           items:
             type: string
             minLength: 3
             pattern: ^[a-zA-Z0-9_:\-\.\*]+$
             description: Specify the permission by its slug.
       additionalProperties: false
-    UnauthorizedErrorResponse:
+    V2KeysAddPermissionsResponseBody:
       type: object
       required:
       - meta
-      - error
+      - data
       properties:
         meta:
           $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+        data:
+          $ref: '#/components/schemas/V2KeysAddPermissionsResponseData'
+    V2KeysGetKeyRequestBody:
+      type: object
+      properties:
+        keyId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which key to retrieve using the database identifier returned from `keys.createKey`.
 
-        - No authentication token is provided in the request
+            Do not confuse this with the actual API key string that users include in requests.
 
-        - The provided token is invalid, expired, or malformed
+            Key data includes metadata, permissions, usage statistics, and configuration but never the plaintext key value unless `decrypt=true`.
 
-        - The token format doesn''t match expected patterns
+            Find this ID in creation responses, key listings, dashboard, or verification responses.
+
+            '
+          example: key_1234abcd
+        decrypt:
+          type: boolean
+          default: false
+          description: 'Controls whether to include the plaintext key value in the response for recovery purposes.
+
+            Only works for keys created with `recoverable=true` and requires the `decrypt_key` permission.
+
+            Returned keys must be handled securely, never logged, cached, or stored insecurely.
 
 
-        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+            Use only for legitimate recovery scenarios like user password resets or emergency access.
+
+            Most applications should keep this false to maintain security best practices and avoid accidental key exposure.
+
+            Decryption requests are audited and may trigger security alerts in enterprise environments.
+
+            '
+      additionalProperties: false
+      required:
+      - keyId
+    V2KeysRerollKeyResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2KeysRerollKeyResponseData'
     NotFoundErrorResponse:
       type: object
       required:
@@ -1834,7 +1689,21 @@ components:
 
 
         To resolve this error, verify the resource ID is correct and that you have access to it.'
-    V2KeysVerifyKeyResponseBody:
+    V2KeysMigrateKeysMigration:
+      type: object
+      required:
+      - hash
+      - keyId
+      properties:
+        hash:
+          type: string
+          description: The hash provided in the migration request
+          example: sha256_abc123def456
+        keyId:
+          type: string
+          description: The unique identifier for this key in Unkey's system. This is NOT the actual API key, but a reference ID used for management operations like updating or deleting the key. Store this ID in your database to reference the key later. This ID is not sensitive and can be logged or displayed in dashboards.
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+    V2KeysAddRolesResponseBody:
       type: object
       required:
       - meta
@@ -1843,36 +1712,98 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
         data:
-          $ref: '#/components/schemas/V2KeysVerifyKeyResponseData'
-      additionalProperties: false
-    V2KeysGetKeyResponseBody:
+          $ref: '#/components/schemas/V2KeysAddRolesResponseData'
+    V2KeysAddPermissionsResponseData:
+      type: array
+      description: 'Complete list of all permissions directly assigned to the key (including both newly added permissions and those that were already assigned).
+
+
+        This response includes:
+
+        - All direct permissions assigned to the key (both pre-existing and newly added)
+
+        - Both the permission ID and name for each permission
+
+
+        Important notes:
+
+        - This list does NOT include permissions granted through roles
+
+        - For a complete permission picture, use `/v2/keys.getKey` instead
+
+        - An empty array indicates the key has no direct permissions assigned'
+      items:
+        $ref: '#/components/schemas/Permission'
+    RatelimitRequest:
       type: object
       required:
-      - meta
-      - data
+      - name
+      - limit
+      - duration
+      - autoApply
       properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/KeyResponseData'
-    V2KeysMigrateKeysResponseData:
-      type: object
-      required:
-      - migrated
-      - failed
-      properties:
-        migrated:
-          type: array
-          description: Successfully migrated keys with their hash and generated keyId
-          items:
-            $ref: '#/components/schemas/V2KeysMigrateKeysMigration'
-        failed:
-          type: array
-          description: Hashes that could not be migrated (e.g., already exist in the system)
-          items:
-            type: string
-            description: The hash that failed to migrate
-            example: sha256_ghi789jkl012
+        name:
+          description: 'The name of this rate limit. This name is used to identify which limit to check during key verification.
+
+
+            Best practices for limit names:
+
+            - Use descriptive, semantic names like ''api_requests'', ''heavy_operations'', or ''downloads''
+
+            - Be consistent with naming conventions across your application
+
+            - Create separate limits for different resource types or operation costs
+
+            - Consider using namespaced names for better organization (e.g., ''files.downloads'', ''compute.training'')
+
+
+            You will reference this exact name when verifying keys to check against this specific limit.'
+          type: string
+          example: api
+          minLength: 3
+          maxLength: 128
+        limit:
+          description: 'The maximum number of operations allowed within the specified time window.
+
+
+            When this limit is reached, verification requests will fail with `code=RATE_LIMITED` until the window resets. The limit should reflect:
+
+            - Your infrastructure capacity and scaling limitations
+
+            - Fair usage expectations for your service
+
+            - Different tier levels for various user types
+
+            - The relative cost of the operations being limited
+
+
+            Higher values allow more frequent access but may impact service performance.'
+          type: integer
+          format: int64
+          minimum: 1
+        duration:
+          description: 'The duration for each ratelimit window in milliseconds.
+
+
+            This controls how long the rate limit counter accumulates before resetting. Common values include:
+
+            - 1000 (1 second): For strict per-second limits on high-frequency operations
+
+            - 60000 (1 minute): For moderate API usage control
+
+            - 3600000 (1 hour): For less frequent but costly operations
+
+            - 86400000 (24 hours): For daily quotas
+
+
+            Shorter windows provide more frequent resets but may allow large burst usage. Longer windows provide more consistent usage patterns but take longer to reset after limit exhaustion.'
+          type: integer
+          format: int64
+          minimum: 1000
+        autoApply:
+          description: Whether this ratelimit should be automatically applied when verifying a key.
+          type: boolean
+          default: false
     V2KeysSetRolesResponseData:
       type: array
       description: 'Complete list of all roles now directly assigned to the key after the set operation has completed.
@@ -1898,406 +1829,58 @@ components:
         - An empty array indicates the key now has no roles assigned at all'
       items:
         $ref: '#/components/schemas/Role'
-    KeyResponseData:
+    V2KeysUpdateCreditsResponseBody:
       type: object
+      required:
+      - meta
+      - data
       properties:
-        keyId:
-          type: string
-          minLength: 8
-          maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: Unique identifier for this key.
-          example: key_1234567890abcdef
-        start:
-          type: string
-          minLength: 1
-          maxLength: 50
-          description: First few characters of the key for identification.
-          example: sk_test_abc123
-        enabled:
-          type: boolean
-          description: Whether the key is enabled or disabled.
-          example: true
-        name:
-          type: string
-          maxLength: 255
-          description: Human-readable name for this key.
-          example: Production API Key
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
         meta:
-          type: object
-          additionalProperties: true
-          maxProperties: 100
-          description: Custom metadata associated with this key.
-          example: null
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        createdAt:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 9223372036854776000
-          description: Unix timestamp in milliseconds when key was created.
-          example: 1701425400000
-        updatedAt:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 9223372036854776000
-          description: Unix timestamp in milliseconds when key was last updated.
-          example: 1701425400000
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        lastUsedAt:
-          type: integer
-          format: int64
-          minimum: 0
-          description: Unix timestamp in milliseconds when key was last used for verification. This is an approximated value, accurate to within 5 minutes.
-          example: 1701425400000
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        expires:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 9223372036854776000
-          description: Unix timestamp in milliseconds when key expires (if set).
-          example: 1735689600000
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        permissions:
-          type: array
-          items:
-            type: string
-            description: List of permission slugs granted to this key.
-          example:
-          - documents.read
-          - documents.write
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        roles:
-          type: array
-          items:
-            type: string
-            description: List of roles assigned to this key.
-          example:
-          - editor
-          - viewer
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        credits:
+          $ref: '#/components/schemas/Meta'
+        data:
           $ref: '#/components/schemas/KeyCreditsData'
-        identity:
-          $ref: '#/components/schemas/Identity'
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        plaintext:
-          type: string
-          description: Decrypted key value (only when decrypt=true).
-          example: sk_test_abc123def456
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        ratelimits:
-          type: array
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/RatelimitResponse'
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - keyId
-      - start
-      - createdAt
-      - enabled
       additionalProperties: false
-    VerifyKeyRatelimitData:
-      type: object
-      properties:
-        exceeded:
-          type: boolean
-          description: Whether the rate limit was exceeded.
-        id:
-          type: string
-          minLength: 8
-          maxLength: 255
-          pattern: ^rl_[a-zA-Z0-9_]+$
-          description: Unique identifier for this rate limit configuration.
-          example: rl_1234567890abcdef
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Human-readable name for this rate limit.
-          example: api_requests
-        limit:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 1000000
-          description: Maximum requests allowed within the time window.
-          example: 1000
-        duration:
-          type: integer
-          format: int64
-          minimum: 1000
-          maximum: 2592000000
-          description: Rate limit window duration in milliseconds.
-          example: 3600000
-        reset:
-          type: integer
-          format: int64
-          minimum: 1000
-          maximum: 2592000000
-          description: Rate limit reset duration in milliseconds.
-          example: 3600000
-        remaining:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 1000000
-          description: Rate limit remaining requests within the time window.
-          example: 999
-        autoApply:
-          type: boolean
-          description: 'Whether this rate limit should be automatically applied when verifying keys.
-
-            When true, we will automatically apply this limit during verification without it being explicitly listed.
-
-            '
-          example: true
-      required:
-      - id
-      - exceeded
-      - name
-      - limit
-      - duration
-      - reset
-      - remaining
-      - autoApply
-      additionalProperties: false
-    V2KeysRerollKeyRequestBody:
+    V2KeysAddRolesRequestBody:
       type: object
       required:
       - keyId
-      - expiration
+      - roles
       properties:
         keyId:
           type: string
           minLength: 3
           maxLength: 255
           pattern: ^[a-zA-Z0-9_]+$
-          description: 'The database identifier of the key to reroll.
-
-
-            This is the unique ID returned when creating or listing keys, NOT the actual API key token.
-
-            You can find this ID in:
-
-            - The response from `keys.createKey`
-
-            - Key verification responses
-
-            - The Unkey dashboard
-
-            - API key listing endpoints
-
-            '
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-        expiration:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 4102444800000
-          description: 'Duration in milliseconds until the ORIGINAL key is revoked, starting from now.
-
-
-            This parameter controls the overlap period for key rotation:
-
-            - Set to `0` to revoke the original key immediately
-
-            - Positive values keep the original key active for the specified duration
-
-            - Allows graceful migration by giving users time to update their credentials
-
-
-            Common overlap periods:
-
-            - Immediate revocation: 0
-
-            - 1 hour grace period: 3600000
-
-            - 24 hours grace period: 86400000
-
-            - 7 days grace period: 604800000
-
-            - 30 days grace period: 2592000000
-
-            '
-          example: 86400000
-    V2KeysRemoveRolesResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysRemoveRolesResponseData'
-    V2KeysDeleteKeyResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/EmptyResponse'
-      additionalProperties: false
-    Identity:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Identity ID
-        externalId:
-          type: string
-          description: External identity ID
-        meta:
-          type: object
-          additionalProperties: true
-          description: Identity metadata
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        ratelimits:
-          type: array
-          description: Identity ratelimits
-          items:
-            $ref: '#/components/schemas/RatelimitResponse'
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - externalId
-      - id
-    V2KeysAddPermissionsResponseData:
-      type: array
-      description: 'Complete list of all permissions directly assigned to the key (including both newly added permissions and those that were already assigned).
-
-
-        This response includes:
-
-        - All direct permissions assigned to the key (both pre-existing and newly added)
-
-        - Both the permission ID and name for each permission
-
-
-        Important notes:
-
-        - This list does NOT include permissions granted through roles
-
-        - For a complete permission picture, use `/v2/keys.getKey` instead
-
-        - An empty array indicates the key has no direct permissions assigned'
-      items:
-        $ref: '#/components/schemas/Permission'
-    TooManyRequestsErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
-
-
-        The rate limit resets automatically after the time window expires. To avoid this error:
-
-        - Implement exponential backoff when retrying requests
-
-        - Cache results where appropriate to reduce request frequency
-
-        - Check the error detail message for specific quota information
-
-        - Contact support if you need a higher quota for your use case'
-    V2KeysWhoamiResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/KeyResponseData'
-    V2KeysMigrateKeysResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysMigrateKeysResponseData'
-    V2KeysCreateKeyResponseData:
-      type: object
-      properties:
-        keyId:
-          type: string
-          description: The unique identifier for this key in Unkey's system. This is NOT the actual API key, but a reference ID used for management operations like updating or deleting the key. Store this ID in your database to reference the key later. This ID is not sensitive and can be logged or displayed in dashboards.
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-        key:
-          type: string
-          description: 'The full generated API key that should be securely provided to your user.
-
-            SECURITY WARNING: This is the only time you''ll receive the complete key - Unkey only stores a securely hashed version. Never log or store this value in your own systems; provide it directly to your end user via secure channels. After this API call completes, this value cannot be retrieved again (unless created with `recoverable=true`).'
-          example: prod_2cGKbMxRjIzhCxo1IdjH3arELti7Sdyc8w6XYbvtcyuBowPT
-      required:
-      - keyId
-      - key
-    V2KeysDeleteKeyRequestBody:
-      type: object
-      required:
-      - keyId
-      properties:
-        keyId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key to delete using the database identifier returned from `createKey`.
+          description: 'Specifies which key receives the additional roles using the database identifier returned from `createKey`.
 
             Do not confuse this with the actual API key string that users include in requests.
 
-            Deletion immediately invalidates the key, causing all future verification attempts to fail with `code=NOT_FOUND`.
+            Added roles supplement existing roles and permissions without replacing them.
 
-            Key deletion triggers cache invalidation across all regions but may take up to 30 seconds to fully propagate.
+            Role assignments take effect immediately but may take up to 30 seconds to propagate across all regions.
 
             '
           example: key_2cGKbMxRyIzhCxo1Idjz8q
-        permanent:
-          type: boolean
-          default: false
-          description: 'Controls deletion behavior between recoverable soft-deletion and irreversible permanent erasure.
+        roles:
+          type: array
+          minItems: 1
+          maxItems: 100
+          description: 'Assigns additional roles to the key through direct assignment to existing workspace roles.
 
-            Soft deletion (default) preserves key data for potential recovery through direct database operations.
-
-            Permanent deletion completely removes all traces including hash values and metadata with no recovery option.
+            Operations are idempotent - adding existing roles has no effect and causes no errors.
 
 
-            Use permanent deletion only for regulatory compliance (GDPR), resolving hash collisions, or when reusing identical key strings.
+            All roles must already exist in the workspace - roles cannot be created automatically.
 
-            Permanent deletion cannot be undone and may affect analytics data that references the deleted key.
-
-            Most applications should use soft deletion to maintain audit trails and prevent accidental data loss.
+            Invalid roles cause the entire operation to fail atomically, ensuring consistent state.
 
             '
-          example: false
+          items:
+            type: string
+            minLength: 3
+            maxLength: 255
+            pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
+            description: Specify the role by name.
       additionalProperties: false
     V2KeysCreateKeyRequestBody:
       type: object
@@ -2514,7 +2097,7 @@ components:
             '
           example: false
       additionalProperties: false
-    V2KeysSetRolesResponseBody:
+    V2KeysRemovePermissionsResponseBody:
       type: object
       required:
       - meta
@@ -2523,18 +2106,8 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
         data:
-          $ref: '#/components/schemas/V2KeysSetRolesResponseData'
-    V2KeysRerollKeyResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysRerollKeyResponseData'
-    V2KeysSetPermissionsRequestBody:
+          $ref: '#/components/schemas/V2KeysRemovePermissionsResponseData'
+    V2KeysRemovePermissionsRequestBody:
       type: object
       required:
       - keyId
@@ -2545,7 +2118,7 @@ components:
           minLength: 3
           maxLength: 255
           pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key receives the additional permissions using the database identifier returned from `keys.createKey`.
+          description: 'Specifies which key to remove permissions from using the database identifier returned from `keys.createKey`.
 
             Do not confuse this with the actual API key string that users include in requests.
 
@@ -2553,134 +2126,89 @@ components:
           example: key_2cGKbMxRyIzhCxo1Idjz8q
         permissions:
           type: array
-          description: 'The permissions to set for this key.
+          minItems: 1
+          maxItems: 1000
+          description: 'Removes direct permissions from the key without affecting role-based permissions.
 
 
-            This is a complete replacement operation - it overwrites all existing direct permissions with this new set.
+            You can either use a permission slug, or the permission ID.
 
 
-            Key behaviors:
+            After removal, verification checks for these permissions will fail unless granted through roles.
 
-            - Providing an empty array removes all direct permissions from the key
-
-            - This only affects direct permissions - permissions granted through roles are not affected
-
-            - All existing direct permissions not included in this list will be removed
-
-
-            Any permissions that do not exist will be auto created if the root key has permissions, otherwise this operation will fail with a 403 error.'
+            '
           items:
             type: string
             minLength: 3
             pattern: ^[a-zA-Z0-9_:\-\.\*]+$
             description: Specify the permission by its slug.
       additionalProperties: false
-    V2KeysRemoveRolesResponseData:
-      type: array
-      description: 'Complete list of all roles directly assigned to the key after the removal operation completes.
-
-
-        The response includes:
-
-        - The remaining roles still assigned to the key (after removing the specified roles)
-
-        - Both ID and name for each role for easy reference
-
-
-        Important notes:
-
-        - The response reflects the current state after the removal operation
-
-        - An empty array indicates the key now has no roles assigned
-
-        - This only shows direct role assignments
-
-        - Role permissions are not expanded in this response - use keys.getKey for full details
-
-        - Changes take effect immediately for new verifications but cached sessions may retain old permissions briefly'
-      items:
-        $ref: '#/components/schemas/Role'
-    RatelimitRequest:
+    VerifyKeyRatelimitData:
       type: object
-      required:
-      - name
-      - limit
-      - duration
-      - autoApply
       properties:
-        name:
-          description: 'The name of this rate limit. This name is used to identify which limit to check during key verification.
-
-
-            Best practices for limit names:
-
-            - Use descriptive, semantic names like ''api_requests'', ''heavy_operations'', or ''downloads''
-
-            - Be consistent with naming conventions across your application
-
-            - Create separate limits for different resource types or operation costs
-
-            - Consider using namespaced names for better organization (e.g., ''files.downloads'', ''compute.training'')
-
-
-            You will reference this exact name when verifying keys to check against this specific limit.'
+        exceeded:
+          type: boolean
+          description: Whether the rate limit was exceeded.
+        id:
           type: string
-          example: api
-          minLength: 3
+          minLength: 8
+          maxLength: 255
+          pattern: ^rl_[a-zA-Z0-9_]+$
+          description: Unique identifier for this rate limit configuration.
+          example: rl_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
           maxLength: 128
+          description: Human-readable name for this rate limit.
+          example: api_requests
         limit:
-          description: 'The maximum number of operations allowed within the specified time window.
-
-
-            When this limit is reached, verification requests will fail with `code=RATE_LIMITED` until the window resets. The limit should reflect:
-
-            - Your infrastructure capacity and scaling limitations
-
-            - Fair usage expectations for your service
-
-            - Different tier levels for various user types
-
-            - The relative cost of the operations being limited
-
-
-            Higher values allow more frequent access but may impact service performance.'
           type: integer
           format: int64
           minimum: 1
+          maximum: 1000000
+          description: Maximum requests allowed within the time window.
+          example: 1000
         duration:
-          description: 'The duration for each ratelimit window in milliseconds.
-
-
-            This controls how long the rate limit counter accumulates before resetting. Common values include:
-
-            - 1000 (1 second): For strict per-second limits on high-frequency operations
-
-            - 60000 (1 minute): For moderate API usage control
-
-            - 3600000 (1 hour): For less frequent but costly operations
-
-            - 86400000 (24 hours): For daily quotas
-
-
-            Shorter windows provide more frequent resets but may allow large burst usage. Longer windows provide more consistent usage patterns but take longer to reset after limit exhaustion.'
           type: integer
           format: int64
           minimum: 1000
+          maximum: 2592000000
+          description: Rate limit window duration in milliseconds.
+          example: 3600000
+        reset:
+          type: integer
+          format: int64
+          minimum: 1000
+          maximum: 2592000000
+          description: Rate limit reset duration in milliseconds.
+          example: 3600000
+        remaining:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 1000000
+          description: Rate limit remaining requests within the time window.
+          example: 999
         autoApply:
-          description: Whether this ratelimit should be automatically applied when verifying a key.
           type: boolean
-          default: false
-    V2KeysAddPermissionsResponseBody:
-      type: object
+          description: 'Whether this rate limit should be automatically applied when verifying keys.
+
+            When true, we will automatically apply this limit during verification without it being explicitly listed.
+
+            '
+          example: true
       required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysAddPermissionsResponseData'
-    BadRequestErrorResponse:
+      - id
+      - exceeded
+      - name
+      - limit
+      - duration
+      - reset
+      - remaining
+      - autoApply
+      additionalProperties: false
+    InternalServerErrorResponse:
       type: object
       required:
       - meta
@@ -2689,124 +2217,55 @@ components:
         meta:
           $ref: '#/components/schemas/Meta'
         error:
-          $ref: '#/components/schemas/BadRequestErrorDetails'
-      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
-    Permission:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    V2KeysDeleteKeyRequestBody:
       type: object
+      required:
+      - keyId
       properties:
-        id:
+        keyId:
           type: string
           minLength: 3
           maxLength: 255
           pattern: ^[a-zA-Z0-9_]+$
-          description: 'The unique identifier for this permission within Unkey''s system.
+          description: 'Specifies which key to delete using the database identifier returned from `createKey`.
 
-            Generated automatically when the permission is created and used to reference this permission in API operations.
+            Do not confuse this with the actual API key string that users include in requests.
 
-            Always begins with ''perm_'' followed by alphanumeric characters and underscores.
+            Deletion immediately invalidates the key, causing all future verification attempts to fail with `code=NOT_FOUND`.
 
-            '
-          example: perm_1234567890abcdef
-        name:
-          type: string
-          minLength: 1
-          maxLength: 512
-          description: 'The human-readable name for this permission that describes its purpose.
-
-            Should be descriptive enough for developers to understand what access it grants.
-
-            Use clear, semantic names that reflect the resources or actions being permitted.
-
-            Names must be unique within your workspace to avoid confusion and conflicts.
+            Key deletion triggers cache invalidation across all regions but may take up to 30 seconds to fully propagate.
 
             '
-          example: users.read
-        slug:
-          pattern: ^[a-zA-Z0-9_:\-\.\*]+$
-          type: string
-          minLength: 1
-          maxLength: 512
-          description: The unique URL-safe identifier for this permission.
-          example: users-read
-        description:
-          type: string
-          maxLength: 512
-          description: 'Optional detailed explanation of what this permission grants access to.
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+        permanent:
+          type: boolean
+          default: false
+          description: 'Controls deletion behavior between recoverable soft-deletion and irreversible permanent erasure.
 
-            Helps team members understand the scope and implications of granting this permission.
+            Soft deletion (default) preserves key data for potential recovery through direct database operations.
 
-            Include information about what resources can be accessed and what actions can be performed.
+            Permanent deletion completely removes all traces including hash values and metadata with no recovery option.
 
-            Not visible to end users - this is for internal documentation and team clarity.
+
+            Use permanent deletion only for regulatory compliance (GDPR), resolving hash collisions, or when reusing identical key strings.
+
+            Permanent deletion cannot be undone and may affect analytics data that references the deleted key.
+
+            Most applications should use soft deletion to maintain audit trails and prevent accidental data loss.
 
             '
-          example: Allows reading user profile information and account details
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - id
-      - name
-      - slug
-    Role:
-      type: object
-      properties:
-        id:
-          type: string
-          description: 'The unique identifier for this role within Unkey''s system.
-
-            Generated automatically when the role is created and used to reference this role in API operations.
-
-            Always begins with ''role_'' followed by alphanumeric characters and underscores.
-
-            '
-          example: role_1234567890abcdef
-        name:
-          type: string
-          description: 'The human-readable name for this role that describes its function.
-
-            Should be descriptive enough for administrators to understand what access this role provides.
-
-            Use clear, semantic names that reflect the job function or responsibility level.
-
-            Names must be unique within your workspace to avoid confusion during role assignment.
-
-            '
-          example: support.readonly
-        description:
-          type: string
-          description: 'Optional detailed explanation of what this role encompasses and what access it provides.
-
-            Helps team members understand the role''s scope, intended use cases, and security implications.
-
-            Include information about what types of users should receive this role and what they can accomplish.
-
-            Not visible to end users - this is for internal documentation and access control audits.
-
-            '
-          example: Provides read-only access for customer support representatives to view user accounts and support tickets
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-        permissions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Permission'
-          maxItems: 100
-          description: 'Complete list of permissions currently assigned to this role.
-
-            Each permission grants specific access rights that will be inherited by any keys or users assigned this role.
-
-            Use this list to understand the full scope of access provided by this role.
-
-            Permissions can be added or removed from roles without affecting the role''s identity or other properties.
-
-            Empty array indicates a role with no permissions currently assigned.
-
-            '
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - id
-      - name
+          example: false
       additionalProperties: false
     V2KeysCreateKeyResponseBody:
       type: object
@@ -2818,51 +2277,148 @@ components:
           $ref: '#/components/schemas/Meta'
         data:
           $ref: '#/components/schemas/V2KeysCreateKeyResponseData'
-    ForbiddenErrorResponse:
+    EmptyResponse:
       type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
-
-        - The root key doesn''t have the required permissions for this endpoint
-
-        - The operation requires elevated privileges that the current key lacks
-
-        - Access to the requested resource is restricted based on workspace settings
-
-
-        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
-    V2KeysMigrateKeysRequestBody:
-      type: object
-      properties:
-        migrationId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          description: Identifier of the configured migration provider/strategy to use (e.g., "your_company"). You will receive this from Unkey's support staff.
-          example: your_company
-        apiId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          description: The ID of the API that the keys should be inserted into
-          example: api_123456789
-        keys:
-          type: array
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/V2KeysMigrateKeyData'
       additionalProperties: false
+      description: Empty response object by design. A successful response indicates this operation was successfully executed.
+    Identity:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identity ID
+        externalId:
+          type: string
+          description: External identity ID
+        meta:
+          type: object
+          additionalProperties: true
+          description: Identity metadata
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          description: Identity ratelimits
+          items:
+            $ref: '#/components/schemas/RatelimitResponse'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
       required:
-      - migrationId
-      - apiId
-      - keys
+      - externalId
+      - id
+    KeyResponseData:
+      type: object
+      properties:
+        keyId:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: Unique identifier for this key.
+          example: key_1234567890abcdef
+        start:
+          type: string
+          minLength: 1
+          maxLength: 50
+          description: First few characters of the key for identification.
+          example: sk_test_abc123
+        enabled:
+          type: boolean
+          description: Whether the key is enabled or disabled.
+          example: true
+        name:
+          type: string
+          maxLength: 255
+          description: Human-readable name for this key.
+          example: Production API Key
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: Custom metadata associated with this key.
+          example: null
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        createdAt:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key was created.
+          example: 1701425400000
+        updatedAt:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key was last updated.
+          example: 1701425400000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        lastUsedAt:
+          type: integer
+          format: int64
+          minimum: 0
+          description: Unix timestamp in milliseconds when key was last used for verification. This is an approximated value, accurate to within 5 minutes.
+          example: 1701425400000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        expires:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Unix timestamp in milliseconds when key expires (if set).
+          example: 1735689600000
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        permissions:
+          type: array
+          items:
+            type: string
+            description: List of permission slugs granted to this key.
+          example:
+          - documents.read
+          - documents.write
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        roles:
+          type: array
+          items:
+            type: string
+            description: List of roles assigned to this key.
+          example:
+          - editor
+          - viewer
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        credits:
+          $ref: '#/components/schemas/KeyCreditsData'
+        identity:
+          $ref: '#/components/schemas/Identity'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        plaintext:
+          type: string
+          description: Decrypted key value (only when decrypt=true).
+          example: sk_test_abc123def456
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitResponse'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - keyId
+      - start
+      - createdAt
+      - enabled
+      additionalProperties: false
     V2KeysRerollKeyResponseData:
       type: object
       properties:
@@ -2918,10 +2474,229 @@ components:
       required:
       - keyId
       - key
-    UpdateKeyCreditsData:
-      type:
-      - object
-      - 'null'
+    V2KeysMigrateKeyData:
+      type: object
+      properties:
+        hash:
+          type: string
+          minLength: 3
+          description: The current hash of the key on your side
+          example: your_already_hashed_key
+        name:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'Sets a human-readable identifier for internal organization and dashboard display.
+
+            Never exposed to end users, only visible in management interfaces and API responses.
+
+            Avoid generic names like "API Key" when managing multiple keys for the same user or service.
+
+            '
+          example: Payment Service Production Key
+        externalId:
+          type: string
+          minLength: 1
+          maxLength: 255
+          description: 'Links this key to a user or entity in your system using your own identifier.
+
+            Returned during verification to identify the key owner without additional database lookups.
+
+            Essential for user-specific analytics, billing, and multi-tenant key management.
+
+            Use your primary user ID, organization ID, or tenant ID for best results.
+
+            Accepts letters, numbers, underscores, dots, and hyphens for flexible identifier formats.
+
+            '
+          example: user_1234abcd
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: 'Stores arbitrary JSON metadata returned during key verification for contextual information.
+
+            Eliminates additional database lookups during verification, improving performance for stateless services.
+
+            Avoid storing sensitive data here as it''s returned in verification responses.
+
+            Large metadata objects increase verification latency and should stay under 10KB total size.
+
+            '
+          example:
+            plan: enterprise
+            featureFlags:
+              betaAccess: true
+              concurrentConnections: 10
+            customerName: Acme Corp
+            billing:
+              tier: premium
+              renewal: '2024-12-31'
+        roles:
+          type: array
+          maxItems: 100
+          items:
+            type: string
+            minLength: 1
+            maxLength: 100
+          description: 'Assigns existing roles to this key for permission management through role-based access control.
+
+            Roles must already exist in your workspace before assignment.
+
+            During verification, all permissions from assigned roles are checked against requested permissions.
+
+            Roles provide a convenient way to group permissions and apply consistent access patterns across multiple keys.
+
+            '
+          example:
+          - api_admin
+          - billing_reader
+        permissions:
+          type: array
+          maxItems: 1000
+          items:
+            type: string
+            minLength: 1
+            maxLength: 100
+          description: 'Grants specific permissions directly to this key without requiring role membership.
+
+            Wildcard permissions like `documents.*` grant access to all sub-permissions including `documents.read` and `documents.write`.
+
+            Direct permissions supplement any permissions inherited from assigned roles.
+
+            '
+          example:
+          - documents.read
+          - documents.write
+          - settings.view
+        expires:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4102444800000
+          description: 'Sets when this key automatically expires as a Unix timestamp in milliseconds.
+
+            Verification fails with code=EXPIRED immediately after this time passes.
+
+            Omitting this field creates a permanent key that never expires.
+
+
+            Avoid setting timestamps in the past as they immediately invalidate the key.
+
+            Keys expire based on server time, not client time, which prevents timezone-related issues.
+
+            Essential for trial periods, temporary access, and security compliance requiring key rotation.
+
+            '
+        enabled:
+          type: boolean
+          default: true
+          description: 'Controls whether the key is active immediately upon creation.
+
+            When set to `false`, the key exists but all verification attempts fail with `code=DISABLED`.
+
+            Useful for pre-creating keys that will be activated later or for keys requiring manual approval.
+
+            Most keys should be created with `enabled=true` for immediate use.
+
+            '
+          example: true
+        credits:
+          $ref: '#/components/schemas/KeyCreditsData'
+          description: 'Controls usage-based limits through credit consumption with optional automatic refills.
+
+            Unlike rate limits which control frequency, credits control total usage with global consistency.
+
+            Essential for implementing usage-based pricing, subscription tiers, and hard usage quotas.
+
+            Omitting this field creates unlimited usage, while setting null is not allowed during creation.
+
+            '
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitRequest'
+          description: 'Defines time-based rate limits that protect against abuse by controlling request frequency.
+
+            Unlike credits which track total usage, rate limits reset automatically after each window expires.
+
+            Multiple rate limits can control different operation types with separate thresholds and windows.
+
+            Essential for preventing API abuse while maintaining good performance for legitimate usage.
+
+            '
+          example:
+          - name: requests
+            limit: 100
+            duration: 60000
+            autoApply: true
+          - name: heavy_operations
+            limit: 10
+            duration: 3600000
+            autoApply: false
+      additionalProperties: false
+      required:
+      - hash
+    V2KeysDeleteKeyResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/EmptyResponse'
+      additionalProperties: false
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    V2KeysGetKeyResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/KeyResponseData'
+    V2KeysRemoveRolesResponseData:
+      type: array
+      description: 'Complete list of all roles directly assigned to the key after the removal operation completes.
+
+
+        The response includes:
+
+        - The remaining roles still assigned to the key (after removing the specified roles)
+
+        - Both ID and name for each role for easy reference
+
+
+        Important notes:
+
+        - The response reflects the current state after the removal operation
+
+        - An empty array indicates the key now has no roles assigned
+
+        - This only shows direct role assignments
+
+        - Role permissions are not expanded in this response - use keys.getKey for full details
+
+        - Changes take effect immediately for new verifications but cached sessions may retain old permissions briefly'
+      items:
+        $ref: '#/components/schemas/Role'
+    KeyCreditsData:
+      type: object
       description: Credit configuration and remaining balance for this key.
       properties:
         remaining:
@@ -2931,82 +2706,298 @@ components:
           format: int64
           minimum: 0
           maximum: 9223372036854776000
-          description: Number of credits remaining (null for unlimited). This also clears the refilling schedule.
+          description: Number of credits remaining (null for unlimited).
           example: 1000
         refill:
-          $ref: '#/components/schemas/UpdateKeyCreditsRefill'
+          $ref: '#/components/schemas/KeyCreditsRefill'
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - remaining
       additionalProperties: false
-    V2KeysSetRolesRequestBody:
+    V2KeysVerifyKeyResponseData:
+      type: object
+      additionalProperties: false
+      properties:
+        valid:
+          type: boolean
+          description: 'The primary verification result. If true, the key is valid
+
+            and can be used. If false, check the ''code'' field to understand why verification
+
+            failed. Your application should always check this field first before proceeding.
+
+            '
+        code:
+          type: string
+          enum:
+          - VALID
+          - NOT_FOUND
+          - FORBIDDEN
+          - INSUFFICIENT_PERMISSIONS
+          - USAGE_EXCEEDED
+          - RATE_LIMITED
+          - DISABLED
+          - EXPIRED
+          x-speakeasy-unknown-values: allow
+          description: 'A machine-readable code indicating the verification status
+
+            or failure reason. Values: `VALID` (key is valid and passed all checks), `NOT_FOUND` (key doesn''t
+
+            exist or belongs to wrong API), `FORBIDDEN` (key lacks required permissions), `INSUFFICIENT_PERMISSIONS`
+
+            (key lacks specific required permissions for this request), `USAGE_EXCEEDED` (key has no remaining credits), `RATE_LIMITED` (key exceeded rate limits), `DISABLED` (key was explicitly disabled),
+
+            `EXPIRED` (key has passed its expiration date).
+
+            '
+        keyId:
+          type: string
+          description: 'The unique identifier of the verified key in Unkey''s system.
+
+            Use this ID for operations like updating or revoking the key. This field
+
+            is returned for both valid and invalid keys (except when `code=NOT_FOUND`).
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        name:
+          type: string
+          description: 'The human-readable name assigned to this key during creation.
+
+            This is useful for displaying in logs or admin interfaces to identify
+
+            the key''s purpose.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        meta:
+          type: object
+          additionalProperties: true
+          description: 'Custom metadata associated with the key. This can include any
+
+            JSON-serializable data you stored with the key during creation or updates,
+
+            such as plan information, feature flags, or user details. Use this to
+
+            avoid additional database lookups for contextual information needed during
+
+            API calls.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        expires:
+          type: integer
+          format: int64
+          description: 'Unix timestamp (in milliseconds) when the key will expire.
+
+            If omitted, the key has no expiration. You can use this to
+
+            warn users about upcoming expirations or to understand the validity period.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        credits:
+          type: integer
+          format: int64
+          description: 'The number of requests/credits remaining for this key. If omitted,
+
+            the key has unlimited usage. This value decreases with
+
+            each verification (based on the ''cost'' parameter) unless explicit credit
+
+            refills are configured.
+
+            '
+        enabled:
+          type: boolean
+          description: 'Indicates if the key is currently enabled. Disabled keys will
+
+            always fail verification with `code=DISABLED`. This is useful for implementing
+
+            temporary suspensions without deleting the key.
+
+            '
+        permissions:
+          type: array
+          items:
+            type: string
+          description: 'A list of all permission names assigned to this key, either
+
+            directly or through roles. These permissions determine what actions the
+
+            key can perform. Only returned when permissions were checked during verification
+
+            or when the key fails with `code=FORBIDDEN`.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        roles:
+          type: array
+          items:
+            type: string
+          description: 'A list of all role names assigned to this key. Roles are collections
+
+            of permissions that grant access to specific functionality. Only returned
+
+            when permissions were checked during verification.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        identity:
+          $ref: '#/components/schemas/Identity'
+          description: 'Information about the identity associated with this key. Identities
+
+            allow multiple keys to share resources (like rate limits) and represent
+
+            the same user or entity across different applications or devices.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        ratelimits:
+          type: array
+          items:
+            $ref: '#/components/schemas/VerifyKeyRatelimitData'
+            description: The ratelimits that got checked
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - valid
+      - code
+    V2KeysRerollKeyRequestBody:
       type: object
       required:
       - keyId
-      - roles
+      - expiration
       properties:
         keyId:
           type: string
           minLength: 3
           maxLength: 255
           pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key gets the complete role replacement using the database identifier returned from createKey.
+          description: 'The database identifier of the key to reroll.
 
-            Do not confuse this with the actual API key string that users include in requests.
 
-            This is a wholesale replacement operation that removes all existing roles not included in the request.
+            This is the unique ID returned when creating or listing keys, NOT the actual API key token.
 
-            Role changes take effect immediately but may take up to 30 seconds to propagate across all regions.
+            You can find this ID in:
+
+            - The response from `keys.createKey`
+
+            - Key verification responses
+
+            - The Unkey dashboard
+
+            - API key listing endpoints
 
             '
           example: key_2cGKbMxRyIzhCxo1Idjz8q
-        roles:
+        expiration:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 4102444800000
+          description: 'Duration in milliseconds until the ORIGINAL key is revoked, starting from now.
+
+
+            This parameter controls the overlap period for key rotation:
+
+            - Set to `0` to revoke the original key immediately
+
+            - Positive values keep the original key active for the specified duration
+
+            - Allows graceful migration by giving users time to update their credentials
+
+
+            Common overlap periods:
+
+            - Immediate revocation: 0
+
+            - 1 hour grace period: 3600000
+
+            - 24 hours grace period: 86400000
+
+            - 7 days grace period: 604800000
+
+            - 30 days grace period: 2592000000
+
+            '
+          example: 86400000
+    V2KeysAddPermissionsRequestBody:
+      type: object
+      required:
+      - keyId
+      - permissions
+      properties:
+        keyId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which key receives the additional permissions using the database identifier returned from `keys.createKey`.
+
+            Do not confuse this with the actual API key string that users include in requests.
+
+            '
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+        permissions:
           type: array
-          maxItems: 100
-          description: 'Replaces all existing role assignments with this complete list of roles.
+          minItems: 1
+          maxItems: 1000
+          description: 'Grants additional permissions to the key through direct assignment or automatic creation.
 
-            This is a wholesale replacement operation, not an incremental update like add/remove operations.
+            Duplicate permissions are ignored automatically, making this operation idempotent.
 
 
-            Providing an empty array removes all direct role assignments from the key.
+            Adding permissions never removes existing permissions or role-based permissions.
 
-            All roles must already exist in the workspace - roles cannot be created automatically.
 
-            Invalid role references cause the entire operation to fail atomically, ensuring consistent state.
+            Any permissions that do not exist will be auto created if the root key has permissions, otherwise this operation will fail with a 403 error.
 
             '
           items:
             type: string
-            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
             minLength: 3
-            maxLength: 255
-            description: Specify the role by name.
+            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+            description: Specify the permission by its slug.
       additionalProperties: false
-    V2KeysRemovePermissionsResponseBody:
-      type: object
-      required:
-      - meta
-      - data
+    ValidationError:
+      additionalProperties: false
       properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysRemovePermissionsResponseData'
-    V2KeysWhoamiRequestBody:
-      type: object
-      properties:
-        key:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
           type: string
-          minLength: 1
-          maxLength: 512
-          description: 'The complete API key string provided by you, including any prefix.
-
-            Never log, cache, or store API keys in your system as they provide full access to user resources.
-
-            Include the full key exactly as provided - even minor modifications will cause a not found error.
-
-            '
-          example: sk_1234abcdef5678
-      additionalProperties: false
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
       required:
-      - key
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
     KeysVerifyKeyRatelimit:
       type: object
       required:
@@ -3034,443 +3025,22 @@ components:
           minimum: 0
           description: Optionally override the duration of the rate limit window duration.
           example: 600000
-    V2KeysUpdateCreditsResponseBody:
+    V2KeysCreateKeyResponseData:
       type: object
-      required:
-      - meta
-      - data
       properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/KeyCreditsData'
-      additionalProperties: false
-    KeyCreditsRefill:
-      type: object
-      description: Configuration for automatic credit refill behavior.
-      properties:
-        interval:
+        keyId:
           type: string
-          enum:
-          - daily
-          - monthly
-          x-speakeasy-unknown-values: allow
-          description: How often credits are automatically refilled.
-          example: daily
-        amount:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 9223372036854776000
-          description: Number of credits to add during each refill cycle.
-          example: 1000
-        refillDay:
-          type: integer
-          minimum: 1
-          maximum: 31
-          description: 'Day of the month for monthly refills (1-31).
-
-            Only required when interval is ''monthly''.
-
-            For days beyond the month''s length, refill occurs on the last day of the month.
-
-            '
-          example: 15
-          x-go-type-skip-optional-pointer: true
-          x-go-type-skip-optional-pointer-with-omitzero: true
-      required:
-      - interval
-      - amount
-      additionalProperties: false
-    V2KeysVerifyKeyRequestBody:
-      type: object
-      additionalProperties: false
-      required:
-      - key
-      properties:
+          description: The unique identifier for this key in Unkey's system. This is NOT the actual API key, but a reference ID used for management operations like updating or deleting the key. Store this ID in your database to reference the key later. This ID is not sensitive and can be logged or displayed in dashboards.
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
         key:
           type: string
-          minLength: 1
-          maxLength: 512
-          description: 'The API key to verify, exactly as provided by your user.
+          description: 'The full generated API key that should be securely provided to your user.
 
-            Include any prefix - even small changes will cause verification to fail.
-
-            '
-          example: sk_1234abcdef
-        tags:
-          type: array
-          items:
-            type: string
-            minLength: 1
-            maxLength: 512
-          maxItems: 20
-          description: 'Attaches metadata tags for analytics and monitoring without affecting verification outcomes.
-
-            Enables segmentation of API usage in dashboards by endpoint, client version, region, or custom dimensions.
-
-            Use ''key=value'' format for compatibility with most analytics tools and clear categorization.
-
-            Avoid including sensitive data in tags as they may appear in logs and analytics reports.
-
-            '
-          example:
-          - endpoint=/users/profile
-          - method=GET
-          - region=us-east-1
-          - clientVersion=2.3.0
-          - feature=premium
-        permissions:
-          type: string
-          minLength: 1
-          maxLength: 1000
-          description: 'Checks if the key has the specified permission(s) using a query syntax.
-
-            Supports single permissions, logical operators (AND, OR), and parentheses for grouping.
-
-            Examples:
-
-            - Single permission: "documents.read"
-
-            - Multiple permissions: "documents.read AND documents.write"
-
-            - Complex queries: "(documents.read OR documents.write) AND users.view"
-
-            Verification fails if the key lacks the required permissions through direct assignment or role inheritance.
-
-            '
-          example: documents.read AND users.view
-        credits:
-          $ref: '#/components/schemas/KeysVerifyKeyCredits'
-        ratelimits:
-          type: array
-          items:
-            $ref: '#/components/schemas/KeysVerifyKeyRatelimit'
-          description: 'Enforces time-based rate limiting during verification to prevent abuse and ensure fair usage.
-
-            Omitting this field skips rate limit checks entirely, relying only on configured key rate limits.
-
-            Multiple rate limits can be checked simultaneously, each with different costs and temporary overrides.
-
-            Rate limit checks are optimized for performance but may allow brief bursts during high concurrency.
-
-            '
-        migrationId:
-          type: string
-          maxLength: 256
-          description: Migrate keys on demand from your previous system. Reach out for migration support at support@unkey.dev
-          example: m_1234abcd
-    V2KeysAddRolesRequestBody:
-      type: object
+            SECURITY WARNING: This is the only time you''ll receive the complete key - Unkey only stores a securely hashed version. Never log or store this value in your own systems; provide it directly to your end user via secure channels. After this API call completes, this value cannot be retrieved again (unless created with `recoverable=true`).'
+          example: prod_2cGKbMxRjIzhCxo1IdjH3arELti7Sdyc8w6XYbvtcyuBowPT
       required:
       - keyId
-      - roles
-      properties:
-        keyId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key receives the additional roles using the database identifier returned from `createKey`.
-
-            Do not confuse this with the actual API key string that users include in requests.
-
-            Added roles supplement existing roles and permissions without replacing them.
-
-            Role assignments take effect immediately but may take up to 30 seconds to propagate across all regions.
-
-            '
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-        roles:
-          type: array
-          minItems: 1
-          maxItems: 100
-          description: 'Assigns additional roles to the key through direct assignment to existing workspace roles.
-
-            Operations are idempotent - adding existing roles has no effect and causes no errors.
-
-
-            All roles must already exist in the workspace - roles cannot be created automatically.
-
-            Invalid roles cause the entire operation to fail atomically, ensuring consistent state.
-
-            '
-          items:
-            type: string
-            minLength: 3
-            maxLength: 255
-            pattern: ^[a-zA-Z][a-zA-Z0-9._-]*$
-            description: Specify the role by name.
-      additionalProperties: false
-    V2KeysAddRolesResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2KeysAddRolesResponseData'
-    V2KeysAddRolesResponseData:
-      type: array
-      description: 'Complete list of all roles directly assigned to the key after the operation completes.
-
-
-        The response includes:
-
-        - All roles now assigned to the key (both pre-existing and newly added)
-
-        - Both ID and name of each role for easy reference
-
-
-        Important notes:
-
-        - The response shows the complete current state after the addition
-
-        - An empty array means the key has no roles assigned (unlikely after an add operation)
-
-        - This only shows direct role assignments, not inherited or nested roles
-
-        - Role permissions are not expanded in this response - use keys.getKey for full details'
-      items:
-        $ref: '#/components/schemas/Role'
-    InternalServerErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
-
-
-        When you encounter this error:
-
-        - The request ID in the response can help Unkey support investigate the issue
-
-        - The error is likely temporary and retrying may succeed
-
-        - If the error persists, contact Unkey support with the request ID'
-    KeysVerifyKeyCredits:
-      type: object
-      required:
-      - cost
-      properties:
-        cost:
-          type: integer
-          format: int64
-          minimum: 0
-          maximum: 1000000000000
-          description: 'Sets how many credits to deduct for this verification request.
-
-            Use 0 for read-only operations or free tier access, higher values for premium features.
-
-            Credits are deducted after all security checks pass.
-
-            Essential for implementing usage-based pricing with different operation costs.
-
-            '
-          example: 5
-      additionalProperties: false
-      description: 'Controls credit consumption for usage-based billing and quota enforcement.
-
-        Omitting this field uses the default cost of 1 credit per verification.
-
-        Credits provide globally consistent usage tracking, essential for paid APIs with strict quotas.
-
-        '
-    V2KeysRemoveRolesRequestBody:
-      type: object
-      required:
-      - keyId
-      - roles
-      properties:
-        keyId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key loses the roles using the database identifier returned from createKey.
-
-            Do not confuse this with the actual API key string that users include in requests.
-
-            Removing roles only affects direct assignments, not permissions inherited from other sources.
-
-            Role changes take effect immediately but may take up to 30 seconds to propagate across all regions.
-
-            '
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-        roles:
-          type: array
-          minItems: 1
-          maxItems: 100
-          description: 'Removes direct role assignments from the key without affecting other role sources or permissions.
-
-            Operations are idempotent - removing non-assigned roles has no effect and causes no errors.
-
-
-            After removal, the key loses access to permissions that were only granted through these roles.
-
-            Invalid role references cause the entire operation to fail atomically, ensuring consistent state.
-
-            '
-          items:
-            type: string
-            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
-            minLength: 3
-            maxLength: 255
-            description: Specify the role by name.
-      additionalProperties: false
-    RatelimitResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 8
-          maxLength: 255
-          pattern: ^rl_[a-zA-Z0-9_]+$
-          description: Unique identifier for this rate limit configuration.
-          example: rl_1234567890abcdef
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Human-readable name for this rate limit.
-          example: api_requests
-        limit:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 1000000
-          description: Maximum requests allowed within the time window.
-          example: 1000
-        duration:
-          type: integer
-          format: int64
-          minimum: 1000
-          maximum: 2592000000
-          description: Rate limit window duration in milliseconds.
-          example: 3600000
-        autoApply:
-          type: boolean
-          description: Whether this rate limit was automatically applied when verifying the key.
-          example: true
-      required:
-      - id
-      - name
-      - limit
-      - duration
-      - autoApply
-      additionalProperties: false
-    V2KeysUpdateCreditsRequestBody:
-      type: object
-      required:
-      - keyId
-      - operation
-      properties:
-        keyId:
-          type: string
-          description: The ID of the key to update (begins with `key_`). This is the database reference ID for the key, not the actual API key string that users authenticate with. This ID uniquely identifies which key's credits will be updated.
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-          minLength: 3
-        value:
-          type:
-          - integer
-          - 'null'
-          format: int64
-          minimum: 0
-          maximum: 9223372036854776000
-          description: 'The credit value to use with the specified operation. The meaning depends on the operation: for ''set'', this becomes the new remaining credits value; for ''increment'', this amount is added to current credits; for ''decrement'', this amount is subtracted from current credits.
-
-
-            Set to null when using ''set'' operation to make the key unlimited (removes usage restrictions entirely). When decrementing, if the result would be negative, remaining credits are automatically set to zero. Credits are consumed during successful key verification, and when credits reach zero, verification fails with `code=USAGE_EXCEEDED`.
-
-
-            Required when using ''increment'' or ''decrement'' operations. Optional for ''set'' operation (null creates unlimited usage).
-
-            '
-          example: 1000
-        operation:
-          type: string
-          enum:
-          - set
-          - increment
-          - decrement
-          x-speakeasy-unknown-values: allow
-          description: 'Defines how to modify the key''s remaining credits. Use ''set'' to replace current credits with a specific value or unlimited usage, ''increment'' to add credits for plan upgrades or credit purchases, and ''decrement'' to reduce credits for refunds or policy violations.
-
-            '
-          example: set
-      additionalProperties: false
-    BaseError:
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
-          example: Property foo is required but is missing.
-          type: string
-        status:
-          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
-          example: 404
-          format: int
-          type: integer
-        title:
-          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
-          example: Not Found
-          type: string
-        type:
-          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
-          example: https://unkey.com/docs/errors/unkey/resource/not_found
-          type: string
-      required:
-      - title
-      - detail
-      - status
-      - type
-      type: object
-      additionalProperties: false
-      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    V2KeysGetKeyRequestBody:
-      type: object
-      properties:
-        keyId:
-          type: string
-          minLength: 3
-          maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key to retrieve using the database identifier returned from `keys.createKey`.
-
-            Do not confuse this with the actual API key string that users include in requests.
-
-            Key data includes metadata, permissions, usage statistics, and configuration but never the plaintext key value unless `decrypt=true`.
-
-            Find this ID in creation responses, key listings, dashboard, or verification responses.
-
-            '
-          example: key_1234abcd
-        decrypt:
-          type: boolean
-          default: false
-          description: 'Controls whether to include the plaintext key value in the response for recovery purposes.
-
-            Only works for keys created with `recoverable=true` and requires the `decrypt_key` permission.
-
-            Returned keys must be handled securely, never logged, cached, or stored insecurely.
-
-
-            Use only for legitimate recovery scenarios like user password resets or emergency access.
-
-            Most applications should keep this false to maintain security best practices and avoid accidental key exposure.
-
-            Decryption requests are audited and may trigger security alerts in enterprise environments.
-
-            '
-      additionalProperties: false
-      required:
-      - keyId
+      - key
     V2KeysUpdateKeyRequestBody:
       type: object
       required:
@@ -3649,6 +3219,406 @@ components:
           - documents.write
           - settings.view
       additionalProperties: false
+    V2KeysSetRolesRequestBody:
+      type: object
+      required:
+      - keyId
+      - roles
+      properties:
+        keyId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which key gets the complete role replacement using the database identifier returned from createKey.
+
+            Do not confuse this with the actual API key string that users include in requests.
+
+            This is a wholesale replacement operation that removes all existing roles not included in the request.
+
+            Role changes take effect immediately but may take up to 30 seconds to propagate across all regions.
+
+            '
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+        roles:
+          type: array
+          maxItems: 100
+          description: 'Replaces all existing role assignments with this complete list of roles.
+
+            This is a wholesale replacement operation, not an incremental update like add/remove operations.
+
+
+            Providing an empty array removes all direct role assignments from the key.
+
+            All roles must already exist in the workspace - roles cannot be created automatically.
+
+            Invalid role references cause the entire operation to fail atomically, ensuring consistent state.
+
+            '
+          items:
+            type: string
+            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+            minLength: 3
+            maxLength: 255
+            description: Specify the role by name.
+      additionalProperties: false
+    Role:
+      type: object
+      properties:
+        id:
+          type: string
+          description: 'The unique identifier for this role within Unkey''s system.
+
+            Generated automatically when the role is created and used to reference this role in API operations.
+
+            Always begins with ''role_'' followed by alphanumeric characters and underscores.
+
+            '
+          example: role_1234567890abcdef
+        name:
+          type: string
+          description: 'The human-readable name for this role that describes its function.
+
+            Should be descriptive enough for administrators to understand what access this role provides.
+
+            Use clear, semantic names that reflect the job function or responsibility level.
+
+            Names must be unique within your workspace to avoid confusion during role assignment.
+
+            '
+          example: support.readonly
+        description:
+          type: string
+          description: 'Optional detailed explanation of what this role encompasses and what access it provides.
+
+            Helps team members understand the role''s scope, intended use cases, and security implications.
+
+            Include information about what types of users should receive this role and what they can accomplish.
+
+            Not visible to end users - this is for internal documentation and access control audits.
+
+            '
+          example: Provides read-only access for customer support representatives to view user accounts and support tickets
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+        permissions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Permission'
+          maxItems: 100
+          description: 'Complete list of permissions currently assigned to this role.
+
+            Each permission grants specific access rights that will be inherited by any keys or users assigned this role.
+
+            Use this list to understand the full scope of access provided by this role.
+
+            Permissions can be added or removed from roles without affecting the role''s identity or other properties.
+
+            Empty array indicates a role with no permissions currently assigned.
+
+            '
+          x-go-type-skip-optional-pointer: true
+          x-go-type-skip-optional-pointer-with-omitzero: true
+      required:
+      - id
+      - name
+      additionalProperties: false
+    V2KeysSetPermissionsResponseData:
+      type: array
+      description: 'Complete list of all permissions now directly assigned to the key after the set operation has completed.
+
+
+        The response includes:
+
+        - The comprehensive, updated set of direct permissions (reflecting the complete replacement)
+
+        - Both ID and name for each permission for easy reference
+
+
+        Important notes:
+
+        - This only shows direct permissions, not those granted through roles
+
+        - An empty array means the key has no direct permissions assigned
+
+        - For a complete permission picture including roles, use keys.getKey instead'
+      items:
+        $ref: '#/components/schemas/Permission'
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    V2KeysWhoamiResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/KeyResponseData'
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    V2KeysSetRolesResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2KeysSetRolesResponseData'
+    V2KeysMigrateKeysResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2KeysMigrateKeysResponseData'
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    V2KeysRemoveRolesResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2KeysRemoveRolesResponseData'
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    V2KeysRemovePermissionsResponseData:
+      type: array
+      description: 'Complete list of all permissions directly assigned to the key after the removal operation (remaining permissions only).
+
+
+        Notes:
+
+        - This list does NOT include permissions granted through roles
+
+        - For a complete permission picture, use `/v2/keys.getKey` instead
+
+        - An empty array indicates the key has no direct permissions assigned
+
+        - Any cached versions of the key are immediately invalidated to ensure consistency
+
+        - Changes to permissions take effect within seconds for new verifications'
+      items:
+        $ref: '#/components/schemas/Permission'
+    V2KeysMigrateKeysResponseData:
+      type: object
+      required:
+      - migrated
+      - failed
+      properties:
+        migrated:
+          type: array
+          description: Successfully migrated keys with their hash and generated keyId
+          items:
+            $ref: '#/components/schemas/V2KeysMigrateKeysMigration'
+        failed:
+          type: array
+          description: Hashes that could not be migrated (e.g., already exist in the system)
+          items:
+            type: string
+            description: The hash that failed to migrate
+            example: sha256_ghi789jkl012
+    KeysVerifyKeyCredits:
+      type: object
+      required:
+      - cost
+      properties:
+        cost:
+          type: integer
+          format: int64
+          minimum: 0
+          maximum: 1000000000000
+          description: 'Sets how many credits to deduct for this verification request.
+
+            Use 0 for read-only operations or free tier access, higher values for premium features.
+
+            Credits are deducted after all security checks pass.
+
+            Essential for implementing usage-based pricing with different operation costs.
+
+            '
+          example: 5
+      additionalProperties: false
+      description: 'Controls credit consumption for usage-based billing and quota enforcement.
+
+        Omitting this field uses the default cost of 1 credit per verification.
+
+        Credits provide globally consistent usage tracking, essential for paid APIs with strict quotas.
+
+        '
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    V2KeysRemoveRolesRequestBody:
+      type: object
+      required:
+      - keyId
+      - roles
+      properties:
+        keyId:
+          type: string
+          minLength: 3
+          maxLength: 255
+          pattern: ^[a-zA-Z0-9_]+$
+          description: 'Specifies which key loses the roles using the database identifier returned from createKey.
+
+            Do not confuse this with the actual API key string that users include in requests.
+
+            Removing roles only affects direct assignments, not permissions inherited from other sources.
+
+            Role changes take effect immediately but may take up to 30 seconds to propagate across all regions.
+
+            '
+          example: key_2cGKbMxRyIzhCxo1Idjz8q
+        roles:
+          type: array
+          minItems: 1
+          maxItems: 100
+          description: 'Removes direct role assignments from the key without affecting other role sources or permissions.
+
+            Operations are idempotent - removing non-assigned roles has no effect and causes no errors.
+
+
+            After removal, the key loses access to permissions that were only granted through these roles.
+
+            Invalid role references cause the entire operation to fail atomically, ensuring consistent state.
+
+            '
+          items:
+            type: string
+            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
+            minLength: 3
+            maxLength: 255
+            description: Specify the role by name.
+      additionalProperties: false
+    V2KeysWhoamiRequestBody:
+      type: object
+      properties:
+        key:
+          type: string
+          minLength: 1
+          maxLength: 512
+          description: 'The complete API key string provided by you, including any prefix.
+
+            Never log, cache, or store API keys in your system as they provide full access to user resources.
+
+            Include the full key exactly as provided - even minor modifications will cause a not found error.
+
+            '
+          example: sk_1234abcdef5678
+      additionalProperties: false
+      required:
+      - key
+    UpdateKeyCreditsData:
+      type:
+      - object
+      - 'null'
+      description: Credit configuration and remaining balance for this key.
+      properties:
+        remaining:
+          type:
+          - integer
+          - 'null'
+          format: int64
+          minimum: 0
+          maximum: 9223372036854776000
+          description: Number of credits remaining (null for unlimited). This also clears the refilling schedule.
+          example: 1000
+        refill:
+          $ref: '#/components/schemas/UpdateKeyCreditsRefill'
+      additionalProperties: false
     V2KeysSetPermissionsResponseBody:
       type: object
       required:
@@ -3659,43 +3629,100 @@ components:
           $ref: '#/components/schemas/Meta'
         data:
           $ref: '#/components/schemas/V2KeysSetPermissionsResponseData'
-    V2KeysAddPermissionsRequestBody:
+    UnauthorizedErrorResponse:
       type: object
       required:
-      - keyId
-      - permissions
+      - meta
+      - error
       properties:
-        keyId:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
+
+        - No authentication token is provided in the request
+
+        - The provided token is invalid, expired, or malformed
+
+        - The token format doesn''t match expected patterns
+
+
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
+    V2KeysAddRolesResponseData:
+      type: array
+      description: 'Complete list of all roles directly assigned to the key after the operation completes.
+
+
+        The response includes:
+
+        - All roles now assigned to the key (both pre-existing and newly added)
+
+        - Both ID and name of each role for easy reference
+
+
+        Important notes:
+
+        - The response shows the complete current state after the addition
+
+        - An empty array means the key has no roles assigned (unlikely after an add operation)
+
+        - This only shows direct role assignments, not inherited or nested roles
+
+        - Role permissions are not expanded in this response - use keys.getKey for full details'
+      items:
+        $ref: '#/components/schemas/Role'
+    RatelimitResponse:
+      type: object
+      properties:
+        id:
           type: string
-          minLength: 3
+          minLength: 8
           maxLength: 255
-          pattern: ^[a-zA-Z0-9_]+$
-          description: 'Specifies which key receives the additional permissions using the database identifier returned from `keys.createKey`.
-
-            Do not confuse this with the actual API key string that users include in requests.
-
-            '
-          example: key_2cGKbMxRyIzhCxo1Idjz8q
-        permissions:
-          type: array
-          minItems: 1
-          maxItems: 1000
-          description: 'Grants additional permissions to the key through direct assignment or automatic creation.
-
-            Duplicate permissions are ignored automatically, making this operation idempotent.
-
-
-            Adding permissions never removes existing permissions or role-based permissions.
-
-
-            Any permissions that do not exist will be auto created if the root key has permissions, otherwise this operation will fail with a 403 error.
-
-            '
-          items:
-            type: string
-            minLength: 3
-            pattern: ^[a-zA-Z0-9_:\-\.\*]+$
-            description: Specify the permission by its slug.
+          pattern: ^rl_[a-zA-Z0-9_]+$
+          description: Unique identifier for this rate limit configuration.
+          example: rl_1234567890abcdef
+        name:
+          type: string
+          minLength: 1
+          maxLength: 128
+          description: Human-readable name for this rate limit.
+          example: api_requests
+        limit:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+          description: Maximum requests allowed within the time window.
+          example: 1000
+        duration:
+          type: integer
+          format: int64
+          minimum: 1000
+          maximum: 2592000000
+          description: Rate limit window duration in milliseconds.
+          example: 3600000
+        autoApply:
+          type: boolean
+          description: Whether this rate limit was automatically applied when verifying the key.
+          example: true
+      required:
+      - id
+      - name
+      - limit
+      - duration
+      - autoApply
+      additionalProperties: false
+    V2KeysVerifyKeyResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2KeysVerifyKeyResponseData'
       additionalProperties: false
   securitySchemes:
     rootKey:

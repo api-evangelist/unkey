@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  description: "Unkey's API provides programmatic access for all resources within our platform.\n\n\n### Authentication\n#\nThis API uses HTTP Bearer authentication with root keys. Most endpoints require specific permissions associated with your root key. When making requests, include your root key in the `Authorization` header:\n```\nAuthorization: Bearer unkey_xxxxxxxxxxx\n```\n\nAll responses follow a consistent envelope structure that separates operational metadata from actual data. This design provides several benefits:\n- Debugging: Every response includes a unique requestId for tracing issues\n- Consistency: Predictable response format across all endpoints\n- Extensibility: Easy to add new metadata without breaking existing integrations\n- Error Handling: Unified error format with actionable information\n\n### Success Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": {\n    // Actual response data here\n  }\n}\n```\n\nThe meta object contains operational information:\n- `requestId`: Unique identifier for this request (essential for support)\n\nThe data object contains the actual response data specific to each endpoint.\n\n### Paginated Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_123456\"\n  },\n  \"data\": [\n    // Array of results\n  ],\n  \"pagination\": {\n    \"cursor\": \"next_page_token\",\n    \"hasMore\": true\n  }\n}\n```\n\nThe pagination object appears on list endpoints and contains:\n- `cursor`: Token for requesting the next page\n- `hasMore`: Whether more results are available\n\n### Error Response Format:\n```json\n{\n  \"meta\": {\n    \"requestId\": \"req_2c9a0jf23l4k567\"\n  },\n  \"error\": {\n    \"detail\": \"The resource you are attempting to modify is protected and cannot be changed\",\n    \"status\": 403,\n    \"title\": \"Forbidden\",\n    \"type\": \"https://unkey.com/docs/errors/unkey/application/protected_resource\"\n  }\n}\n```\n\nError responses include comprehensive diagnostic information:\n- `title`: Human-readable error summary\n- `detail`: Specific description of what went wrong\n- `status`: HTTP status code\n- `type`: Link to error documentation\n- `errors`: Array of validation errors (for 400 responses)\n\nThis structure ensures you always have the context needed to debug issues and take corrective action."
-  title: Unkey analytics deploy API
+  description: Unkey's API provides programmatic access for all resources within our platform.
+  title: Unkey Deploy API
   version: 2.0.0
 servers:
 - url: https://api.unkey.com
@@ -9,7 +9,7 @@ security:
 - rootKey: []
 tags:
 - description: Deployment operations
-  name: deploy
+  name: Deploy
 paths:
   /v2/deploy.createDeployment:
     post:
@@ -21,9 +21,7 @@ paths:
         Creates a new deployment for a project using either a pre-built Docker image or build context.
 
 
-        **Authentication**: Requires a valid root key with appropriate permissions.
-
-        '
+        **Authentication**: Requires a valid root key with appropriate permissions.'
       operationId: deploy.createDeployment
       requestBody:
         content:
@@ -78,7 +76,7 @@ paths:
       - rootKey: []
       summary: Create Deployment
       tags:
-      - deploy
+      - Deploy
       x-speakeasy-group: internal
       x-speakeasy-name-override: createDeployment
   /v2/deploy.getDeployment:
@@ -91,9 +89,7 @@ paths:
         Retrieves deployment information including status, error messages, and steps.
 
 
-        **Authentication**: Requires a valid root key with appropriate permissions.
-
-        '
+        **Authentication**: Requires a valid root key with appropriate permissions.'
       operationId: deploy.getDeployment
       requestBody:
         content:
@@ -148,11 +144,56 @@ paths:
       - rootKey: []
       summary: Get Deployment
       tags:
-      - deploy
+      - Deploy
       x-speakeasy-group: internal
       x-speakeasy-name-override: getDeployment
 components:
   schemas:
+    V2DeployGitCommit:
+      type: object
+      description: Optional git commit information
+      properties:
+        commitSha:
+          type: string
+          description: Git commit SHA
+          example: a1b2c3d4e5f6
+        commitMessage:
+          type: string
+          description: Git commit message
+          example: 'feat: add new feature'
+        authorHandle:
+          type: string
+          description: Git author handle/username
+          example: johndoe
+        authorAvatarUrl:
+          type: string
+          description: Git author avatar URL
+          example: https://avatars.githubusercontent.com/u/123456
+        timestamp:
+          type: integer
+          format: int64
+          description: Commit timestamp in milliseconds
+          example: 1704067200000
+    V2DeployCreateDeploymentResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2DeployCreateDeploymentResponseData'
+    V2DeployGetDeploymentResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2DeployGetDeploymentResponseData'
     BadRequestErrorResponse:
       type: object
       required:
@@ -164,6 +205,55 @@ components:
         error:
           $ref: '#/components/schemas/BadRequestErrorDetails'
       description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    InternalServerErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    V2DeployCreateDeploymentResponseData:
+      type: object
+      required:
+      - deploymentId
+      properties:
+        deploymentId:
+          type: string
+          description: Unique deployment identifier
+          example: d_abc123xyz
+    V2DeployDeploymentStep:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Step status
+          example: completed
+        message:
+          type: string
+          description: Step message
+          example: Image pulled successfully
+        errorMessage:
+          type: string
+          description: Error message if step failed
+          example: Connection timeout
+        createdAt:
+          type: integer
+          format: int64
+          description: Unix timestamp in milliseconds
+          example: 1704067200000
     V2DeployCreateDeploymentRequestBody:
       type: object
       required:
@@ -205,184 +295,6 @@ components:
         gitCommit:
           $ref: '#/components/schemas/V2DeployGitCommit'
       description: Create a deployment from a pre-built Docker image
-    InternalServerErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
-
-
-        When you encounter this error:
-
-        - The request ID in the response can help Unkey support investigate the issue
-
-        - The error is likely temporary and retrying may succeed
-
-        - If the error persists, contact Unkey support with the request ID'
-    V2DeployGetDeploymentResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2DeployGetDeploymentResponseData'
-    V2DeployGitCommit:
-      type: object
-      description: Optional git commit information
-      properties:
-        commitSha:
-          type: string
-          description: Git commit SHA
-          example: a1b2c3d4e5f6
-        commitMessage:
-          type: string
-          description: Git commit message
-          example: 'feat: add new feature'
-        authorHandle:
-          type: string
-          description: Git author handle/username
-          example: johndoe
-        authorAvatarUrl:
-          type: string
-          description: Git author avatar URL
-          example: https://avatars.githubusercontent.com/u/123456
-        timestamp:
-          type: integer
-          format: int64
-          description: Commit timestamp in milliseconds
-          example: 1704067200000
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
-      additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    NotFoundErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the requested resource cannot be found. This occurs when:
-
-        - The specified resource ID doesn''t exist in your workspace
-
-        - The resource has been deleted or moved
-
-        - The resource exists but is not accessible with current permissions
-
-
-        To resolve this error, verify the resource ID is correct and that you have access to it.'
-    V2DeployCreateDeploymentResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2DeployCreateDeploymentResponseData'
-    UnauthorizedErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
-
-        - No authentication token is provided in the request
-
-        - The provided token is invalid, expired, or malformed
-
-        - The token format doesn''t match expected patterns
-
-
-        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
-    TooManyRequestsErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
-
-
-        The rate limit resets automatically after the time window expires. To avoid this error:
-
-        - Implement exponential backoff when retrying requests
-
-        - Cache results where appropriate to reduce request frequency
-
-        - Check the error detail message for specific quota information
-
-        - Contact support if you need a higher quota for your use case'
-    BaseError:
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
-          example: Property foo is required but is missing.
-          type: string
-        status:
-          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
-          example: 404
-          format: int
-          type: integer
-        title:
-          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
-          example: Not Found
-          type: string
-        type:
-          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
-          example: https://unkey.com/docs/errors/unkey/resource/not_found
-          type: string
-      required:
-      - title
-      - detail
-      - status
-      - type
-      type: object
-      additionalProperties: false
-      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
     ForbiddenErrorResponse:
       type: object
       required:
@@ -403,6 +315,56 @@ components:
 
 
         To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    ValidationError:
+      additionalProperties: false
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
     V2DeployGetDeploymentResponseData:
       type: object
       required:
@@ -450,65 +412,26 @@ components:
           items:
             $ref: '#/components/schemas/V2DeployDeploymentStep'
           description: Deployment steps with status and messages
-    V2DeployCreateDeploymentResponseData:
+    UnauthorizedErrorResponse:
       type: object
       required:
-      - deploymentId
+      - meta
+      - error
       properties:
-        deploymentId:
-          type: string
-          description: Unique deployment identifier
-          example: d_abc123xyz
-    ValidationError:
-      additionalProperties: false
-      properties:
-        location:
-          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
 
-            - ''body.name'' (field in request body)
+        - No authentication token is provided in the request
 
-            - ''body.items[3].tags'' (nested array element)
+        - The provided token is invalid, expired, or malformed
 
-            - ''path.apiId'' (path parameter)
+        - The token format doesn''t match expected patterns
 
-            - ''query.limit'' (query parameter)
 
-            Use this location to identify exactly which part of your request needs correction.'
-          type: string
-          example: body.permissions[0].name
-        message:
-          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
-          type: string
-          example: Must be at least 3 characters long
-        fix:
-          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
-          type: string
-          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
-      required:
-      - location
-      - message
-      type: object
-      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
-    V2DeployDeploymentStep:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Step status
-          example: completed
-        message:
-          type: string
-          description: Step message
-          example: Image pulled successfully
-        errorMessage:
-          type: string
-          description: Error message if step failed
-          example: Connection timeout
-        createdAt:
-          type: integer
-          format: int64
-          description: Unix timestamp in milliseconds
-          example: 1704067200000
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
     V2DeployGetDeploymentRequestBody:
       type: object
       required:
@@ -520,6 +443,79 @@ components:
           description: Unique deployment identifier to retrieve
           example: d_abc123xyz
           pattern: ^d_[a-zA-Z0-9]+$
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
   securitySchemes:
     rootKey:
       bearerFormat: root key
