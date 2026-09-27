@@ -562,31 +562,82 @@ paths:
       x-speakeasy-name-override: updateIdentity
 components:
   schemas:
-    V2IdentitiesListIdentitiesRequestBody:
+    V2IdentitiesUpdateIdentityRequestBody:
       type: object
       properties:
-        limit:
-          type: integer
-          minimum: 1
-          maximum: 100
-          default: 100
-          description: The maximum number of identities to return in a single request. Use this to control response size and loading performance.
-          example: 50
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to update. Accepts either the externalId (your system-generated identifier) or the identityId (internal identifier returned by the identity service).
+          example: user_123
+        meta:
+          type: object
+          additionalProperties: true
+          maxProperties: 100
+          description: 'Replaces all existing metadata with this new metadata object.
+
+            Omitting this field preserves existing metadata, while providing an empty object clears all metadata.
+
+            Avoid storing sensitive data here as it''s returned in verification responses.
+
+            Large metadata objects increase verification latency and should stay under 10KB total size.
+
+            '
+          example:
+            name: Alice Smith
+            email: alice@example.com
+            plan: premium
+        ratelimits:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/RatelimitRequest'
+          description: 'Replaces all existing identity rate limits with this complete list of rate limits.
+
+            Omitting this field preserves existing rate limits, while providing an empty array removes all rate limits.
+
+            These limits are shared across all keys belonging to this identity, preventing abuse through multiple keys.
+
+            Rate limit changes take effect immediately but may take up to 30 seconds to propagate across all regions.
+
+            '
+          example:
+          - name: requests
+            limit: 1000
+            duration: 3600000
+            autoApply: true
+      additionalProperties: false
+      required:
+      - identity
+    Pagination:
+      type: object
+      properties:
         cursor:
           type: string
-          description: Pagination cursor from a previous response. Use this to fetch subsequent pages of results when the response contains a cursor value.
-          example: cursor_eyJrZXkiOiJrZXlfMTIzNCJ9
-      additionalProperties: false
-    V2IdentitiesCreateIdentityResponseBody:
-      type: object
+          minLength: 1
+          maxLength: 1024
+          description: 'Opaque pagination token for retrieving the next page of results.
+
+            Include this exact value in the cursor field of subsequent requests.
+
+            Cursors are temporary and may expire after extended periods.
+
+            '
+          example: eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==
+        hasMore:
+          type: boolean
+          description: 'Indicates whether additional results exist beyond this page.
+
+            When true, use the cursor to fetch the next page.
+
+            When false, you have reached the end of the result set.
+
+            '
+          example: true
       required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2IdentitiesCreateIdentityResponseData'
+      - hasMore
+      additionalProperties: false
+      description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
     V2IdentitiesGetIdentityResponseBody:
       type: object
       required:
@@ -597,7 +648,53 @@ components:
           $ref: '#/components/schemas/Meta'
         data:
           $ref: '#/components/schemas/Identity'
-    NotFoundErrorResponse:
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    V2IdentitiesGetIdentityRequestBody:
+      type: object
+      properties:
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to retrieve. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
+          example: user_abc123
+      additionalProperties: false
+      required:
+      - identity
+    V2IdentitiesDeleteIdentityRequestBody:
+      type: object
+      properties:
+        identity:
+          type: string
+          minLength: 1
+          description: The ID of the identity to delete. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
+          example: user_123
+      additionalProperties: false
+      required:
+      - identity
+    UnauthorizedErrorResponse:
       type: object
       required:
       - meta
@@ -607,16 +704,16 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the requested resource cannot be found. This occurs when:
+      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
 
-        - The specified resource ID doesn''t exist in your workspace
+        - No authentication token is provided in the request
 
-        - The resource has been deleted or moved
+        - The provided token is invalid, expired, or malformed
 
-        - The resource exists but is not accessible with current permissions
+        - The token format doesn''t match expected patterns
 
 
-        To resolve this error, verify the resource ID is correct and that you have access to it.'
+        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
     RatelimitRequest:
       type: object
       required:
@@ -687,93 +784,58 @@ components:
           description: Whether this ratelimit should be automatically applied when verifying a key.
           type: boolean
           default: false
-    Pagination:
+    V2IdentitiesCreateIdentityResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2IdentitiesCreateIdentityResponseData'
+    RatelimitResponse:
       type: object
       properties:
-        cursor:
+        id:
+          type: string
+          minLength: 8
+          maxLength: 255
+          pattern: ^rl_[a-zA-Z0-9_]+$
+          description: Unique identifier for this rate limit configuration.
+          example: rl_1234567890abcdef
+        name:
           type: string
           minLength: 1
-          maxLength: 1024
-          description: 'Opaque pagination token for retrieving the next page of results.
-
-            Include this exact value in the cursor field of subsequent requests.
-
-            Cursors are temporary and may expire after extended periods.
-
-            '
-          example: eyJrZXkiOiJrZXlfMTIzNCIsInRzIjoxNjk5Mzc4ODAwfQ==
-        hasMore:
+          maxLength: 128
+          description: Human-readable name for this rate limit.
+          example: api_requests
+        limit:
+          type: integer
+          format: int64
+          minimum: 1
+          maximum: 1000000
+          description: Maximum requests allowed within the time window.
+          example: 1000
+        duration:
+          type: integer
+          format: int64
+          minimum: 1000
+          maximum: 2592000000
+          description: Rate limit window duration in milliseconds.
+          example: 3600000
+        autoApply:
           type: boolean
-          description: 'Indicates whether additional results exist beyond this page.
-
-            When true, use the cursor to fetch the next page.
-
-            When false, you have reached the end of the result set.
-
-            '
+          description: Whether this rate limit was automatically applied when verifying the key.
           example: true
       required:
-      - hasMore
+      - id
+      - name
+      - limit
+      - duration
+      - autoApply
       additionalProperties: false
-      description: Pagination metadata for list endpoints. Provides information necessary to traverse through large result sets efficiently using cursor-based pagination.
-    V2IdentitiesUpdateIdentityResponseBody:
-      type: object
-      required:
-      - data
-      - meta
-      properties:
-        data:
-          $ref: '#/components/schemas/Identity'
-        meta:
-          $ref: '#/components/schemas/Meta'
-    V2IdentitiesUpdateIdentityRequestBody:
-      type: object
-      properties:
-        identity:
-          type: string
-          minLength: 1
-          description: The ID of the identity to update. Accepts either the externalId (your system-generated identifier) or the identityId (internal identifier returned by the identity service).
-          example: user_123
-        meta:
-          type: object
-          additionalProperties: true
-          maxProperties: 100
-          description: 'Replaces all existing metadata with this new metadata object.
-
-            Omitting this field preserves existing metadata, while providing an empty object clears all metadata.
-
-            Avoid storing sensitive data here as it''s returned in verification responses.
-
-            Large metadata objects increase verification latency and should stay under 10KB total size.
-
-            '
-          example:
-            name: Alice Smith
-            email: alice@example.com
-            plan: premium
-        ratelimits:
-          type: array
-          maxItems: 50
-          items:
-            $ref: '#/components/schemas/RatelimitRequest'
-          description: 'Replaces all existing identity rate limits with this complete list of rate limits.
-
-            Omitting this field preserves existing rate limits, while providing an empty array removes all rate limits.
-
-            These limits are shared across all keys belonging to this identity, preventing abuse through multiple keys.
-
-            Rate limit changes take effect immediately but may take up to 30 seconds to propagate across all regions.
-
-            '
-          example:
-          - name: requests
-            limit: 1000
-            duration: 3600000
-            autoApply: true
-      additionalProperties: false
-      required:
-      - identity
-    InternalServerErrorResponse:
+    ForbiddenErrorResponse:
       type: object
       required:
       - meta
@@ -783,17 +845,17 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
 
 
-        When you encounter this error:
-
-        - The request ID in the response can help Unkey support investigate the issue
-
-        - The error is likely temporary and retrying may succeed
-
-        - If the error persists, contact Unkey support with the request ID'
-    ConflictErrorResponse:
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    TooManyRequestsErrorResponse:
       type: object
       required:
       - meta
@@ -803,27 +865,29 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the request conflicts with the current state of the resource. This occurs when:
-
-        - Attempting to create a resource that already exists
-
-        - Modifying a resource that has been changed by another operation
-
-        - Violating unique constraints or business rules
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
 
 
-        To resolve this error, check the current state of the resource and adjust your request accordingly.'
-    V2IdentitiesDeleteIdentityRequestBody:
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    Meta:
       type: object
-      properties:
-        identity:
-          type: string
-          minLength: 1
-          description: The ID of the identity to delete. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
-          example: user_123
-      additionalProperties: false
       required:
-      - identity
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
     Identity:
       type: object
       properties:
@@ -849,6 +913,91 @@ components:
       required:
       - externalId
       - id
+    NotFoundErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the requested resource cannot be found. This occurs when:
+
+        - The specified resource ID doesn''t exist in your workspace
+
+        - The resource has been deleted or moved
+
+        - The resource exists but is not accessible with current permissions
+
+
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
+    V2IdentitiesUpdateIdentityResponseBody:
+      type: object
+      required:
+      - data
+      - meta
+      properties:
+        data:
+          $ref: '#/components/schemas/Identity'
+        meta:
+          $ref: '#/components/schemas/Meta'
+    ConflictErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the request conflicts with the current state of the resource. This occurs when:
+
+        - Attempting to create a resource that already exists
+
+        - Modifying a resource that has been changed by another operation
+
+        - Violating unique constraints or business rules
+
+
+        To resolve this error, check the current state of the resource and adjust your request accordingly.'
+    BaseError:
+      properties:
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
+          example: Property foo is required but is missing.
+          type: string
+        status:
+          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
+          example: 404
+          format: int
+          type: integer
+        title:
+          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
+          example: Not Found
+          type: string
+        type:
+          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
+          example: https://unkey.com/docs/errors/unkey/resource/not_found
+          type: string
+      required:
+      - title
+      - detail
+      - status
+      - type
+      type: object
+      additionalProperties: false
+      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
+    V2IdentitiesCreateIdentityResponseData:
+      type: object
+      properties:
+        identityId:
+          type: string
+          description: The unique identifier of the created identity.
+      required:
+      - identityId
     V2IdentitiesListIdentitiesResponseBody:
       type: object
       required:
@@ -863,6 +1012,49 @@ components:
         pagination:
           $ref: '#/components/schemas/Pagination'
       additionalProperties: false
+    V2IdentitiesListIdentitiesRequestBody:
+      type: object
+      properties:
+        limit:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+          description: The maximum number of identities to return in a single request. Use this to control response size and loading performance.
+          example: 50
+        cursor:
+          type: string
+          description: Pagination cursor from a previous response. Use this to fetch subsequent pages of results when the response contains a cursor value.
+          example: cursor_eyJrZXkiOiJrZXlfMTIzNCJ9
+      additionalProperties: false
+    InternalServerErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
+    V2IdentitiesDeleteIdentityResponseBody:
+      type: object
+      description: Empty response object. A successful response indicates the identity was deleted successfully.
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+      required:
+      - meta
     V2IdentitiesCreateIdentityRequestBody:
       type: object
       required:
@@ -932,25 +1124,6 @@ components:
             When verifying keys, you can specify which limits you want to use and all keys attached to this identity will share the limits, regardless of which specific key is used.
 
             '
-    V2IdentitiesDeleteIdentityResponseBody:
-      type: object
-      description: Empty response object. A successful response indicates the identity was deleted successfully.
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-      required:
-      - meta
-    BadRequestErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BadRequestErrorDetails'
-      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
     ValidationError:
       additionalProperties: false
       properties:
@@ -981,179 +1154,6 @@ components:
       - message
       type: object
       description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
-    V2IdentitiesCreateIdentityResponseData:
-      type: object
-      properties:
-        identityId:
-          type: string
-          description: The unique identifier of the created identity.
-      required:
-      - identityId
-    V2IdentitiesGetIdentityRequestBody:
-      type: object
-      properties:
-        identity:
-          type: string
-          minLength: 1
-          description: The ID of the identity to retrieve. This can be either the externalId (from your own system that was used during identity creation) or the identityId (the internal ID returned by the identity service).
-          example: user_abc123
-      additionalProperties: false
-      required:
-      - identity
-    BaseError:
-      properties:
-        detail:
-          description: A human-readable explanation specific to this occurrence of the problem. This provides detailed information about what went wrong and potential remediation steps. The message is intended to be helpful for developers troubleshooting the issue.
-          example: Property foo is required but is missing.
-          type: string
-        status:
-          description: HTTP status code that corresponds to this error. This will match the status code in the HTTP response. Common codes include `400` (Bad Request), `401` (Unauthorized), `403` (Forbidden), `404` (Not Found), `409` (Conflict), and `500` (Internal Server Error).
-          example: 404
-          format: int
-          type: integer
-        title:
-          description: A short, human-readable summary of the problem type. This remains constant from occurrence to occurrence of the same problem and should be used for programmatic handling.
-          example: Not Found
-          type: string
-        type:
-          description: A URI reference that identifies the problem type. This provides a stable identifier for the error that can be used for documentation lookups and programmatic error handling. When followed, this URI should provide human-readable documentation for the problem type.
-          example: https://unkey.com/docs/errors/unkey/resource/not_found
-          type: string
-      required:
-      - title
-      - detail
-      - status
-      - type
-      type: object
-      additionalProperties: false
-      description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
-      additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    TooManyRequestsErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
-
-
-        The rate limit resets automatically after the time window expires. To avoid this error:
-
-        - Implement exponential backoff when retrying requests
-
-        - Cache results where appropriate to reduce request frequency
-
-        - Check the error detail message for specific quota information
-
-        - Contact support if you need a higher quota for your use case'
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
-    ForbiddenErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
-
-        - The root key doesn''t have the required permissions for this endpoint
-
-        - The operation requires elevated privileges that the current key lacks
-
-        - Access to the requested resource is restricted based on workspace settings
-
-
-        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
-    UnauthorizedErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when authentication has failed or credentials are missing. This occurs when:
-
-        - No authentication token is provided in the request
-
-        - The provided token is invalid, expired, or malformed
-
-        - The token format doesn''t match expected patterns
-
-
-        To resolve this error, ensure you''re including a valid root key in the Authorization header.'
-    RatelimitResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          minLength: 8
-          maxLength: 255
-          pattern: ^rl_[a-zA-Z0-9_]+$
-          description: Unique identifier for this rate limit configuration.
-          example: rl_1234567890abcdef
-        name:
-          type: string
-          minLength: 1
-          maxLength: 128
-          description: Human-readable name for this rate limit.
-          example: api_requests
-        limit:
-          type: integer
-          format: int64
-          minimum: 1
-          maximum: 1000000
-          description: Maximum requests allowed within the time window.
-          example: 1000
-        duration:
-          type: integer
-          format: int64
-          minimum: 1000
-          maximum: 2592000000
-          description: Rate limit window duration in milliseconds.
-          example: 3600000
-        autoApply:
-          type: boolean
-          description: Whether this rate limit was automatically applied when verifying the key.
-          example: true
-      required:
-      - id
-      - name
-      - limit
-      - duration
-      - autoApply
-      additionalProperties: false
     V2IdentitiesListIdentitiesResponseData:
       type: array
       items:

@@ -149,6 +149,16 @@ paths:
       x-speakeasy-name-override: getDeployment
 components:
   schemas:
+    V2DeployCreateDeploymentResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2DeployCreateDeploymentResponseData'
     V2DeployGitCommit:
       type: object
       description: Optional git commit information
@@ -174,127 +184,64 @@ components:
           format: int64
           description: Commit timestamp in milliseconds
           example: 1704067200000
-    V2DeployCreateDeploymentResponseBody:
+    V2DeployGetDeploymentResponseData:
       type: object
       required:
-      - meta
-      - data
+      - id
+      - status
       properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2DeployCreateDeploymentResponseData'
-    V2DeployGetDeploymentResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2DeployGetDeploymentResponseData'
-    BadRequestErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BadRequestErrorDetails'
-      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
-    InternalServerErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
-
-
-        When you encounter this error:
-
-        - The request ID in the response can help Unkey support investigate the issue
-
-        - The error is likely temporary and retrying may succeed
-
-        - If the error persists, contact Unkey support with the request ID'
-    V2DeployCreateDeploymentResponseData:
+        id:
+          type: string
+          description: Unique deployment identifier
+          example: d_abc123xyz
+        status:
+          type: string
+          description: Current deployment status
+          enum:
+          - UNSPECIFIED
+          - PENDING
+          - STARTING
+          - BUILDING
+          - DEPLOYING
+          - NETWORK
+          - FINALIZING
+          - READY
+          - FAILED
+          - SKIPPED
+          - AWAITING_APPROVAL
+          - STOPPED
+          - SUPERSEDED
+          - CANCELLED
+          example: READY
+          x-speakeasy-unknown-values: allow
+        errorMessage:
+          type: string
+          description: Error message if deployment failed
+          example: 'Failed to pull image: authentication required'
+        hostnames:
+          type: array
+          items:
+            type: string
+          description: Hostnames associated with this deployment
+          example:
+          - app.example.com
+          - api.example.com
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/V2DeployDeploymentStep'
+          description: Deployment steps with status and messages
+    V2DeployGetDeploymentRequestBody:
       type: object
       required:
       - deploymentId
       properties:
         deploymentId:
           type: string
-          description: Unique deployment identifier
+          minLength: 1
+          description: Unique deployment identifier to retrieve
           example: d_abc123xyz
-    V2DeployDeploymentStep:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Step status
-          example: completed
-        message:
-          type: string
-          description: Step message
-          example: Image pulled successfully
-        errorMessage:
-          type: string
-          description: Error message if step failed
-          example: Connection timeout
-        createdAt:
-          type: integer
-          format: int64
-          description: Unix timestamp in milliseconds
-          example: 1704067200000
-    V2DeployCreateDeploymentRequestBody:
-      type: object
-      required:
-      - project
-      - app
-      - branch
-      - environmentSlug
-      - dockerImage
-      properties:
-        project:
-          type: string
-          minLength: 1
-          description: Project slug
-          example: my-project
-        app:
-          type: string
-          minLength: 1
-          description: App slug within the project
-          example: default
-        keyspaceId:
-          type: string
-          description: Optional keyspace ID for authentication context
-          example: key_abc123
-        branch:
-          type: string
-          minLength: 1
-          description: Git branch name
-          example: main
-        environmentSlug:
-          type: string
-          minLength: 1
-          description: Environment slug (e.g., "production", "staging")
-          example: production
-        dockerImage:
-          type: string
-          minLength: 1
-          description: Docker image reference to deploy
-          example: ghcr.io/user/app:v1.0.0
-        gitCommit:
-          $ref: '#/components/schemas/V2DeployGitCommit'
-      description: Create a deployment from a pre-built Docker image
+          pattern: ^d_[a-zA-Z0-9]+$
     ForbiddenErrorResponse:
       type: object
       required:
@@ -315,6 +262,58 @@ components:
 
 
         To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
+    V2DeployCreateDeploymentResponseData:
+      type: object
+      required:
+      - deploymentId
+      properties:
+        deploymentId:
+          type: string
+          description: Unique deployment identifier
+          example: d_abc123xyz
+    TooManyRequestsErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
+
+
+        The rate limit resets automatically after the time window expires. To avoid this error:
+
+        - Implement exponential backoff when retrying requests
+
+        - Cache results where appropriate to reduce request frequency
+
+        - Check the error detail message for specific quota information
+
+        - Contact support if you need a higher quota for your use case'
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    V2DeployGetDeploymentResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2DeployGetDeploymentResponseData'
     ValidationError:
       additionalProperties: false
       properties:
@@ -365,53 +364,91 @@ components:
 
 
         To resolve this error, verify the resource ID is correct and that you have access to it.'
-    V2DeployGetDeploymentResponseData:
+    V2DeployCreateDeploymentRequestBody:
       type: object
       required:
-      - id
-      - status
+      - project
+      - app
+      - branch
+      - environmentSlug
+      - dockerImage
       properties:
-        id:
+        project:
           type: string
-          description: Unique deployment identifier
-          example: d_abc123xyz
+          minLength: 1
+          description: Project slug
+          example: my-project
+        app:
+          type: string
+          minLength: 1
+          description: App slug within the project
+          example: default
+        keyspaceId:
+          type: string
+          description: Optional keyspace ID for authentication context
+          example: key_abc123
+        branch:
+          type: string
+          minLength: 1
+          description: Git branch name
+          example: main
+        environmentSlug:
+          type: string
+          minLength: 1
+          description: Environment slug (e.g., "production", "staging")
+          example: production
+        dockerImage:
+          type: string
+          minLength: 1
+          description: Docker image reference to deploy
+          example: ghcr.io/user/app:v1.0.0
+        gitCommit:
+          $ref: '#/components/schemas/V2DeployGitCommit'
+      description: Create a deployment from a pre-built Docker image
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    V2DeployDeploymentStep:
+      type: object
+      properties:
         status:
           type: string
-          description: Current deployment status
-          enum:
-          - UNSPECIFIED
-          - PENDING
-          - STARTING
-          - BUILDING
-          - DEPLOYING
-          - NETWORK
-          - FINALIZING
-          - READY
-          - FAILED
-          - SKIPPED
-          - AWAITING_APPROVAL
-          - STOPPED
-          - SUPERSEDED
-          - CANCELLED
-          example: READY
-          x-speakeasy-unknown-values: allow
+          description: Step status
+          example: completed
+        message:
+          type: string
+          description: Step message
+          example: Image pulled successfully
         errorMessage:
           type: string
-          description: Error message if deployment failed
-          example: 'Failed to pull image: authentication required'
-        hostnames:
-          type: array
-          items:
-            type: string
-          description: Hostnames associated with this deployment
-          example:
-          - app.example.com
-          - api.example.com
-        steps:
-          type: array
-          items:
-            $ref: '#/components/schemas/V2DeployDeploymentStep'
-          description: Deployment steps with status and messages
+          description: Error message if step failed
+          example: Connection timeout
+        createdAt:
+          type: integer
+          format: int64
+          description: Unix timestamp in milliseconds
+          example: 1704067200000
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
     UnauthorizedErrorResponse:
       type: object
       required:
@@ -432,30 +469,26 @@ components:
 
 
         To resolve this error, ensure you''re including a valid root key in the Authorization header.'
-    V2DeployGetDeploymentRequestBody:
+    InternalServerErrorResponse:
       type: object
       required:
-      - deploymentId
+      - meta
+      - error
       properties:
-        deploymentId:
-          type: string
-          minLength: 1
-          description: Unique deployment identifier to retrieve
-          example: d_abc123xyz
-          pattern: ^d_[a-zA-Z0-9]+$
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when an unexpected error occurs on the server. This indicates a problem with Unkey''s systems rather than your request.
+
+
+        When you encounter this error:
+
+        - The request ID in the response can help Unkey support investigate the issue
+
+        - The error is likely temporary and retrying may succeed
+
+        - If the error persists, contact Unkey support with the request ID'
     BaseError:
       properties:
         detail:
@@ -483,39 +516,6 @@ components:
       type: object
       additionalProperties: false
       description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
-      additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    TooManyRequestsErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the client has sent too many requests in a given time period. This occurs when you''ve exceeded a rate limit or quota for the resource you''re accessing.
-
-
-        The rate limit resets automatically after the time window expires. To avoid this error:
-
-        - Implement exponential backoff when retrying requests
-
-        - Cache results where appropriate to reduce request frequency
-
-        - Check the error detail message for specific quota information
-
-        - Contact support if you need a higher quota for your use case'
   securitySchemes:
     rootKey:
       bearerFormat: root key

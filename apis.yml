@@ -1,15 +1,20 @@
 aid: unkey
 deliveryModel:
-  model: saas
-  open_source: false
+  model: unknown
+  license_evidence:
+    repo: unkeyed/unkey
+    spdx: NOASSERTION
+    stars: 5447
+  open_source: unknown
   commercial: true
   callable_host: true
-  label: Hosted service · you call their endpoint
-  confidence: high
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
   source:
   - openapi
   - pricing
-  generated: '2026-08-28'
+  - repository-unlicensed
+  generated: '2026-09-25'
   method: derived
 accessModel:
   pricing: freemium
@@ -54,7 +59,7 @@ tags_raw:
 - Analytics
 apis:
 - aid: unkey:unkey-analytics-api
-  name: Unkey analytics API
+  name: Unkey Analytics API
   description: Analytics query operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -80,7 +85,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 - aid: unkey:unkey-deploy-api
-  name: Unkey deploy API
+  name: Unkey Deploy API
   description: Deployment operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -106,7 +111,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 - aid: unkey:unkey-identities-api
-  name: Unkey identities API
+  name: Unkey Identities API
   description: Identity management operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -132,7 +137,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 - aid: unkey:unkey-keys-api
-  name: Unkey keys API
+  name: Unkey Keys API
   description: API key management operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -158,7 +163,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 - aid: unkey:unkey-liveness-api
-  name: Unkey liveness API
+  name: Unkey Liveness API
   description: Health check operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -184,7 +189,7 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 - aid: unkey:unkey-permissions-api
-  name: Unkey permissions API
+  name: Unkey Permissions API
   description: Permission and role management operations
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
@@ -240,8 +245,6 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
-  - Rate-Limit
-  tags_raw:
   - Rate Limit
   properties:
   - type: OpenAPI
