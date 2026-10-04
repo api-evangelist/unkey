@@ -245,6 +245,8 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
+  - Rate-Limit
+  tags_raw:
   - Rate Limit
   properties:
   - type: OpenAPI
@@ -264,6 +266,9 @@ apis:
     url: >-
       https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json
 common:
+- type: CapabilityMap
+  url: capabilities/unkey-capability-edges.yml
+  name: Unkey Business Capability Map
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/unkey/overview
 - type: AgenticAccess
