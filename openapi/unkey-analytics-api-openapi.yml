@@ -113,7 +113,7 @@ components:
       type: object
       additionalProperties: false
       description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    NotFoundErrorResponse:
+    UnprocessableEntityErrorResponse:
       type: object
       required:
       - meta
@@ -123,95 +123,48 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the requested resource cannot be found. This occurs when:
+      description: 'Error response when the request is syntactically valid but cannot be processed due to semantic constraints or resource limitations. This occurs when:
 
-        - The specified resource ID doesn''t exist in your workspace
+        - A query exceeds execution time limits
 
-        - The resource has been deleted or moved
+        - A query uses more memory than allowed
 
-        - The resource exists but is not accessible with current permissions
+        - A query scans too many rows
 
-
-        To resolve this error, verify the resource ID is correct and that you have access to it.'
-    V2AnalyticsGetVerificationsResponseData:
-      type: array
-      description: Array of verification rows returned by the query. Fields vary based on the SQL SELECT clause.
-      items:
-        type: object
-        additionalProperties: true
-        description: Dynamic row with fields determined by the query. Can include any combination of fields like time, outcome, count, key_id, etc.
-      example:
-      - outcome: VALID
-        count: 1234
-        time: 1696118400000
-      - outcome: RATE_LIMITED
-        count: 56
-        time: 1696118400000
-    V2AnalyticsGetVerificationsResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2AnalyticsGetVerificationsResponseData'
-    BadRequestErrorDetails:
-      allOf:
-      - $ref: '#/components/schemas/BaseError'
-      - type: object
-        properties:
-          errors:
-            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
-            items:
-              $ref: '#/components/schemas/ValidationError'
-            type: array
-        required:
-        - errors
-      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
-    BadRequestErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BadRequestErrorDetails'
-      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
-    ForbiddenErrorResponse:
-      type: object
-      required:
-      - meta
-      - error
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        error:
-          $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
-
-        - The root key doesn''t have the required permissions for this endpoint
-
-        - The operation requires elevated privileges that the current key lacks
-
-        - Access to the requested resource is restricted based on workspace settings
+        - A query result exceeds size limits
 
 
-        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
-    Meta:
-      type: object
-      required:
-      - requestId
-      properties:
-        requestId:
-          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
-          example: req_123
-          type: string
+        The request syntax is correct, but the operation cannot be completed due to business rules or resource constraints. Review the error details for specific limitations and adjust your request accordingly.'
+    ValidationError:
       additionalProperties: false
-      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+      properties:
+        location:
+          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
+
+            - ''body.name'' (field in request body)
+
+            - ''body.items[3].tags'' (nested array element)
+
+            - ''path.apiId'' (path parameter)
+
+            - ''query.limit'' (query parameter)
+
+            Use this location to identify exactly which part of your request needs correction.'
+          type: string
+          example: body.permissions[0].name
+        message:
+          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
+          type: string
+          example: Must be at least 3 characters long
+        fix:
+          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
+          type: string
+          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
+      required:
+      - location
+      - message
+      type: object
+      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
     InternalServerErrorResponse:
       type: object
       required:
@@ -252,36 +205,6 @@ components:
 
 
         To resolve this error, ensure you''re including a valid root key in the Authorization header.'
-    ValidationError:
-      additionalProperties: false
-      properties:
-        location:
-          description: 'JSON path indicating exactly where in the request the error occurred. This helps pinpoint the problematic field or parameter. Examples include:
-
-            - ''body.name'' (field in request body)
-
-            - ''body.items[3].tags'' (nested array element)
-
-            - ''path.apiId'' (path parameter)
-
-            - ''query.limit'' (query parameter)
-
-            Use this location to identify exactly which part of your request needs correction.'
-          type: string
-          example: body.permissions[0].name
-        message:
-          description: Detailed error message explaining what validation rule was violated. This provides specific information about why the field or parameter was rejected, such as format errors, invalid values, or constraint violations.
-          type: string
-          example: Must be at least 3 characters long
-        fix:
-          description: A human-readable suggestion describing how to fix the error. This provides practical guidance on what changes would satisfy the validation requirements. Not all validation errors include fix suggestions, but when present, they offer specific remediation advice.
-          type: string
-          example: Ensure the name uses only alphanumeric characters, underscores, and hyphens
-      required:
-      - location
-      - message
-      type: object
-      description: Individual validation error details. Each validation error provides precise information about what failed, where it failed, and how to fix it, enabling efficient error resolution.
     TooManyRequestsErrorResponse:
       type: object
       required:
@@ -326,7 +249,66 @@ components:
         - If the error persists, the service may be undergoing maintenance
 
         - Contact Unkey support if the issue continues'
-    UnprocessableEntityErrorResponse:
+    V2AnalyticsGetVerificationsResponseData:
+      type: array
+      description: Array of verification rows returned by the query. Fields vary based on the SQL SELECT clause.
+      items:
+        type: object
+        additionalProperties: true
+        description: Dynamic row with fields determined by the query. Can include any combination of fields like time, outcome, count, key_id, etc.
+      example:
+      - outcome: VALID
+        count: 1234
+        time: 1696118400000
+      - outcome: RATE_LIMITED
+        count: 56
+        time: 1696118400000
+    BadRequestErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BadRequestErrorDetails'
+      description: Error response for invalid requests that cannot be processed due to client-side errors. This typically occurs when request parameters are missing, malformed, or fail validation rules. The response includes detailed information about the specific errors in the request, including the location of each error and suggestions for fixing it. When receiving this error, check the 'errors' array in the response for specific validation issues that need to be addressed before retrying.
+    Meta:
+      type: object
+      required:
+      - requestId
+      properties:
+        requestId:
+          description: A unique id for this request. Always include this ID when contacting support about a specific API request. This identifier allows Unkey's support team to trace the exact request through logs and diagnostic systems to provide faster assistance.
+          example: req_123
+          type: string
+      additionalProperties: false
+      description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
+    V2AnalyticsGetVerificationsResponseBody:
+      type: object
+      required:
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2AnalyticsGetVerificationsResponseData'
+    BadRequestErrorDetails:
+      allOf:
+      - $ref: '#/components/schemas/BaseError'
+      - type: object
+        properties:
+          errors:
+            description: List of individual validation errors that occurred in the request. Each error provides specific details about what failed validation, where the error occurred in the request, and suggestions for fixing it. This granular information helps developers quickly identify and resolve multiple issues in a single request without having to make repeated API calls.
+            items:
+              $ref: '#/components/schemas/ValidationError'
+            type: array
+        required:
+        - errors
+      description: Extended error details specifically for bad request (400) errors. This builds on the BaseError structure by adding an array of individual validation errors, making it easy to identify and fix multiple issues at once.
+    NotFoundErrorResponse:
       type: object
       required:
       - meta
@@ -336,18 +318,16 @@ components:
           $ref: '#/components/schemas/Meta'
         error:
           $ref: '#/components/schemas/BaseError'
-      description: 'Error response when the request is syntactically valid but cannot be processed due to semantic constraints or resource limitations. This occurs when:
+      description: 'Error response when the requested resource cannot be found. This occurs when:
 
-        - A query exceeds execution time limits
+        - The specified resource ID doesn''t exist in your workspace
 
-        - A query uses more memory than allowed
+        - The resource has been deleted or moved
 
-        - A query scans too many rows
-
-        - A query result exceeds size limits
+        - The resource exists but is not accessible with current permissions
 
 
-        The request syntax is correct, but the operation cannot be completed due to business rules or resource constraints. Review the error details for specific limitations and adjust your request accordingly.'
+        To resolve this error, verify the resource ID is correct and that you have access to it.'
     V2AnalyticsGetVerificationsRequestBody:
       type: object
       required:
@@ -361,6 +341,26 @@ components:
 
             '
           example: SELECT COUNT(*) as total FROM key_verifications_v1 WHERE outcome = 'VALID' AND time >= now() - INTERVAL 7 DAY
+    ForbiddenErrorResponse:
+      type: object
+      required:
+      - meta
+      - error
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        error:
+          $ref: '#/components/schemas/BaseError'
+      description: 'Error response when the provided credentials are valid but lack sufficient permissions for the requested operation. This occurs when:
+
+        - The root key doesn''t have the required permissions for this endpoint
+
+        - The operation requires elevated privileges that the current key lacks
+
+        - Access to the requested resource is restricted based on workspace settings
+
+
+        To resolve this error, ensure your root key has the necessary permissions or contact your workspace administrator.'
   securitySchemes:
     rootKey:
       bearerFormat: root key

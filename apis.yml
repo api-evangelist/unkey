@@ -245,8 +245,6 @@ apis:
   humanURL: https://www.unkey.com
   baseURL: https://api.unkey.com
   tags:
-  - Rate-Limit
-  tags_raw:
   - Rate Limit
   properties:
   - type: OpenAPI

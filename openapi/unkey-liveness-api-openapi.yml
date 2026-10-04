@@ -118,16 +118,6 @@ components:
       type: object
       additionalProperties: false
       description: Base error structure following Problem Details for HTTP APIs (RFC 7807). This provides a standardized way to carry machine-readable details of errors in HTTP response content.
-    V2LivenessResponseBody:
-      type: object
-      required:
-      - meta
-      - data
-      properties:
-        meta:
-          $ref: '#/components/schemas/Meta'
-        data:
-          $ref: '#/components/schemas/V2LivenessResponseData'
     InternalServerErrorResponse:
       type: object
       required:
@@ -148,6 +138,16 @@ components:
         - The error is likely temporary and retrying may succeed
 
         - If the error persists, contact Unkey support with the request ID'
+    V2LivenessResponseData:
+      type: object
+      properties:
+        message:
+          description: Status message indicating the health of the service. A value of 'OK' indicates that the service is functioning properly and ready to accept requests. Any other value indicates a potential issue with the service health.
+          example: OK
+          type: string
+      required:
+      - message
+      description: Response data for the liveness check endpoint. This provides a simple indication of whether the Unkey API service is running and able to process requests. Monitoring systems can use this endpoint to track service availability and trigger alerts if the service becomes unhealthy.
     Meta:
       type: object
       required:
@@ -159,16 +159,16 @@ components:
           type: string
       additionalProperties: false
       description: Metadata object included in every API response. This provides context about the request and is essential for debugging, audit trails, and support inquiries. The `requestId` is particularly important when troubleshooting issues with the Unkey support team.
-    V2LivenessResponseData:
+    V2LivenessResponseBody:
       type: object
-      properties:
-        message:
-          description: Status message indicating the health of the service. A value of 'OK' indicates that the service is functioning properly and ready to accept requests. Any other value indicates a potential issue with the service health.
-          example: OK
-          type: string
       required:
-      - message
-      description: Response data for the liveness check endpoint. This provides a simple indication of whether the Unkey API service is running and able to process requests. Monitoring systems can use this endpoint to track service availability and trigger alerts if the service becomes unhealthy.
+      - meta
+      - data
+      properties:
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          $ref: '#/components/schemas/V2LivenessResponseData'
   securitySchemes:
     rootKey:
       bearerFormat: root key
