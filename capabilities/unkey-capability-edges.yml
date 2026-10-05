@@ -1,0 +1,82 @@
+slug: unkey
+provider: Unkey
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 7
+edges:
+- tag: Keys
+  spec_file: unkey-keys-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.85
+  evidence: POST /v2/keys.createKey  Create API Key; POST /v2/keys.rerollKey  Reroll Key; POST /v2/keys.setPermissions  Set
+    Key Permissions
+  reason: Issuance, verification, rotation and permissioning of API keys for external developers — squarely
+    Developer Identity & Credential Management.
+- tag: APIs
+  spec_file: unkey-apis-api-openapi.yml
+  capability_id: BC-4270.40
+  capability_id_l1: BC-4270
+  capability_name: Developer Identity & Credential Management
+  confidence: 0.8
+  evidence: POST /v2/apis.createApi  Create API Namespace; POST /v2/apis.listKeys  List API Keys
+  reason: Manages API namespaces that group issued API keys for external consumers — developer credential/API
+    surface management on a developer platform. Sub-capability could arguably be Public API Lifecycle
+    Management, hence 0.8.
+- tag: Analytics
+  spec_file: unkey-analytics-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.8
+  evidence: POST /v2/analytics.getVerifications  Query Key Verification Data
+  reason: Usage analytics over API key verifications — consumption analytics for API providers, matching
+    API Consumption Governance (quotas, usage analytics).
+- tag: Deploy
+  spec_file: unkey-deploy-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.8
+  evidence: 'POST /v2/deploy.createDeployment  Create Deployment; schemas: V2DeployGitCommit, V2DeployDeploymentStep'
+  reason: Creates and inspects deployments tied to git commits with deployment steps — software deployment
+    orchestration. Could also read as Continuous Integration Management, hence 0.8.
+- tag: Identities
+  spec_file: unkey-identities-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: 'POST /v2/identities.createIdentity  Create Identity; schemas: Identity, RatelimitRequest'
+  reason: CRUD over identities representing API consumers, with associated ratelimits — identity and access
+    management plumbing for a developer platform rather than customer master data.
+- tag: Permissions
+  spec_file: unkey-permissions-api-openapi.yml
+  capability_id: BC-620.20
+  capability_id_l1: BC-620
+  capability_name: Identity & Access Management
+  confidence: 0.8
+  evidence: 'POST /v2/permissions.createRole  Create Role; POST /v2/permissions.listPermissions  List
+    Permissions; schema: Role'
+  reason: RBAC primitives — creating and listing permissions and roles — which is identity and access
+    management functionality exposed as a product.
+- tag: Rate Limit
+  spec_file: unkey-rate-limit-api-openapi.yml
+  capability_id: BC-4270.50
+  capability_id_l1: BC-4270
+  capability_name: API Consumption Governance
+  confidence: 0.8
+  evidence: POST /v2/ratelimit.limit  Apply Rate Limiting; POST /v2/ratelimit.setOverride  Set Ratelimit
+    Override
+  reason: 'Rate limiting is normally plumbing, but here it is the vendor''s product surface: enforcing
+    and overriding quotas on API consumers, which is API Consumption Governance.'
