@@ -153,3 +153,51 @@ plans:
       - name: Up to 32 vCPU / 32 GB per Instance
       - name: Custom domains
       - name: Email support
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - free
+  - subscription
+  units:
+  - money
+  - period
+  plans:
+  - name: Free
+    access: freemium
+    model: free
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Starter
+    access: paid
+    model: subscription
+    model_how: derived
+    units:
+    - money
+    - other
+    - period
+    periods:
+    - month
+  - name: Pro
+    access: paid
+    model: subscription
+    model_how: derived
+    units:
+    - money
+    - other
+    - period
+    periods:
+    - month
+  - name: Business
+    access: paid
+    model: subscription
+    model_how: derived
+    units:
+    - money
+    - other
+    - period
+    periods:
+    - month
