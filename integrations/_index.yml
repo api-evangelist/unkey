@@ -98,3 +98,34 @@
     detected: '2026-10-22'
   status: not-a-workflow
   arazzo: null
+- slug: unkey-jsr
+  label: JSR
+  partner_name: JSR
+  category: official SDK (JavaScript/TypeScript, JSR)
+  type: register
+  channel: package-registry
+  evidence: https://jsr.io/@unkey/api
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: JSR (jsr.io public API JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@unkey/api'
+      version: 2.0.6
+      released: '2025-10-14'
+      released_field: versions.createdAt
+      lapsed: false
+      page: https://jsr.io/@unkey/api
+      github_repository: https://github.com/unkeyed/sdks
+      repo_leg: github-org:unkeyed
+      publisher_leg: org:unkey
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months or archived'
+    detected_by: sweep-jsr-javascript-registry.py
+    detected: '2026-10-23'
+  status: not-a-workflow
+  arazzo: null
