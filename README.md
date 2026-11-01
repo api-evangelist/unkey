@@ -1,4 +1,4 @@
-# Unkey (unkey)
+# Unkey
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,70 +66,225 @@
 
 Unkey is the developer platform for modern APIs, providing globally distributed API key management, rate limiting, identity management, analytics, and deployment capabilities. The platform enables API providers to issue, verify, and revoke keys with metadata, expiration, usage credits, permissions, and roles — without managing any infrastructure.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/apis.yml)
+**Areas:** APIKeys · Rate Limiting · Authentication · Developer Platform · Access Control · Identity · Analytics
 
-## Scope
+## Unkey on APIs.io
 
-- **Type:** Index
+Everything profiled for Unkey is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/unkey/](https://apis.io/providers/unkey/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (8)
 
-- API Keys
-- Rate Limiting
-- Authentication
-- Developer Platform
-- Access Control
-- Identity
-- Analytics
+- [Unkey Analytics API](https://apis.io/apis/unkey/unkey-analytics-api/) — Analytics query operations
+- [Unkey Deploy API](https://apis.io/apis/unkey/unkey-deploy-api/) — Deployment operations
+- [Unkey Identities API](https://apis.io/apis/unkey/unkey-identities-api/) — Identity management operations
+- [Unkey Keys API](https://apis.io/apis/unkey/unkey-keys-api/) — API key management operations
+- [Unkey Liveness API](https://apis.io/apis/unkey/unkey-liveness-api/) — Health check operations
+- [Unkey Permissions API](https://apis.io/apis/unkey/unkey-permissions-api/) — Permission and role management operations
+- [Unkey APIS API](https://apis.io/apis/unkey/unkey-apis-api/) — API management operations
+- [Unkey Rate Limit API](https://apis.io/apis/unkey/unkey-rate-limit-api/) — Rate limiting operations
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Agentic access (1)
 
-### Unkey API
+Which operations an agent can call, which act, and which need a human in the loop.
 
-Unkey's REST API providing programmatic access to all platform resources: API namespace management, API key lifecycle (create, verify, update, reroll, delete), identity management, permissions and roles, standalone rate limiting with namespace overrides, key verification analytics via SQL, and deployment operations. All management operations use Bearer authentication with root keys.
+- [Unkey Agentic Access](https://apis.io/agentic-access/unkey/unkey-agentic-access/)
 
-- **Human URL:** [https://www.unkey.com](https://www.unkey.com)
-- **Base URL:** `https://api.unkey.com`
+#### JSON Schema (149)
 
-#### Tags
+The data models the API reads and writes.
 
-- API Keys
-- Rate Limiting
-- Identity
-- Permissions
-- Analytics
-- Deployments
+- [BadRequestErrorDetails](https://apis.io/schemas/unkey/unkey-badrequesterrordetails/)
+- [BadRequestErrorResponse](https://apis.io/schemas/unkey/unkey-badrequesterrorresponse/)
+- [BaseError](https://apis.io/schemas/unkey/unkey-baseerror/)
+- [ConflictErrorResponse](https://apis.io/schemas/unkey/unkey-conflicterrorresponse/)
+- [EmptyResponse](https://apis.io/schemas/unkey/unkey-emptyresponse/)
+- [ForbiddenErrorResponse](https://apis.io/schemas/unkey/unkey-forbiddenerrorresponse/)
+- [GoneErrorResponse](https://apis.io/schemas/unkey/unkey-goneerrorresponse/)
+- [Unkey Identity](https://apis.io/schemas/unkey/unkey-identity/)
+- [InternalServerErrorResponse](https://apis.io/schemas/unkey/unkey-internalservererrorresponse/)
+- [Unkey API Key](https://apis.io/schemas/unkey/unkey-key/)
+- [KeyCreditsData](https://apis.io/schemas/unkey/unkey-keycreditsdata/)
+- [KeyCreditsRefill](https://apis.io/schemas/unkey/unkey-keycreditsrefill/)
+- [KeyResponseData](https://apis.io/schemas/unkey/unkey-keyresponsedata/)
+- [KeysVerifyKeyCredits](https://apis.io/schemas/unkey/unkey-keysverifykeycredits/)
+- [KeysVerifyKeyRatelimit](https://apis.io/schemas/unkey/unkey-keysverifykeyratelimit/)
+- [Meta](https://apis.io/schemas/unkey/unkey-meta/)
+- [NotFoundErrorResponse](https://apis.io/schemas/unkey/unkey-notfounderrorresponse/)
+- [Pagination](https://apis.io/schemas/unkey/unkey-pagination/)
+- [Permission](https://apis.io/schemas/unkey/unkey-permission/)
+- [PreconditionFailedErrorResponse](https://apis.io/schemas/unkey/unkey-preconditionfailederrorresponse/)
+- [Unkey Rate Limit Result](https://apis.io/schemas/unkey/unkey-ratelimit/)
+- [RatelimitOverride](https://apis.io/schemas/unkey/unkey-ratelimitoverride/)
+- [RatelimitRequest](https://apis.io/schemas/unkey/unkey-ratelimitrequest/)
+- [RatelimitResponse](https://apis.io/schemas/unkey/unkey-ratelimitresponse/)
+- [Role](https://apis.io/schemas/unkey/unkey-role/)
+- …and 124 more published on APIs.io
 
-#### Properties
+#### JSON Structure (2)
 
-- [Documentation](https://www.unkey.com/docs)
-- [OpenAPI](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/openapi/unkey-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Spectral Rules](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/rules/unkey-rules.yml)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-key-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-ratelimit-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-schema/unkey-identity-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [Postman Collection](collections/unkey.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/unkey.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Data models expressed in JSON Structure.
 
-## Common Properties
+- [Unkey Key Structure](https://apis.io/json-structure/unkey/unkey-key-structure/)
+- [Unkey Structure](https://apis.io/json-structure/unkey/unkey-structure/)
 
-- [LinkedIn](https://www.linkedin.com/company/unkeyed)
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Unkey Context](https://apis.io/jsonld/unkey/unkey-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Unkey Vocabulary](https://apis.io/vocabularies/unkey/unkey-vocabulary/)
+
+#### Examples (20)
+
+Example requests and responses.
+
+- [Unkey Create Key Example](https://apis.io/examples/unkey/unkey-create-key-example/)
+- [Unkey Get Key Example](https://apis.io/examples/unkey/unkey-get-key-example/)
+- [Unkey Identitiescreateidentity Example](https://apis.io/examples/unkey/unkey-identitiescreateidentity-example/)
+- [Unkey Identitiesdeleteidentity Example](https://apis.io/examples/unkey/unkey-identitiesdeleteidentity-example/)
+- [Unkey Identitiesgetidentity Example](https://apis.io/examples/unkey/unkey-identitiesgetidentity-example/)
+- [Unkey Identitieslistidentities Example](https://apis.io/examples/unkey/unkey-identitieslistidentities-example/)
+- [Unkey Identitiesupdateidentity Example](https://apis.io/examples/unkey/unkey-identitiesupdateidentity-example/)
+- [Unkey Keysupdatekey Example](https://apis.io/examples/unkey/unkey-keysupdatekey-example/)
+- [Unkey Keysverifykey Example](https://apis.io/examples/unkey/unkey-keysverifykey-example/)
+- [Unkey Liveness Example](https://apis.io/examples/unkey/unkey-liveness-example/)
+- [Unkey Permissionscreaterole Example](https://apis.io/examples/unkey/unkey-permissionscreaterole-example/)
+- [Unkey Permissionsdeletepermission Example](https://apis.io/examples/unkey/unkey-permissionsdeletepermission-example/)
+- [Unkey Ratelimit Limit Example](https://apis.io/examples/unkey/unkey-ratelimit-limit-example/)
+- [Unkey Ratelimitdeleteoverride Example](https://apis.io/examples/unkey/unkey-ratelimitdeleteoverride-example/)
+- [Unkey Ratelimitgetoverride Example](https://apis.io/examples/unkey/unkey-ratelimitgetoverride-example/)
+- [Unkey Ratelimitlimit Example](https://apis.io/examples/unkey/unkey-ratelimitlimit-example/)
+- [Unkey Ratelimitlistoverrides Example](https://apis.io/examples/unkey/unkey-ratelimitlistoverrides-example/)
+- [Unkey Ratelimitmultilimit Example](https://apis.io/examples/unkey/unkey-ratelimitmultilimit-example/)
+- [Unkey Ratelimitsetoverride Example](https://apis.io/examples/unkey/unkey-ratelimitsetoverride-example/)
+- [Unkey Verify Key Example](https://apis.io/examples/unkey/unkey-verify-key-example/)
+
+#### Collections (18)
+
+Postman and Open Collection request collections.
+
+- [Unkey API](https://apis.io/collections/unkey/open-unkey/)
+- [Unkey analytics API](https://apis.io/collections/unkey/open-unkey-analytics-api/)
+- [Unkey analytics apis API](https://apis.io/collections/unkey/open-unkey-apis-api/)
+- [Unkey analytics deploy API](https://apis.io/collections/unkey/open-unkey-deploy-api/)
+- [Unkey API](https://apis.io/collections/unkey/open-unkey-dev/)
+- [Unkey analytics identities API](https://apis.io/collections/unkey/open-unkey-identities-api/)
+- [Unkey analytics keys API](https://apis.io/collections/unkey/open-unkey-keys-api/)
+- [Unkey analytics liveness API](https://apis.io/collections/unkey/open-unkey-liveness-api/)
+- [Unkey analytics permissions API](https://apis.io/collections/unkey/open-unkey-permissions-api/)
+- [Unkey analytics ratelimit API](https://apis.io/collections/unkey/open-unkey-ratelimit-api/)
+- [Unkey analytics API](https://apis.io/collections/unkey/postman-unkey-analytics-api/)
+- [Unkey analytics apis API](https://apis.io/collections/unkey/postman-unkey-apis-api/)
+- [Unkey analytics deploy API](https://apis.io/collections/unkey/postman-unkey-deploy-api/)
+- [Unkey analytics identities API](https://apis.io/collections/unkey/postman-unkey-identities-api/)
+- [Unkey analytics keys API](https://apis.io/collections/unkey/postman-unkey-keys-api/)
+- [Unkey analytics liveness API](https://apis.io/collections/unkey/postman-unkey-liveness-api/)
+- [Unkey analytics permissions API](https://apis.io/collections/unkey/postman-unkey-permissions-api/)
+- [Unkey analytics ratelimit API](https://apis.io/collections/unkey/postman-unkey-ratelimit-api/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Unkey — jsonschema rules](https://apis.io/rules/unkey/unkey-jsonschema-spectral-rules/)
+- [Unkey API Rules](https://apis.io/rules/unkey/unkey-rules/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Unkey Authentication](https://apis.io/security/unkey/unkey-authentication/)
+- [Unkey Domain Security](https://apis.io/security/unkey/unkey-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Unkey Plans Pricing](https://apis.io/plans/unkey/unkey-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Unkey Rate Limits](https://apis.io/rate-limits/unkey/unkey-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Unkey Finops](https://apis.io/finops/unkey/unkey-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://www.unkey.com)
 - [Documentation](https://www.unkey.com/docs)
-- [Git Hub](https://github.com/unkeyed/unkey)
 - [Pricing](https://www.unkey.com/pricing)
-- [Blog](https://www.unkey.com/blog)
 - [Changelog](https://www.unkey.com/changelog)
-- [Vocabulary](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/vocabulary/unkey-vocabulary.yml)
-- [J S O N L D Context](https://raw.githubusercontent.com/api-evangelist/unkey/refs/heads/main/json-ld/unkey-context.jsonld)
-- [Features](undefined)
+- [Blog](https://www.unkey.com/blog)
+- [GitHub](https://github.com/unkeyed)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 40.7** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 65.5 |
+| Contract governance | 27.3 |
+| Operational transparency | 26.3 |
+| Developer ergonomics | 25.0 |
+| Access clarity | 18.4 |
+
+**Agent readiness 27.7** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/unkey/](https://apis.io/providers/unkey/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Unkey: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/unkey/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
